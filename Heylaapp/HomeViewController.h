@@ -15,6 +15,7 @@
 {
     NSArray *searchResultsArray;
 }
+@property (weak, nonatomic) IBOutlet UIView *floationgView;
 @property (weak, nonatomic) IBOutlet UIView *lb_bookingView;
 @property (weak, nonatomic) IBOutlet UIView *lb_reviewView;
 @property (weak, nonatomic) IBOutlet UIView *lb_checkinView;

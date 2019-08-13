@@ -25,7 +25,123 @@
     [super viewDidLoad];
     menuItems = @[@"samp",@"bookingHistory",@"preference", @"changeCity", @"wishList", @"shareApp", @"rateApp", @"blog",@"settings",@"logOut"];
     staticMenu = @[@"userName"];
+    [self getProfileDetails];
+}
+-(void)getProfileDetails
+{
+    appDel = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    NSString *user_id = [[NSUserDefaults standardUserDefaults]objectForKey:@"stat_user_id"];
+    self->appDel.user_Id = user_id;
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
+    [parameters setObject:appDel.user_Id forKey:@"user_id"];
     
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    
+    NSString *getEventcities = @"apimain/profileDetails";
+    NSArray *components = [NSArray arrayWithObjects:baseUrl,getEventcities, nil];
+    NSString *api = [NSString pathWithComponents:components];
+    
+    [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+     {
+         
+         NSLog(@"%@",responseObject);
+         [MBProgressHUD hideHUDForView:self.view animated:YES];
+         NSString *msg = [responseObject objectForKey:@"msg"];
+         NSString *status = [responseObject objectForKey:@"status"];
+         
+         if ([msg isEqualToString:@"User Details"] && [status isEqualToString:@"Success"])
+         {
+             NSDictionary *dict = [responseObject objectForKey:@"userData"];
+             NSString *user_id = [dict objectForKey:@"user_id"];
+             self->appDel.user_Id = [dict objectForKey:@"user_id"];
+             self->appDel.address_line_1 = [dict objectForKey:@"address_line_1"];
+             self->appDel.address_line_2 = [dict objectForKey:@"address_line_2"];
+             self->appDel.address_line_3 = [dict objectForKey:@"address_line_3"];
+             self->appDel.birth_date = [dict objectForKey:@"birth_date"];
+             self->appDel.city_id = [dict objectForKey:@"city_id"];
+             self->appDel.city_name = [dict objectForKey:@"city_name"];
+             self->appDel.country_id = [dict objectForKey:@"country_id"];
+             self->appDel.country_name = [dict objectForKey:@"country_name"];
+             self->appDel.email_verify_status = [dict objectForKey:@"email_verify_status"];
+             NSString *full_Name = [dict objectForKey:@"full_name"];
+             [[NSUserDefaults standardUserDefaults]setObject:full_Name forKey:@"statFull_Name"];
+             self->appDel.full_name = [[NSUserDefaults standardUserDefaults]objectForKey:@"statFull_Name"];
+             self->appDel.gender = [dict objectForKey:@"gender"];
+             self->appDel.newsletter_status = [dict objectForKey:@"newsletter_status"];
+             self->appDel.occupation = [dict objectForKey:@"occupation"];
+             self->appDel.picture_url = [dict objectForKey:@"picture_url"];
+             NSString *picture = [dict objectForKey:@"picture_url"];
+             self->appDel.referal_code = [dict objectForKey:@"referal_code"];
+             self->appDel.state_id = [dict objectForKey:@"state_id"];
+             self->appDel.state_name = [dict objectForKey:@"state_name"];
+             self->appDel.user_role = [dict objectForKey:@"user_role"];
+             self->appDel.user_role_name = [dict objectForKey:@"user_role_name"];
+             self->appDel.zip = [dict objectForKey:@"zip"];
+             NSString *emailId = [dict objectForKey:@"email_id"];
+             self->appDel.email_id = [[NSUserDefaults standardUserDefaults]objectForKey:@"statemail_id"];
+             NSString *mobile_no = [dict objectForKey:@"mobile_no"];
+             self->appDel.mobile_no = [[NSUserDefaults standardUserDefaults]objectForKey:@"statemobile_no"];
+             NSString *userName = [dict objectForKey:@"user_name"];
+             [[NSUserDefaults standardUserDefaults]setObject:userName forKey:@"statUser_Name"];
+             self->appDel.user_name = [[NSUserDefaults standardUserDefaults]objectForKey:@"statUser_Name"];
+             NSString *log_Type = @"";
+             [[NSUserDefaults standardUserDefaults]setObject:log_Type forKey:@"login_type"];
+             self->appDel.login_type = [[NSUserDefaults standardUserDefaults]objectForKey:@"login_type"];
+             self->appDel.user_type = @"1";
+             NSLog(@"%@",self->appDel.user_Id);
+             [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:@"stat_user_type"];
+             [[NSUserDefaults standardUserDefaults]setObject:emailId forKey:@"statemail_id"];
+             [[NSUserDefaults standardUserDefaults]setObject:@"signIn" forKey:@"status"];
+             [[NSUserDefaults standardUserDefaults]setObject:picture forKey:@"picture_Url"];
+             [[NSUserDefaults standardUserDefaults]setObject:user_id forKey:@"stat_user_id"];
+             [[NSUserDefaults standardUserDefaults]setObject:mobile_no forKey:@"statemobile_no"];
+             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.full_name forKey:@"statFull_Name"];
+             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.birth_date forKey:@"dob"];
+             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.occupation forKey:@"occupation"];
+             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.gender forKey:@"gender"];
+             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.address_line_1 forKey:@"addressLine"];
+             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.address_line_2 forKey:@"addressLineTwo"];
+             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.address_line_3 forKey:@"addressLineThree"];
+             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.country_name forKey:@"country"];
+             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.state_name forKey:@"state"];
+             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.city_name forKey:@"city"];
+             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.zip forKey:@"pincode"];
+             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.country_id forKey:@"country_id"];
+             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.state_id forKey:@"state_id"];
+             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.city_id forKey:@"city_id"];
+             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.newsletter_status forKey:@"new_Letter"];
+         }
+         else
+         {
+             UIAlertController *alert= [UIAlertController
+                                        alertControllerWithTitle:@"Heyla"
+                                        message:msg
+                                        preferredStyle:UIAlertControllerStyleAlert];
+             
+             UIAlertAction *ok = [UIAlertAction
+                                  actionWithTitle:@"OK"
+                                  style:UIAlertActionStyleDefault
+                                  handler:^(UIAlertAction * action)
+                                  {
+                                      
+                                  }];
+             
+             [alert addAction:ok];
+             [self presentViewController:alert animated:YES completion:nil];
+         }
+     }
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+     {
+         NSLog(@"error: %@", error);
+     }];
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.tableView reloadData];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -63,7 +179,8 @@
         cell.userImageView.clipsToBounds = YES;
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         cell.UserName.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"statFull_Name"];
-        cell.cityName.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"selected_city_prof"];
+        cell.cityName.text = @"India";
+        //[[NSUserDefaults standardUserDefaults]objectForKey:@"selected_city_prof"];
         
         NSLog(@"%@",appDel.login_type);
         if ([appDel.login_type isEqualToString:@"FB"])
@@ -370,7 +487,7 @@
     else if(indexPath.row == 6)
     {
         UIApplication *application = [UIApplication sharedApplication];
-        NSURL *URL = [NSURL URLWithString:@"https://itunes.apple.com/us/app/heyla/id1328232644?ls=1&mt=8"];
+        NSURL *URL = [NSURL URLWithString:@"https://apps.apple.com/us/app/heyla/id1438601804?ls=1"];
         [application openURL:URL options:@{} completionHandler:^(BOOL success)
          {
              if (success)

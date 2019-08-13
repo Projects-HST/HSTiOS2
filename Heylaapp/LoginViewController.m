@@ -112,7 +112,7 @@
     }
     [self loadUserLocation];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                          action:@selector(dismissKeyboard)];
+    action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
 }
 - (void)loadUserLocation
@@ -775,7 +775,7 @@
             NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
             [parameters setObject:self.signInUserName.text forKey:@"username"];
             [parameters setObject:self.signInPassword.text forKey:@"password"];
-            [parameters setObject:@"sdjhksjdhkjsdhksdjfhkdj" forKey:@"gcm_key"];
+            [parameters setObject:deviceToken forKey:@"gcm_key"];
             [parameters setObject:@"2" forKey:@"mobile_type"];
             AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
             manager.requestSerializer = [AFJSONRequestSerializer serializer];

@@ -146,7 +146,7 @@
     datePicker.datePickerMode=UIDatePickerModeDate;
     datePicker.maximumDate=[NSDate date];
     toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
-    [toolBar setTintColor:[UIColor grayColor]];
+    [toolBar setTintColor:[UIColor colorWithRed:68/255.0 green:142/255.0 blue:203/255.0 alpha:1.0]];
     UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(ShowSelectedDate)];
     UIBarButtonItem *cancelBtn=[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(ShowsCancelButton)];
     UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -301,6 +301,7 @@
         newsLetterFlag = @"1";
         [[NSUserDefaults standardUserDefaults]setObject:@"Y" forKey:@"new_Letter"];
     }
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
     action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
@@ -606,9 +607,23 @@
                                   
                               }];
     
+    UIAlertAction* button3 = [UIAlertAction
+                              actionWithTitle:@"Remove Profile Photo"
+                              style:UIAlertActionStyleDefault
+                              handler:^(UIAlertAction * action)
+                              {
+                                  [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                                  self.cropImage = [UIImage imageNamed:@"profile.png"];
+                                 // self.profImageView.image = [UIImage imageNamed:@"profile.png"];
+                                  [self profile_Pic];
+                                  [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                  
+                              }];
+    
     [alert addAction:button0];
     [alert addAction:button1];
     [alert addAction:button2];
+    [alert addAction:button3];
     alert.popoverPresentationController.sourceView = self.imageBtnOtlet;
     [self presentViewController:alert animated:YES completion:nil];
 }

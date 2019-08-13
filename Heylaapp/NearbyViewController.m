@@ -8,6 +8,7 @@
 
 #import "NearbyViewController.h"
 #import "LSFloatingActionMenu.h"
+#import "LGPlusButtonsView.h"
 
 @interface NearbyViewController ()
 {
@@ -66,6 +67,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *tipsLabel;
 @property (strong, nonatomic) LSFloatingActionMenu *actionMenu;
 @property (nonatomic, strong) MKMapView *mapView;
+@property (strong, nonatomic) LGPlusButtonsView *plusButtonsViewMain;
 
 @end
 
@@ -87,7 +89,7 @@
     listpickerView.dataSource = self;
     [self.distanceTxtfield setInputView:listpickerView];
     listToolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
-    [listToolBar setTintColor:[UIColor grayColor]];
+    [listToolBar setTintColor:[UIColor colorWithRed:68/255.0 green:142/255.0 blue:203/255.0 alpha:1.0]];
     UIBarButtonItem *done=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(SelectedDistance)];
     UIBarButtonItem *cancel=[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(CancelButton)];
     UIBarButtonItem *spacePicker=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -127,7 +129,133 @@
     [self loadUserLocation];
     self.nearbyImageView.hidden = NO;
     self.tableView.hidden = YES;
+    [self setUpFloatingButton];
+}
 
+-(void)setUpFloatingButton
+{
+    _plusButtonsViewMain = [LGPlusButtonsView plusButtonsViewWithNumberOfButtons:3
+                                                         firstButtonIsPlusButton:YES
+                                                                   showAfterInit:YES
+                                                                   actionHandler:^(LGPlusButtonsView *plusButtonView, NSString *title, NSString *description, NSUInteger index)
+                            {
+                                NSLog(@"actionHandler | title: %@, description: %@, index: %lu", title, description, (long unsigned)index);
+                                
+                                if (index == 1)
+                                {
+                                    if ([self.distanceTxtfield.text isEqualToString:@""])
+                                    {
+                                        UIAlertController *alert= [UIAlertController
+                                                                   alertControllerWithTitle:@"Heyla"
+                                                                   message:@"Select your distance"
+                                                                   preferredStyle:UIAlertControllerStyleAlert];
+                                        
+                                        UIAlertAction *ok = [UIAlertAction
+                                                             actionWithTitle:@"OK"
+                                                             style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * action)
+                                                             {
+                                                                 
+                                                             }];
+                                        
+                                        [alert addAction:ok];
+                                        [self presentViewController:alert animated:YES completion:nil];
+                                    }
+                                    else
+                                    {
+                                        self.tipsLabel.text = [NSString stringWithFormat:@"Click at index %d", (int)index];
+                                        self->mapViewFlag = @"NO";
+                                        [self loadUserLocation];
+                                    }
+                                }
+                                else if (index == 2)
+                                {
+                                    if (self->selectedDistance.length == 0)
+                                    {
+                                        
+                                        UIAlertController *alert= [UIAlertController
+                                                                   alertControllerWithTitle:@"Heyla"
+                                                                   message:@"Select your distance"
+                                                                   preferredStyle:UIAlertControllerStyleAlert];
+                                        
+                                        UIAlertAction *ok = [UIAlertAction
+                                                             actionWithTitle:@"OK"
+                                                             style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * action)
+                                                             {
+                                                                 
+                                                             }];
+                                        
+                                        [alert addAction:ok];
+                                        [self presentViewController:alert animated:YES completion:nil];
+                                    }
+                                    else
+                                    {
+                                        self.tipsLabel.text = [NSString stringWithFormat:@"Click at index %d", (int)index];
+                                        [self->_mapView setMapType:MKMapTypeStandard];
+                                        self->mapViewFlag = @"YES";
+                                        [self loadUserLocation];
+                                    }
+                                }
+                            }];
+    
+    _plusButtonsViewMain.observedScrollView = self.tableView;
+    _plusButtonsViewMain.showHideOnScroll = NO;
+    _plusButtonsViewMain.coverColor = [UIColor colorWithWhite:1.f alpha:0.7];
+    _plusButtonsViewMain.position = LGPlusButtonsViewPositionBottomRight;
+    _plusButtonsViewMain.plusButtonAnimationType = LGPlusButtonAnimationTypeRotate;
+    
+    [_plusButtonsViewMain setButtonsTitles:@[@"+", @"", @""] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setDescriptionsTexts:@[@"",@"Listview",@"Mapview"]];
+    [_plusButtonsViewMain setButtonsImages:@[[NSNull new], [UIImage imageNamed:@"listview"], [UIImage imageNamed:@"mapview"]]
+                                  forState:UIControlStateNormal
+                            forOrientation:LGPlusButtonsViewOrientationAll];
+    
+    [_plusButtonsViewMain setButtonsAdjustsImageWhenHighlighted:NO];
+    [_plusButtonsViewMain setButtonsBackgroundColor:[UIColor colorWithRed:0.f green:0.5 blue:1.f alpha:1.f] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setButtonsBackgroundColor:[UIColor colorWithRed:0.2 green:0.6 blue:1.f alpha:1.f] forState:UIControlStateHighlighted];
+    [_plusButtonsViewMain setButtonsBackgroundColor:[UIColor colorWithRed:0.2 green:0.6 blue:1.f alpha:1.f] forState:UIControlStateHighlighted|UIControlStateSelected];
+    [_plusButtonsViewMain setButtonsSize:CGSizeMake(44.f, 44.f) forOrientation:LGPlusButtonsViewOrientationAll];
+    [_plusButtonsViewMain setButtonsLayerCornerRadius:44.f/2.f forOrientation:LGPlusButtonsViewOrientationAll];
+    [_plusButtonsViewMain setButtonsTitleFont:[UIFont boldSystemFontOfSize:24.f] forOrientation:LGPlusButtonsViewOrientationAll];
+    [_plusButtonsViewMain setButtonsLayerShadowColor:[UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1.f]];
+    [_plusButtonsViewMain setButtonsLayerShadowOpacity:0.5];
+    [_plusButtonsViewMain setButtonsLayerShadowRadius:3.f];
+    [_plusButtonsViewMain setButtonsLayerShadowOffset:CGSizeMake(0.f, 2.f)];
+    [_plusButtonsViewMain setButtonAtIndex:0 size:CGSizeMake(56.f, 56.f)
+                            forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    [_plusButtonsViewMain setButtonAtIndex:0 layerCornerRadius:56.f/2.f
+                            forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    [_plusButtonsViewMain setButtonAtIndex:0 titleFont:[UIFont systemFontOfSize:40.f]
+                            forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    [_plusButtonsViewMain setButtonAtIndex:0 titleOffset:CGPointMake(0.f, -3.f) forOrientation:LGPlusButtonsViewOrientationAll];
+    [_plusButtonsViewMain setButtonAtIndex:2 backgroundColor:[UIColor colorWithRed:208.0/255 green:45.0/255 blue:39.0/255 alpha:1.0] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setButtonAtIndex:2 backgroundColor:[UIColor colorWithRed:208.0/255 green:45.0/255 blue:39.0/255 alpha:1.0] forState:UIControlStateHighlighted];
+    [_plusButtonsViewMain setButtonAtIndex:1 backgroundColor:[UIColor colorWithRed:1.f green:0.5 blue:0.f alpha:1.f] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setButtonAtIndex:1 backgroundColor:[UIColor colorWithRed:1.f green:0.5 blue:0.f alpha:1.f] forState:UIControlStateHighlighted];
+//    [_plusButtonsViewMain setButtonAtIndex:3 backgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
+//    [_plusButtonsViewMain setButtonAtIndex:3 backgroundColor:[UIColor clearColor] forState:UIControlStateHighlighted];
+
+    [_plusButtonsViewMain setDescriptionsBackgroundColor:[UIColor whiteColor]];
+    [_plusButtonsViewMain setDescriptionsTextColor:[UIColor blackColor]];
+    [_plusButtonsViewMain setDescriptionsLayerShadowColor:[UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1.f]];
+    [_plusButtonsViewMain setDescriptionsLayerShadowOpacity:0.25];
+    [_plusButtonsViewMain setDescriptionsLayerShadowRadius:1.f];
+    [_plusButtonsViewMain setDescriptionsLayerShadowOffset:CGSizeMake(0.f, 1.f)];
+    [_plusButtonsViewMain setDescriptionsLayerCornerRadius:6.f forOrientation:LGPlusButtonsViewOrientationAll];
+    [_plusButtonsViewMain setDescriptionsContentEdgeInsets:UIEdgeInsetsMake(4.f, 8.f, 4.f, 8.f) forOrientation:LGPlusButtonsViewOrientationAll];
+    
+    for (NSUInteger i=1; i<=2; i++)
+        [_plusButtonsViewMain setButtonAtIndex:i offset:CGPointMake(-6.f, 0.f)
+                                forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        [_plusButtonsViewMain setButtonAtIndex:0 titleOffset:CGPointMake(0.f, -2.f) forOrientation:LGPlusButtonsViewOrientationLandscape];
+        [_plusButtonsViewMain setButtonAtIndex:0 titleFont:[UIFont systemFontOfSize:32.f] forOrientation:LGPlusButtonsViewOrientationLandscape];
+    }
+    
+    [self.view addSubview:_plusButtonsViewMain];
 }
 - (void)loadUserLocation
 {
@@ -135,6 +263,7 @@
     {
         _mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height)];
         [self.tableView addSubview:_mapView];
+        [self.mapView addSubview:_plusButtonsViewMain];
         objLocationManager = [[CLLocationManager alloc] init];
         objLocationManager.delegate = self;
         objLocationManager.distanceFilter = kCLDistanceFilterNone;
@@ -706,7 +835,7 @@
 - (void)showMenuFromButton:(UIButton *)button withDirection:(LSFloatingActionMenuDirection)direction
 {
     button.hidden = YES;
-    self.tipsLabel.text = @"";
+//    self.tipsLabel.text = @"";
     NSArray *menuIcons = @[@"Plusicon",@"Listview",@"Mapview"];
     NSMutableArray *menus = [NSMutableArray array];
     CGSize itemSize = button.frame.size;

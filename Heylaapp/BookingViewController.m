@@ -172,7 +172,7 @@
     [self.eventPlan setInputView:datapickerView];
     
     toolbar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
-    [toolbar setTintColor:[UIColor grayColor]];
+    [toolbar setTintColor:[UIColor colorWithRed:68/255.0 green:142/255.0 blue:203/255.0 alpha:1.0]];
     UIBarButtonItem *done=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(SelectedValue)];
     UIBarButtonItem *cancel=[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(Cancel)];
     UIBarButtonItem *spacePicker=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];

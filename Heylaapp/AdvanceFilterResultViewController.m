@@ -230,6 +230,14 @@
         
         cell.eventLocation.text = [event_venue objectAtIndex:indexPath.row];
         cell.eventStatus.text = [event_type objectAtIndex:indexPath.row];
+        if ([cell.eventStatus.text  isEqual: @"Paid"])
+        {
+            cell.paidView.backgroundColor = [UIColor colorWithRed:208/255.0f green:45/255.0f blue:39/255.0f alpha:1.0];
+        }
+        else
+        {
+            cell.paidView.backgroundColor = [UIColor colorWithRed:72/255.0f green:168/255.0f blue:71/255.0f alpha:1.0];
+        }
         NSString *strStartTime = [start_time objectAtIndex:indexPath.row];
         NSString *strendTime = [end_time objectAtIndex:indexPath.row];
         cell.eventTime.text = [NSString stringWithFormat:@"%@ - %@",strStartTime,strendTime];

@@ -67,6 +67,9 @@
     _eventPreference.delegate = self;
     _eventCity.delegate = self;
     
+    UIColor *color = [UIColor colorWithRed:68/255.0 green:142/255.0 blue:203/255.0 alpha:1.0];
+    self.dateTextFiled.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"DD-MM-YYYY" attributes:@{NSForegroundColorAttributeName: color}];
+    
     eventTypeArray = [[NSMutableArray alloc]init];
     eventCategoeryArray = [[NSMutableArray alloc]init];
     preference = [[NSMutableArray alloc]init];
@@ -90,7 +93,7 @@
     [self.dateTextFiled setInputView:datePicker];
 
     toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
-    [toolBar setTintColor:[UIColor grayColor]];
+    [toolBar setTintColor:[UIColor colorWithRed:68/255.0 green:142/255.0 blue:203/255.0 alpha:1.0]];
     UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(ShowSelectedDate)];
     UIBarButtonItem *cancelBtn=[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(ShowsCancelButton)];
     UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -109,7 +112,7 @@
     
     
     listToolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
-    [listToolBar setTintColor:[UIColor grayColor]];
+    [listToolBar setTintColor:[UIColor colorWithRed:68/255.0 green:142/255.0 blue:203/255.0 alpha:1.0]];
     UIBarButtonItem *done=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(SelectedDate)];
     UIBarButtonItem *cancel=[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(CancelButton)];
     UIBarButtonItem *spacePicker=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -450,6 +453,7 @@
     _viewDate.layer.borderColor = [UIColor colorWithRed:68/255.0 green:142/255.0 blue:203/255.0 alpha:1.0].CGColor;
     _viewDate.layer.borderWidth = 1.0;
     self.dateTextFiled.textColor = [UIColor colorWithRed:68/255.0 green:142/255.0 blue:203/255.0 alpha:1.0];
+    [self.dateTextFiled resignFirstResponder];
 
     NSDate *today = [NSDate date];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
@@ -469,7 +473,7 @@
     _viewDate.layer.borderColor = [UIColor colorWithRed:68/255.0 green:142/255.0 blue:203/255.0 alpha:1.0].CGColor;
     _viewDate.layer.borderWidth = 1.0;
     self.dateTextFiled.textColor = [UIColor colorWithRed:68/255.0 green:142/255.0 blue:203/255.0 alpha:1.0];
-    
+    [self.dateTextFiled resignFirstResponder];
     NSCalendar *cal = [NSCalendar currentCalendar];
     NSDate *tomorrow = [cal dateByAddingUnit:NSCalendarUnitDay
                                        value:1
@@ -494,6 +498,9 @@
     [_today setTitleColor:[UIColor colorWithRed:68/255.0 green:142/255.0 blue:203/255.0 alpha:1.0] forState:UIControlStateNormal];
     _tommorow.layer.backgroundColor = [UIColor whiteColor].CGColor;
     [_tommorow setTitleColor:[UIColor colorWithRed:68/255.0 green:142/255.0 blue:203/255.0 alpha:1.0] forState:UIControlStateNormal];
+    _viewDate.layer.backgroundColor = [UIColor whiteColor].CGColor;
+    _viewDate.layer.borderColor = [UIColor colorWithRed:68/255.0 green:142/255.0 blue:203/255.0 alpha:1.0].CGColor;
+    _viewDate.layer.borderWidth = 1.0;
     self.dateTextFiled.textColor = [UIColor colorWithRed:68/255.0 green:142/255.0 blue:203/255.0 alpha:1.0];
 }
 

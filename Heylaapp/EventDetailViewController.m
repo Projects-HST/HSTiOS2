@@ -15,7 +15,8 @@
     NSString *eyeImageFlag;
     NSString *reviewCount;
     UIBarButtonItem *wishlistButton;
-    
+    UIBarButtonItem *shareButton;
+
     NSDateFormatter *dateFormatter;
     NSDate *date;
     NSString *reqStartDateString;
@@ -29,11 +30,18 @@
 {
     [super viewDidLoad];
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
-    wishlistButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"favWhishlist"] style:UIBarButtonItemStylePlain target:self action:@selector(Add:)];
+    wishlistButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"favED"] style:UIBarButtonItemStylePlain target:self action:@selector(Add:)];
     wishlistButton.width = 20.0;
     self.navigationItem.rightBarButtonItem = wishlistButton;
-    
     wishlistButton.tintColor = [UIColor whiteColor];
+    
+    shareButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"shareED"] style:UIBarButtonItemStylePlain target:self action:@selector(share:)];
+    shareButton.width = 20.0;
+    self.navigationItem.rightBarButtonItem = shareButton;
+    shareButton.tintColor = [UIColor whiteColor];
+    
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:wishlistButton,shareButton,nil];
+    
     self.mainView.layer.cornerRadius = 8.0;
     self.mainView.clipsToBounds = YES;
     self.writeReviewOutlet.layer.cornerRadius = 5.0;
@@ -54,6 +62,23 @@
         self.checkInOutlet.frame = CGRectMake(self.checkInOutlet.frame.origin.x,self.checkInOutlet.frame.origin.y,375,self.checkInOutlet.frame.size.height);
 
     }
+    NSLog(@"%@", appDel.event_type);
+    if ([appDel.event_type isEqualToString:@"Paid"])
+    {
+        self.paidView.backgroundColor = [UIColor colorWithRed:208/255.0f green:45/255.0f blue:39/255.0f alpha:1.0];
+        self.paidLabel.text = @"Paid";
+        self.paidView.layer.cornerRadius = 5.0;
+        self.paidView.clipsToBounds = YES;
+    }
+    else
+    {
+        self.paidView.backgroundColor = [UIColor colorWithRed:72/255.0f green:168/255.0f blue:71/255.0f alpha:1.0];
+        self.paidLabel.text = @"Free";
+        self.paidView.layer.cornerRadius = 5.0;
+        self.paidView.clipsToBounds = YES;
+    }
+    
+    
     UIImage *placeholderImage = [UIImage imageNamed:@"placeholder.jpg"];
     __weak typeof(self) weakSelf = self;
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:appDel.event_picture]];
@@ -66,6 +91,7 @@
          NSLog(@"%@",error);
          
      }];
+    
     self.eventNameLabel.text = appDel.event_Name;
     self.adressLabel.text = appDel.event_Address;
     if ([appDel.event_type isEqualToString:@"Hotspot"])
@@ -100,6 +126,7 @@
         NSLog(@"%@%@",reqStartDateString,reqEndDateString);
 
     }
+    
     self.timeLabel.text = [NSString stringWithFormat:@"%@ to %@",appDel.event_StartTime,appDel.event_EndTime];
     NSLog(@"%@%@%@",appDel.event_StartTime,appDel.event_EndTime,self.timeLabel.text);
     self.despTextView.text = appDel.event_description;
@@ -237,14 +264,14 @@
          {
              UIImage *image = [UIImage imageNamed:@"favselectedED"];
              [self->wishlistButton setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-             self->wishlistButton.tintColor = [UIColor redColor];
+             self->wishlistButton.tintColor = [UIColor clearColor];
              self->appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
              self->appDel.wishlist_id = [responseObject objectForKey:@"wishlist_id"];
              self->favImageFlag = @"1";
          }
          else
          {
-             UIImage *image = [UIImage imageNamed:@"favWhishlist"];
+             UIImage *image = [UIImage imageNamed:@"favED"];
              [self->wishlistButton setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
              self->wishlistButton.tintColor = [UIColor whiteColor];
              self->favImageFlag = @"0";
@@ -516,130 +543,11 @@
     [application openURL:[NSURL URLWithString:googleMapsURLString] options:@{} completionHandler:nil];
 }
 
-- (IBAction)shareBtn:(id)sender
-{
-    if ([appDel.user_type isEqualToString:@"2"])
-    {
-        UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"Login to Access"
-                                   preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-                                 [self presentViewController:loginViewController animated:NO completion:nil];
-                             }];
-        
-        UIAlertAction *cancel = [UIAlertAction
-                                 actionWithTitle:@"Cancel"
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction * action)
-                                 {
-                                     
-                                 }];
-        
-        [alert addAction:ok];
-        [alert addAction:cancel];
-        [self presentViewController:alert animated:YES completion:nil];
-    
-    }
-    else
-    {
-        NSDate *currentDate = [[NSDate alloc] init];
-        NSTimeZone *timeZone = [NSTimeZone defaultTimeZone];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setTimeZone:timeZone];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        NSString *localDateString = [dateFormatter stringFromDate:currentDate];
-        appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
-        [parameters setObject:@"2" forKey:@"rule_id"];
-        [parameters setObject:appDel.user_Id forKey:@"user_id"];
-        [parameters setObject:appDel.event_id forKey:@"event_id"];
-        [parameters setObject:localDateString forKey:@"date"];
+//- (IBAction)shareBtn:(id)sender
+//{
+//    
+//}
 
-        AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-        manager.requestSerializer = [AFJSONRequestSerializer serializer];
-        [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-        
-        NSString *userActivity = @"apimain/userActivity";
-        NSArray *components = [NSArray arrayWithObjects:baseUrl,userActivity, nil];
-        NSString *api = [NSString pathWithComponents:components];
-        
-        [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-         {
-             
-             NSLog(@"%@",responseObject);
-             [MBProgressHUD hideHUDForView:self.view animated:YES];
-             NSString *msg = [responseObject objectForKey:@"msg"];
-             NSString *status = [responseObject objectForKey:@"status"];
-             
-             if ([msg isEqualToString:@"User Activity Updated"] && [status isEqualToString:@"success"])
-             {
-                 if ([self->appDel.event_type isEqualToString:@"Hotspot"])
-                 {
-                     NSString *strURL=[NSString stringWithFormat:@"http://heylaapp.com/"];
-                     NSURL *urlReq = [NSURL URLWithString:strURL];
-                     NSString *eventName = self->appDel.event_Name;
-                     NSString *eventDescription = self->appDel.event_description;
-                     NSString *eventLocation = self->appDel.event_Address;
-                     NSString *eventtime = [NSString stringWithFormat:@"%@ %@ %@ / %@",@"To",@":",self->appDel.event_StartTime,self->appDel.event_EndTime];
-//                   NSString *eventDate = [NSString stringWithFormat:@"%@ %@ %@ / %@",@"From",@":",self->appDel.event_StartDate,self->appDel.event_EndDate];
-                     NSArray *items = @[eventName,eventtime,eventDescription,eventLocation,urlReq];
-                     UIActivityViewController *controller = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
-                     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                     [self presentActivityController:controller];
-                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                 }
-                 else
-                 {
-                     NSString *strURL=[NSString stringWithFormat:@"http://heylaapp.com/"];
-                     NSURL *urlReq = [NSURL URLWithString:strURL];
-                     NSString *eventName = self->appDel.event_Name;
-                     NSString *eventDescription = self->appDel.event_description;
-                     NSString *eventLocation = self->appDel.event_Address;
-                     NSString *eventtime = [NSString stringWithFormat:@"%@ %@ %@ / %@",@"To",@":",self->appDel.event_StartTime,self->appDel.event_EndTime];
-                     NSString *eventDate = [NSString stringWithFormat:@"%@ %@ %@ / %@",@"From",@":",self->appDel.event_StartDate,self->appDel.event_EndDate];
-                     NSArray *items = @[eventName,eventDate,eventtime,eventDescription,eventLocation,urlReq];
-                     UIActivityViewController *controller = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
-                     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                     [self presentActivityController:controller];
-                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                 }
-             }
-             else
-             {
-                     UIAlertController *alert= [UIAlertController
-                                                alertControllerWithTitle:@"Heyla"
-                                                message:msg
-                                                preferredStyle:UIAlertControllerStyleAlert];
-                 
-                     UIAlertAction *ok = [UIAlertAction
-                                          actionWithTitle:@"OK"
-                                          style:UIAlertActionStyleDefault
-                                          handler:^(UIAlertAction * action)
-                                          {
-                                              
-                                          }];
-                 
-                     [alert addAction:ok];
-                     [self presentViewController:alert animated:YES completion:nil];
-             }
-         }
-                     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-         {
-                     NSLog(@"error: %@", error);
-         }];
-        
-    }
-}
 - (void)presentActivityController:(UIActivityViewController *)controller
 {
     // for iPad: make the presentation a Popover
@@ -756,6 +664,131 @@
     }
 }
 
+-(IBAction)share:(id)sender
+{
+    if ([appDel.user_type isEqualToString:@"2"])
+    {
+        UIAlertController *alert= [UIAlertController
+                                   alertControllerWithTitle:@"Heyla"
+                                   message:@"Login to Access"
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                                 [self presentViewController:loginViewController animated:NO completion:nil];
+                             }];
+        
+        UIAlertAction *cancel = [UIAlertAction
+                                 actionWithTitle:@"Cancel"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     
+                                 }];
+        
+        [alert addAction:ok];
+        [alert addAction:cancel];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    }
+    else
+    {
+        NSDate *currentDate = [[NSDate alloc] init];
+        NSTimeZone *timeZone = [NSTimeZone defaultTimeZone];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setTimeZone:timeZone];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSString *localDateString = [dateFormatter stringFromDate:currentDate];
+        appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
+        [parameters setObject:@"2" forKey:@"rule_id"];
+        [parameters setObject:appDel.user_Id forKey:@"user_id"];
+        [parameters setObject:appDel.event_id forKey:@"event_id"];
+        [parameters setObject:localDateString forKey:@"date"];
+        
+        AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+        
+        NSString *userActivity = @"apimain/userActivity";
+        NSArray *components = [NSArray arrayWithObjects:baseUrl,userActivity, nil];
+        NSString *api = [NSString pathWithComponents:components];
+        
+        [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+         {
+             
+             NSLog(@"%@",responseObject);
+             [MBProgressHUD hideHUDForView:self.view animated:YES];
+             NSString *msg = [responseObject objectForKey:@"msg"];
+             NSString *status = [responseObject objectForKey:@"status"];
+             
+             if ([msg isEqualToString:@"User Activity Updated"] && [status isEqualToString:@"success"])
+             {
+                 if ([self->appDel.event_type isEqualToString:@"Hotspot"])
+                 {
+                     NSString *strURL=[NSString stringWithFormat:@"http://heylaapp.com/"];
+                     NSURL *urlReq = [NSURL URLWithString:strURL];
+                     NSString *eventName = self->appDel.event_Name;
+                     NSString *eventDescription = self->appDel.event_description;
+                     NSString *eventLocation = self->appDel.event_Address;
+                     NSString *eventtime = [NSString stringWithFormat:@"%@ %@ %@ / %@",@"To",@":",self->appDel.event_StartTime,self->appDel.event_EndTime];
+                     //                   NSString *eventDate = [NSString stringWithFormat:@"%@ %@ %@ / %@",@"From",@":",self->appDel.event_StartDate,self->appDel.event_EndDate];
+                     NSArray *items = @[eventName,eventtime,eventDescription,eventLocation,urlReq];
+                     UIActivityViewController *controller = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
+                     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                     [self presentActivityController:controller];
+                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                 }
+                 else
+                 {
+                     NSString *strURL=[NSString stringWithFormat:@"http://heylaapp.com/"];
+                     NSURL *urlReq = [NSURL URLWithString:strURL];
+                     NSString *eventName = self->appDel.event_Name;
+                     NSString *eventDescription = self->appDel.event_description;
+                     NSString *eventLocation = self->appDel.event_Address;
+                     NSString *eventtime = [NSString stringWithFormat:@"%@ %@ %@ / %@",@"To",@":",self->appDel.event_StartTime,self->appDel.event_EndTime];
+                     NSString *eventDate = [NSString stringWithFormat:@"%@ %@ %@ / %@",@"From",@":",self->appDel.event_StartDate,self->appDel.event_EndDate];
+                     NSArray *items = @[eventName,eventDate,eventtime,eventDescription,eventLocation,urlReq];
+                     UIActivityViewController *controller = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
+                     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                     [self presentActivityController:controller];
+                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                 }
+             }
+             else
+             {
+                 UIAlertController *alert= [UIAlertController
+                                            alertControllerWithTitle:@"Heyla"
+                                            message:msg
+                                            preferredStyle:UIAlertControllerStyleAlert];
+                 
+                 UIAlertAction *ok = [UIAlertAction
+                                      actionWithTitle:@"OK"
+                                      style:UIAlertActionStyleDefault
+                                      handler:^(UIAlertAction * action)
+                                      {
+                                          
+                                      }];
+                 
+                 [alert addAction:ok];
+                 [self presentViewController:alert animated:YES completion:nil];
+             }
+         }
+              failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+         {
+             NSLog(@"error: %@", error);
+         }];
+        
+    }
+}
+
 -(IBAction)Add:(id)sender
 {
     if ([appDel.user_type isEqualToString:@"2"])
@@ -813,9 +846,11 @@
                  
                  if ([msg isEqualToString:@"Wishlist Added"] && [status isEqualToString:@"success"])
                  {
+                     self->favImageFlag = @"1";
+                     self->appDel.wishlist_id = [responseObject objectForKey:@"wishlist_id"];
                      UIImage *image = [UIImage imageNamed:@"favselectedED"];
                      [self->wishlistButton setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-                     self->wishlistButton.tintColor = [UIColor redColor];
+                     self->wishlistButton.tintColor = [UIColor clearColor];
                      
                      MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
                      
@@ -853,20 +888,66 @@
         }
         else
         {
-            UIAlertController *alert= [UIAlertController
-                                       alertControllerWithTitle:@"Heyla"
-                                       message:@"Whishlist already added"
-                                       preferredStyle:UIAlertControllerStyleAlert];
+            appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
+            [parameters setObject:appDel.user_Id forKey:@"user_id"];
+            [parameters setObject:self->appDel.wishlist_id forKey:@"wishlist_id"];
             
-            UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:@"OK"
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction * action)
-                                 {
-                                     
-                                 }];
-            [alert addAction:ok];
-            [self presentViewController:alert animated:YES completion:nil];
+            AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+            manager.requestSerializer = [AFJSONRequestSerializer serializer];
+            [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+            
+            NSString *addWishListMaster = @"apimain/deleteWishList/";
+            NSArray *components = [NSArray arrayWithObjects:baseUrl,addWishListMaster, nil];
+            NSString *api = [NSString pathWithComponents:components];
+            [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+             {
+                 
+                 NSLog(@"%@",responseObject);
+                 NSString *msg = [responseObject objectForKey:@"msg"];
+                 NSString *status = [responseObject objectForKey:@"status"];
+                 
+                 if ([msg isEqualToString:@"Wishlist Deleted"] && [status isEqualToString:@"success"])
+                 {
+                     self->favImageFlag = @"0";
+                     UIImage *image = [UIImage imageNamed:@"favED"];
+                     [self->wishlistButton setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+                     self->wishlistButton.tintColor = [UIColor clearColor];
+                     
+                     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                     
+                     // Configure for text only and offset down
+                     hud.mode = MBProgressHUDModeText;
+                     hud.label.text = @"Wishlist Removed";
+                     hud.margin = 10.f;
+                     hud.yOffset = 200.f;
+                     hud.removeFromSuperViewOnHide = YES;
+                     [hud hideAnimated:YES afterDelay:2];
+                     
+                 }
+                 else
+                 {
+                     UIAlertController *alert= [UIAlertController
+                                                alertControllerWithTitle:@"Heyla"
+                                                message:msg
+                                                preferredStyle:UIAlertControllerStyleAlert];
+                     
+                     UIAlertAction* ok = [UIAlertAction
+                                          actionWithTitle:@"OK"
+                                          style:UIAlertActionStyleDefault
+                                          handler:^(UIAlertAction * action)
+                                          {
+                                              
+                                          }];
+                     [alert addAction:ok];
+                     [self presentViewController:alert animated:YES completion:nil];
+                 }
+             }
+                  failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+             {
+                 NSLog(@"error: %@", error);
+             }];
         }
     }
 }

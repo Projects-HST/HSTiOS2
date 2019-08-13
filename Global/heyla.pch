@@ -59,7 +59,6 @@
 #import "EventImageViewController.h"
 #import "PageContentViewController.h"
 #import "EventImageTableViewCell.h"
-#import "SettingsViewController.h"
 #import "AttendeesViewController.h"
 #import "AttendeesTableViewCell.h"
 #import "NearbyViewController.h"
@@ -68,9 +67,10 @@
 #import "NavigationController.h"
 #import "SideMenuTableViewController.h"
 #import "SideMenuTableViewCell.h"
-#import "SettingsTableViewCell.h"
 #import "BlogViewController.h"
 #import "PointsViewController.h"
 #import "PointsTableViewCell.h"
+#import "Settings.h"
+#import "Feedback.h"
 
 #endif /* heyla_pch */

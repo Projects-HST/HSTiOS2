@@ -14,6 +14,8 @@
     CLLocationManager *objLocationManager;
     double latitude_UserLocation, longitude_UserLocation;
 }
+@property (weak, nonatomic) IBOutlet UILabel *paidLabel;
+@property (weak, nonatomic) IBOutlet UIView *paidView;
 @property (weak, nonatomic) IBOutlet UIButton *report_Otlet;
 - (IBAction)report_Btn:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *reviewDownView;
@@ -47,7 +49,7 @@
 - (IBAction)backBtn:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
 - (IBAction)mapViewBtn:(id)sender;
-- (IBAction)shareBtn:(id)sender;
+//- (IBAction)shareBtn:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *organiserName;
 @property (weak, nonatomic) IBOutlet UILabel *poularityCount;
 - (IBAction)reviewBtn:(id)sender;

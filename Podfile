@@ -16,4 +16,5 @@ target 'Heylaapp' do
  pod 'OpenSSL-Universal'
  pod 'Google/Analytics'
  pod 'Firebase/Core'
+ pod 'LGPlusButtonsView', '~> 1.1.0'
  end

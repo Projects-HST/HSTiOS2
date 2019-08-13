@@ -292,6 +292,16 @@
              
          }];
         cell.eventStatus.text = [event_type objectAtIndex:indexPath.row];
+        if ([cell.eventStatus.text  isEqual: @"Paid"])
+        {
+            cell.paidView.backgroundColor = [UIColor colorWithRed:208/255.0f green:45/255.0f blue:39/255.0f alpha:1.0];
+        }
+        else
+        {
+            cell.paidView.backgroundColor = [UIColor colorWithRed:72/255.0f green:168/255.0f blue:71/255.0f alpha:1.0];
+        }
+        cell.paidView.layer.cornerRadius = 5.0;
+        cell.paidView.clipsToBounds = YES;
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
         return cell;
@@ -308,15 +318,22 @@
         [cell.eventImageView setImageWithURLRequest:request placeholderImage:placeholderImage success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image)
          {
              weakCell.eventImageView.image = image;
-             
          }
          failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error)
         {
-             
          NSLog(@"%@",error);
-             
          }];
         cell.eventStatus.text = [event_type objectAtIndex:indexPath.row];
+        if ([cell.eventStatus.text  isEqual: @"Paid"])
+        {
+            cell.paidView.backgroundColor = [UIColor colorWithRed:208/255.0f green:45/255.0f blue:39/255.0f alpha:1.0];
+        }
+        else
+        {
+            cell.paidView.backgroundColor = [UIColor colorWithRed:72/255.0f green:168/255.0f blue:71/255.0f alpha:1.0];
+        }
+        cell.paidView.layer.cornerRadius = 5.0;
+        cell.paidView.clipsToBounds = YES;
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         return cell;
     }

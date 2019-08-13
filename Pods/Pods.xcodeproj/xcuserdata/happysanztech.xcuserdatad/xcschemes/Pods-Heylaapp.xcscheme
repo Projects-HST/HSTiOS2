@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "704AFC681449554FE2C9235E82698CEF"
+               BlueprintIdentifier = "8D7C053ECD1948EDC73B8C4E713BBE17"
                BlueprintName = "Pods-Heylaapp"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "libPods-Heylaapp.a">

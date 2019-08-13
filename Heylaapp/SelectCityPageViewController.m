@@ -32,9 +32,11 @@
     
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     self.currentCity.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"locatedCity"];
-    _countryTxtFiled.layer.cornerRadius = 10.0;
-    _countryTxtFiled.layer.borderWidth = 1.0;
-    _countryTxtFiled.layer.borderColor = [UIColor blackColor].CGColor;
+    self.countryTxtFiled.text  = @"Singapore";
+    //[[NSUserDefaults standardUserDefaults]objectForKey:@"locatedCity"];
+//    _countryTxtFiled.layer.cornerRadius = 10.0;
+//    _countryTxtFiled.layer.borderWidth = 1.0;
+//    _countryTxtFiled.layer.borderColor = [UIColor blackColor].CGColor;
     
     city_Latitude = [[NSMutableArray alloc]init];
     city_Longitude = [[NSMutableArray alloc]init];
@@ -45,82 +47,84 @@
     
     [[NSUserDefaults standardUserDefaults]setObject:@"city" forKey:@"From_page"];
     
-    appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    NSString *user_id = [[NSUserDefaults standardUserDefaults]objectForKey:@"stat_user_id"];
-    self->appDel.user_Id = user_id;
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
-    [parameters setObject:appDel.user_Id forKey:@"user_id"];
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    [self getEventCity];
     
-    NSString *getEventCountries = @"apimain/getEventCountries";
-    NSArray *components = [NSArray arrayWithObjects:baseUrl,getEventCountries, nil];
-    NSString *api = [NSString pathWithComponents:components];
+//    appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    NSString *user_id = [[NSUserDefaults standardUserDefaults]objectForKey:@"stat_user_id"];
+//    self->appDel.user_Id = user_id;
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
+//    [parameters setObject:appDel.user_Id forKey:@"user_id"];
+//    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+//
+//    NSString *getEventCountries = @"apimain/getEventCountries";
+//    NSArray *components = [NSArray arrayWithObjects:baseUrl,getEventCountries, nil];
+//    NSString *api = [NSString pathWithComponents:components];
+//
+//    [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+//     {
+//
+//         NSLog(@"%@",responseObject);
+//         [MBProgressHUD hideHUDForView:self.view animated:YES];
+//         NSString *msg = [responseObject objectForKey:@"msg"];
+//         NSString *status = [responseObject objectForKey:@"status"];
+//
+//         if ([msg isEqualToString:@"View Countries"] && [status isEqualToString:@"success"])
+//         {
+//             NSArray *country = [responseObject objectForKey:@"Countries"];
+//             [self->countryArray removeAllObjects];
+//
+//             for (int i =0; i < [country count]; i++)
+//             {
+//                 NSDictionary *dict = [country objectAtIndex:i];
+//                 NSString *str_country = [dict objectForKey:@"country_name"];
+//                 NSString *str_id = [dict objectForKey:@"id"];
+//
+//                 [self->countryArray addObject:str_country];
+//                 [self->countryID addObject:str_id];
+//             }
+//             self.countryTxtFiled.text = [self->countryArray objectAtIndex:0];
+//             self->strCountry_id = [self->countryID objectAtIndex:0];
+//             [self getEventCity];
+//         }
+//         else
+//         {
+//             UIAlertController *alert= [UIAlertController
+//                                        alertControllerWithTitle:@"Heyla"
+//                                        message:msg
+//                                        preferredStyle:UIAlertControllerStyleAlert];
+//
+//             UIAlertAction *ok = [UIAlertAction
+//                                  actionWithTitle:@"OK"
+//                                  style:UIAlertActionStyleDefault
+//                                  handler:^(UIAlertAction * action)
+//                                  {
+//
+//                                  }];
+//
+//             [alert addAction:ok];
+//             [self presentViewController:alert animated:YES completion:nil];
+//         }
+//     }
+//          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+//     {
+//         NSLog(@"error: %@", error);
+//     }];
     
-    [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-     {
-         
-         NSLog(@"%@",responseObject);
-         [MBProgressHUD hideHUDForView:self.view animated:YES];
-         NSString *msg = [responseObject objectForKey:@"msg"];
-         NSString *status = [responseObject objectForKey:@"status"];
-         
-         if ([msg isEqualToString:@"View Countries"] && [status isEqualToString:@"success"])
-         {
-             NSArray *country = [responseObject objectForKey:@"Countries"];
-             [self->countryArray removeAllObjects];
-             
-             for (int i =0; i < [country count]; i++)
-             {
-                 NSDictionary *dict = [country objectAtIndex:i];
-                 NSString *str_country = [dict objectForKey:@"country_name"];
-                 NSString *str_id = [dict objectForKey:@"id"];
-                 
-                 [self->countryArray addObject:str_country];
-                 [self->countryID addObject:str_id];
-             }
-             self.countryTxtFiled.text = [self->countryArray objectAtIndex:0];
-             self->strCountry_id = [self->countryID objectAtIndex:0];
-             [self getEventCity];
-         }
-         else
-         {
-             UIAlertController *alert= [UIAlertController
-                                        alertControllerWithTitle:@"Heyla"
-                                        message:msg
-                                        preferredStyle:UIAlertControllerStyleAlert];
-             
-             UIAlertAction *ok = [UIAlertAction
-                                  actionWithTitle:@"OK"
-                                  style:UIAlertActionStyleDefault
-                                  handler:^(UIAlertAction * action)
-                                  {
-                                      
-                                  }];
-             
-             [alert addAction:ok];
-             [self presentViewController:alert animated:YES completion:nil];
-         }
-     }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-     {
-         NSLog(@"error: %@", error);
-     }];
-    
-    listpickerView = [[UIPickerView alloc] init];
-    listpickerView.delegate = self;
-    listpickerView.dataSource = self;
-    [self.countryTxtFiled setInputView:listpickerView];
-    listToolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
-    [listToolBar setTintColor:[UIColor grayColor]];
-    UIBarButtonItem *done=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(SelectedCountry)];
-    UIBarButtonItem *cancel=[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(CancelButton)];
-    UIBarButtonItem *spacePicker=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    [listToolBar setItems:[NSArray arrayWithObjects:cancel,spacePicker,done, nil]];
-    [self.countryTxtFiled setInputAccessoryView:listToolBar];
+//    listpickerView = [[UIPickerView alloc] init];
+//    listpickerView.delegate = self;
+//    listpickerView.dataSource = self;
+//    [self.countryTxtFiled setInputView:listpickerView];
+//    listToolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+//    [listToolBar setTintColor:[UIColor colorWithRed:68/255.0 green:142/255.0 blue:203/255.0 alpha:1.0]];
+//    UIBarButtonItem *done=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(SelectedCountry)];
+//    UIBarButtonItem *cancel=[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(CancelButton)];
+//    UIBarButtonItem *spacePicker=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+//    [listToolBar setItems:[NSArray arrayWithObjects:cancel,spacePicker,done, nil]];
+//    [self.countryTxtFiled setInputAccessoryView:listToolBar];
     NSLog(@"%@",self.currentCity.text);
     [[NSUserDefaults standardUserDefaults]setObject:@"YES" forKey:@"city_Page_alert"];
     NSString *str = [[NSUserDefaults standardUserDefaults]objectForKey:@"from_sideMenu"];
@@ -154,7 +158,7 @@
         appDel = (AppDelegate*)[UIApplication sharedApplication].delegate;
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
-        [parameters setObject:strCountry_id forKey:@"country_id"];
+        [parameters setObject:@"195" forKey:@"country_id"];
         AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
         [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];

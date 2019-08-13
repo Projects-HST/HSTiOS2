@@ -76,7 +76,7 @@
 
              }
              
-             [self.tableView reloadData];
+                [self.tableView reloadData];
          }
          else
          {
@@ -142,11 +142,11 @@
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:imageUrl]];
     [cell.userImage setImageWithURLRequest:request placeholderImage:placeholderImage success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image)
      {
-         weakCell.userImage.hidden = YES;
-//         weakCell.userImage.image = image;
-//         weakCell.userImage.layer.cornerRadius =  25;
-//         weakCell.userImage.clipsToBounds = YES;
-//         weakCell.userImage.layer.masksToBounds = YES;
+ //        weakCell.userImage.hidden = YES;
+         weakCell.userImage.image = image;
+         weakCell.userImage.layer.cornerRadius =  25;
+         weakCell.userImage.clipsToBounds = YES;
+         weakCell.userImage.layer.masksToBounds = YES;
          
      } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
          
@@ -155,6 +155,14 @@
      }];
     cell.userPoints.text = [total_points objectAtIndex:indexPath.row];
     cell.userRank.text = [NSString stringWithFormat:@"%li", indexPath.row +1];
+    if (indexPath.row == 0)
+    {
+        cell.crownImage.hidden = NO;
+    }
+    else
+    {
+        cell.crownImage.hidden = YES;
+    }
     return cell;
 }
 
