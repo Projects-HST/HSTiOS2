@@ -81,8 +81,8 @@
     NSString *strDate = [dfTwo stringFromDate:date];
     self.eventdate.text = strDate;
 //    [NSString stringWithFormat:@"%@ - %@",appDel.event_StartDate,appDel.event_EndDate];
-    self.totalPrice.text = [NSString stringWithFormat:@"%@%@",@"Rs.",appDel.price];
-    self.ticketPrice.text = [NSString stringWithFormat:@"%@%@",@"Rs.",appDel.price];
+    self.totalPrice.text = [NSString stringWithFormat:@"%@%@",@"S$.",appDel.price];
+    self.ticketPrice.text = [NSString stringWithFormat:@"%@%@",@"S$.",appDel.price];
     btnClick =@"0";
     [ticketCountadd removeAllObjects];
     

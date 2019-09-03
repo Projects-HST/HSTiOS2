@@ -61,10 +61,16 @@
     }
 }
 - (IBAction)submitBtn:(id)sender
-{ 
+{
+    NSString *password = self.newpassword.text;
+
     if ([self.newpassword.text isEqualToString:@""])
     {
-        [_newpassword showErrorWithText:@"Enter new password"];
+        [_newpassword showErrorWithText:@"Give a new password to reset!"];
+    }
+    else if (password.length < 6)
+    {
+        [_newpassword showErrorWithText:@"Password should contain atleast 6 characters"];
     }
     else
     {
@@ -130,6 +136,17 @@
     if (theTextField == self.newpassword)
     {
         [theTextField resignFirstResponder];
+    }
+    return YES;
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == self.newpassword)
+    {
+        if (textField.text.length >= 12 && range.length == 0)
+        {
+            return NO;
+        }
     }
     return YES;
 }

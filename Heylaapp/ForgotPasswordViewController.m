@@ -79,7 +79,7 @@
 {
     if ([self.emailTextfiled.text isEqualToString:@""])
     {
-        [_emailTextfiled showErrorWithText:@"Enter email address"];
+        [_emailTextfiled showErrorWithText:@"Enter email ID"];
     }
     else
     {

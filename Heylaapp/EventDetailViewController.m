@@ -130,7 +130,15 @@
     self.timeLabel.text = [NSString stringWithFormat:@"%@ to %@",appDel.event_StartTime,appDel.event_EndTime];
     NSLog(@"%@%@%@",appDel.event_StartTime,appDel.event_EndTime,self.timeLabel.text);
     self.despTextView.text = appDel.event_description;
-    self.mobileNumberLabel.text = [NSString stringWithFormat:@"%@ %@,%@",@"Mobile Number :",appDel.event_PrimaryContactNumber,appDel.event_secondaryContactNumber];;
+    if ([appDel.event_secondaryContactNumber  isEqual: @""])
+    {
+        self.mobileNumberLabel.text = [NSString stringWithFormat:@"%@ %@",@"Mobile Number :",appDel.event_PrimaryContactNumber];;
+    }
+    else
+    {
+        self.mobileNumberLabel.text = [NSString stringWithFormat:@"%@ %@,%@",@"Mobile Number :",appDel.event_PrimaryContactNumber,appDel.event_secondaryContactNumber];;
+
+    }
     self.organiserName.text =  appDel.event_PrimaryContactPerson;
     self.mailLabel.text = [NSString stringWithFormat:@"%@ %@",@"Email :",appDel.event_Contact_email];
     eyeImageFlag = @"0";
@@ -145,7 +153,8 @@
         self.reviewmoreButnOtlet.hidden = YES;
         self.reviewTitleLabel.hidden = YES;
         self.reviewDownView.hidden = YES;
-        self.writeReviewOutlet.hidden = YES;
+        self.writeReviewOutlet.hidden = NO;
+        self.report_Otlet.hidden = YES;
     
         self.starImageOne.hidden = YES;
         self.starImageTwo.hidden = YES;
@@ -164,6 +173,9 @@
         self.starImageThree.hidden = NO;
         self.starImageFour.hidden = NO;
         self.starImageFive.hidden = NO;
+        self.report_Otlet.hidden = NO;
+        self.writeReviewOutlet.hidden = NO;
+
 
         self.reviewNameLabel.hidden = NO;
         self.reviewComments.hidden = NO;

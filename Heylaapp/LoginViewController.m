@@ -432,11 +432,11 @@
 {
     if ([self.signInUserName.text isEqualToString:@""])
     {
-        [_signInUserName showErrorWithText:@"username cannot be empty"];
+        [_signInUserName showErrorWithText:@"Username cannot be empty"];
     }
     else if ([self.signInPassword.text isEqualToString:@""])
     {
-        [_signInPassword showErrorWithText:@"username cannot be empty"];
+        [_signInPassword showErrorWithText:@"Username cannot be empty"];
     }
     else
     {
@@ -471,19 +471,19 @@
         }
         else if ([self.SignUpMobileNo.text isEqualToString:@""])
         {
-            [_SignUpMobileNo showErrorWithText:@"mobilenumber cannot be empty"];
+            [_SignUpMobileNo showErrorWithText:@"Mobilenumber cannot be empty"];
         }
         else if (appDel.mobileNumber.length != 10)
         {
-            [_SignUpMobileNo showErrorWithText:@"enter valid mobile number."];
+            [_SignUpMobileNo showErrorWithText:@"Enter valid mobile number."];
         }
         else if ([self.signUpPassword.text isEqualToString:@""])
         {
-            [_signUpPassword showErrorWithText:@"password cannot be empty"];
+            [_signUpPassword showErrorWithText:@"Password cannot be empty"];
         }
         else if (password.length < 6)
         {
-            [_signUpPassword showErrorWithText:@"password should contain atleast 6 characters"];
+            [_signUpPassword showErrorWithText:@"Password should contain atleast 6 characters"];
         }
         else
         {
@@ -571,19 +571,19 @@
     }
     else if ([self.SignUpMobileNo.text isEqualToString:@""])
     {
-        [_SignUpMobileNo showErrorWithText:@"mobilenumber cannot be empty"];
+        [_SignUpMobileNo showErrorWithText:@"Mobilenumber cannot be empty"];
     }
     else if (appDel.mobileNumber.length != 10)
     {
-        [_SignUpMobileNo showErrorWithText:@"enter valid mobile number."];
+        [_SignUpMobileNo showErrorWithText:@"Enter valid mobile number."];
     }
     else if ([self.signUpPassword.text isEqualToString:@""])
     {
-        [_signUpPassword showErrorWithText:@"password cannot be empty"];
+        [_signUpPassword showErrorWithText:@"Password cannot be empty"];
     }
     else if (password.length < 6)
     {
-        [_signUpPassword showErrorWithText:@"password should contain atleast 6 characters"];
+        [_signUpPassword showErrorWithText:@"Password should contain atleast 6 characters"];
     }
     else
     {
@@ -631,6 +631,7 @@
                  [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"state_id"];
                  [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"city_id"];
                  [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"new_Letter"];
+                 
                  NSString *log_Type = @"";
                  [[NSUserDefaults standardUserDefaults]setObject:log_Type forKey:@"login_type"];
                  self->appDel.login_type = [[NSUserDefaults standardUserDefaults]objectForKey:@"login_type"];
@@ -737,8 +738,8 @@
     {
         
         UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"username cannot be empty"
+                                   alertControllerWithTitle:@"Yikes!"
+                                   message:@"Username cannot be empty"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -754,8 +755,8 @@
     else if ([self.signInPassword.text isEqualToString:@""])
     {
         UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"password cannot be empty"
+                                   alertControllerWithTitle:@"Yikes!"
+                                   message:@"Password cannot be empty"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction

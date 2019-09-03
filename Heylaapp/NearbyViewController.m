@@ -130,6 +130,8 @@
     self.nearbyImageView.hidden = NO;
     self.tableView.hidden = YES;
     [self setUpFloatingButton];
+    self.nearbytitle.hidden = NO;
+
 }
 
 -(void)setUpFloatingButton
@@ -657,6 +659,7 @@
              {
                  self.tableView.hidden = YES;
                  self.nearbyImageView.hidden = NO;
+                 self.nearbytitle.hidden = YES;
                  UIAlertController *alert= [UIAlertController
                                             alertControllerWithTitle:@"Heyla"
                                             message:msg

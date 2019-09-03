@@ -23,7 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    menuItems = @[@"samp",@"bookingHistory",@"preference", @"changeCity", @"wishList", @"shareApp", @"rateApp", @"blog",@"settings",@"logOut"];
+    menuItems = @[@"samp",@"bookingHistory",@"preference", @"changeCity", @"wishList", @"shareApp", @"rateApp", @"blog",@"settings",@"userinfo",@"logOut"];
     staticMenu = @[@"userName"];
     [self getProfileDetails];
 }
@@ -117,21 +117,21 @@
          }
          else
          {
-             UIAlertController *alert= [UIAlertController
-                                        alertControllerWithTitle:@"Heyla"
-                                        message:msg
-                                        preferredStyle:UIAlertControllerStyleAlert];
-             
-             UIAlertAction *ok = [UIAlertAction
-                                  actionWithTitle:@"OK"
-                                  style:UIAlertActionStyleDefault
-                                  handler:^(UIAlertAction * action)
-                                  {
-                                      
-                                  }];
-             
-             [alert addAction:ok];
-             [self presentViewController:alert animated:YES completion:nil];
+//             UIAlertController *alert= [UIAlertController
+//                                        alertControllerWithTitle:@"Heyla"
+//                                        message:msg
+//                                        preferredStyle:UIAlertControllerStyleAlert];
+//
+//             UIAlertAction *ok = [UIAlertAction
+//                                  actionWithTitle:@"OK"
+//                                  style:UIAlertActionStyleDefault
+//                                  handler:^(UIAlertAction * action)
+//                                  {
+//
+//                                  }];
+//
+//             [alert addAction:ok];
+//             [self presentViewController:alert animated:YES completion:nil];
          }
      }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
@@ -178,9 +178,16 @@
         cell.userImageView.layer.cornerRadius = cell.userImageView.frame.size.width / 2;
         cell.userImageView.clipsToBounds = YES;
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        cell.UserName.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"statFull_Name"];
-        cell.cityName.text = @"India";
-        //[[NSUserDefaults standardUserDefaults]objectForKey:@"selected_city_prof"];
+        if ([appDel.user_type isEqualToString:@"2"])
+        {
+            cell.UserName.text = @"Guest User";
+            cell.cityName.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"selected_city_prof"];
+        }
+        else
+        {
+            cell.UserName.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"statFull_Name"];
+            cell.cityName.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"selected_city_prof"];
+        }
         
         NSLog(@"%@",appDel.login_type);
         if ([appDel.login_type isEqualToString:@"FB"])
@@ -537,6 +544,10 @@
     }
     else if (indexPath.row == 9)
     {
+        [self performSegueWithIdentifier:@"userinfoSegue" sender:self];
+    }
+    else if (indexPath.row == 10)
+    {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
                                    message:@"Do you really want to signout?"
@@ -575,7 +586,17 @@
                                  [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"new_Letter"];
                                  [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"statFull_Name"];
                                  [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"statUser_Name"];
-
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"selectView"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"deviceToken_Key"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"showSplash"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"status"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"from_sideMenu"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"selected_city_prof"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"TranscationStatus"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"userInfo"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"remember_me"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"locatedCity"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"for_Alert"];
                                  [self performSegueWithIdentifier:@"signOut" sender:self];
                              }];
         

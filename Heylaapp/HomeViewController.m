@@ -68,7 +68,8 @@
     NSArray *samp;
     NSString *strMonth;
     NSString *strToMonth;
-    NSString *dayTypeFlag;;
+    NSString *dayTypeFlag;
+    CGFloat viewWidth;
 
 }
 @property (strong, nonatomic) UIScrollView *scrollView;
@@ -93,10 +94,11 @@
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     UIImage *img = [UIImage imageNamed:@"heylalogomainpage.png"];
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 0, 30, 30)];
     [imgView setImage:img];
     [imgView setContentMode:UIViewContentModeScaleAspectFit];
     self.navigationItem.titleView = imgView;
+    
     adv_status = [[NSMutableArray alloc]init];
     advertisement = [[NSMutableArray alloc]init];
     booking_status = [[NSMutableArray alloc]init];
@@ -133,7 +135,10 @@
     mapViewFlag = @"0";
     searchFlag = @"NO";
     hotspotFlag = @"NO";
+  //_segmentBaseView.frame = CGRectMake(self.segmentBaseView.frame.origin.x,self.segmentBaseView.frame.origin.y,self.segmentBaseView.frame.size.width,55);
+    viewWidth = CGRectGetWidth(self.view.frame);
     [self setUpFloatingButton];
+    [self setupSegmentControl];
     self.daySegment.backgroundColor = [UIColor whiteColor];
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]} forState:UIControlStateSelected];
     self.daySegment.tintColor = [UIColor colorWithRed:62/255.0f green:142/255.0f blue:204/255.0f alpha:1.0];
@@ -141,83 +146,88 @@
     self.daySegment.layer.cornerRadius = 5.0;
     self.daySegment.layer.borderColor = [UIColor whiteColor].CGColor;
     self.daySegment.layer.masksToBounds = YES;
+    self.daysegmentHeight.constant = 40.0f;
+    UIFont *font = [UIFont boldSystemFontOfSize:18.0f];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
+                                                           forKey:NSFontAttributeName];
+    [_daySegment setTitleTextAttributes:attributes
+                               forState:UIControlStateNormal];
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-        _tableView.frame = CGRectMake(self.tableView.frame.origin.x,95,self.tableView.frame.size.width,self.tableView.frame.size.height);
-        CGRect frame = CGRectMake (self.daySegment.frame.origin.x,self.daySegment.frame.origin.y, self.daySegment.frame.size.width, 55);
-        self.daySegment.frame = frame;
+//        _tableView.frame = CGRectMake(self.tableView.frame.origin.x,95,self.tableView.frame.size.width,self.tableView.frame.size.height);
+//        CGRect frame = CGRectMake (self.daySegment.frame.origin.x,self.daySegment.frame.origin.y, self.daySegment.frame.size.width, 55);
+//        self.daySegment.frame = frame;
         UIFont *font = [UIFont boldSystemFontOfSize:18.0f];
         NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
                                                                forKey:NSFontAttributeName];
         [_daySegment setTitleTextAttributes:attributes
                                    forState:UIControlStateNormal];
-
+        
     }
     else if ([[UIScreen mainScreen] bounds].size.height == 667)
     {
-        _tableView.frame = CGRectMake(self.tableView.frame.origin.x,46,self.tableView.frame.size.width,self.tableView.frame.size.height);
-        CGRect frame = CGRectMake (self.daySegment.frame.origin.x,self.daySegment.frame.origin.y, self.daySegment.frame.size.width,35);
-        self.daySegment.frame = frame;
+//        _tableView.frame = CGRectMake(self.tableView.frame.origin.x,46,self.tableView.frame.size.width,self.tableView.frame.size.height);
+//        CGRect frame = CGRectMake (self.daySegment.frame.origin.x,self.daySegment.frame.origin.y, self.daySegment.frame.size.width,35);
+//        self.daySegment.frame = frame;
         UIFont *font = [UIFont boldSystemFontOfSize:12.0f];
         NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
                                                                forKey:NSFontAttributeName];
         [_daySegment setTitleTextAttributes:attributes
                                    forState:UIControlStateNormal];
-
+        
     }
     else if ([[UIScreen mainScreen] bounds].size.height == 736)
     {
-        _tableView.frame = CGRectMake(self.tableView.frame.origin.x,60,self.tableView.frame.size.width,self.tableView.frame.size.height);
-        CGRect frame = CGRectMake (self.daySegment.frame.origin.x,self.daySegment.frame.origin.y, self.daySegment.frame.size.width,40);
-        self.daySegment.frame = frame;
+//        _tableView.frame = CGRectMake(self.tableView.frame.origin.x,60,self.tableView.frame.size.width,self.tableView.frame.size.height);
+//        CGRect frame = CGRectMake (self.daySegment.frame.origin.x,self.daySegment.frame.origin.y, self.daySegment.frame.size.width,40);
+//        self.daySegment.frame = frame;
         UIFont *font = [UIFont boldSystemFontOfSize:14.0f];
-        NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
-                                                               forKey:NSFontAttributeName];
+        NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
         [_daySegment setTitleTextAttributes:attributes
                                    forState:UIControlStateNormal];
-
+        
     }
     else if ([[UIScreen mainScreen] bounds].size.height == 812)
     {
-        _tableView.frame = CGRectMake(self.tableView.frame.origin.x,60,self.tableView.frame.size.width,self.tableView.frame.size.height);
-        CGRect frame = CGRectMake (self.daySegment.frame.origin.x,self.daySegment.frame.origin.y, self.daySegment.frame.size.width,35);
-        self.daySegment.frame = frame;
+//        _tableView.frame = CGRectMake(self.tableView.frame.origin.x,60,self.tableView.frame.size.width,self.tableView.frame.size.height);
+//        CGRect frame = CGRectMake (self.daySegment.frame.origin.x,self.daySegment.frame.origin.y, self.daySegment.frame.size.width,35);
+//        self.daySegment.frame = frame;
         UIFont *font = [UIFont boldSystemFontOfSize:14.0f];
         NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
                                                                forKey:NSFontAttributeName];
         [_daySegment setTitleTextAttributes:attributes
                                    forState:UIControlStateNormal];
-
+        
     }
     else
     {
-        _tableView.frame = CGRectMake(self.tableView.frame.origin.x,60,self.tableView.frame.size.width,self.tableView.frame.size.height);
-        CGRect frame = CGRectMake (self.daySegment.frame.origin.x,self.daySegment.frame.origin.y,self.daySegment.frame.size.width,30);
-        self.daySegment.frame = frame;
+//        _tableView.frame = CGRectMake(self.tableView.frame.origin.x,60,self.tableView.frame.size.width,self.tableView.frame.size.height);
+//        CGRect frame = CGRectMake (self.daySegment.frame.origin.x,self.daySegment.frame.origin.y,self.daySegment.frame.size.width,30);
+//        self.daySegment.frame = frame;
         UIFont *font = [UIFont boldSystemFontOfSize:10.0f];
         NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
                                                                forKey:NSFontAttributeName];
         [_daySegment setTitleTextAttributes:attributes
-                                        forState:UIControlStateNormal];
-       
+                                   forState:UIControlStateNormal];
+        
     }
-    [self setupSegmentControl];
     self.searchController.searchBar.hidden = NO;
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:Nil];
     self.searchController.searchResultsUpdater = self;
     [self.searchController.searchBar sizeToFit];
     self.searchController.searchBar.delegate = self; // so we can monitor text changes + others
+    self.searchController.searchBar.placeholder = @"Search events";
     self.searchController.delegate = self;
     self.searchController.dimsBackgroundDuringPresentation = NO; // default is YES
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.searchBar.barTintColor = [UIColor colorWithRed:62/255.0f green:142/255.0f blue:204/255.0f alpha:1.0];
     self.searchController.searchBar.tintColor = [UIColor whiteColor];
-   
+    
     _eventArray = [[NSMutableArray alloc] init];
     _filterdItems = [[NSMutableArray alloc]init];
     Eventdetails = [[NSMutableArray alloc]init];
     self.leaderBoardView.hidden =YES;
-  
+    
     self.navigationItem.title = @"Heyla";
     NSArray *city;
     city = [NSArray arrayWithArray:[[NSUserDefaults standardUserDefaults]objectForKey:@"cityName_Array"]];
@@ -290,11 +300,11 @@
                     
                     [alert addAction:cancel];
                     [self presentViewController:alert animated:YES completion:nil];
-               }
-               else
-               {
-                  [self generalEventsList];
-               }
+                }
+                else
+                {
+                    [self generalEventsList];
+                }
             }
             else
             {
@@ -303,20 +313,60 @@
         }
         else
         {
-             [self generalEventsList];
+            [self generalEventsList];
         }
     }
-//  [self generalEventsList];
+    //  [self generalEventsList];
     self.search.tintColor = [UIColor whiteColor];
     self.advanceFilter.tintColor = [UIColor whiteColor];
     self->appDel.login_type = [[NSUserDefaults standardUserDefaults]objectForKey:@"login_type"];
-
 //    self.LeaderBoardimageView.layer.cornerRadius = self.LeaderBoardimageView.frame.size.width / 2;
 //    self.LeaderBoardimageView.clipsToBounds = YES;
 
 //    self.LeaderBoardimageView.hidden = YES;
     
 //    [self.tableView setContentOffset: CGPointZero animated: YES];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    NSString *str = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+    if ([str isEqualToString:@"alertUserIfno"])
+    {
+        
+        [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"userInfo"];
+        UIAlertController * alert=[UIAlertController alertControllerWithTitle:@"Explore Heyla"
+                                                                          message:@"Learn about Heyla app to make the most of it"
+                                                                   preferredStyle:UIAlertControllerStyleAlert];
+
+        UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Skip"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action)
+                                    {
+                                        /** What we write here???????? **/
+                                        NSLog(@"you pressed Yes, please button");
+                                        
+                                        // call method whatever u need
+                                    }];
+
+        UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"Start"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action)
+                                   {
+                                       /** What we write here???????? **/
+                                       [self performSegueWithIdentifier:@"userinfoSegue" sender:self];
+                                       NSLog(@"you pressed No, thanks button");
+                                       // call method whatever u need
+                                   }];
+
+        [alert addAction:yesButton];
+        [alert addAction:noButton];
+        [self presentViewController:alert animated:YES completion:nil];
+
+    }
+    
+    [self webRequestForNewNotification];
+
 }
 
 -(void)setUpFloatingButton
@@ -347,18 +397,21 @@
                                     self.tipsLabel.text = [NSString stringWithFormat:@"Click at index %d", (int)index];
                                     if ([self->appDel.event_categoery_Ref isEqualToString:@"general"])
                                     {
+                                        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                                         [self->_mapView setMapType:MKMapTypeStandard];
                                         self->mapViewFlag = @"YES";
                                         [self loadUserLocation];
                                     }
                                     else if ([self->appDel.event_categoery_Ref isEqualToString:@"popular"])
                                     {
+                                        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                                         [self->_mapView setMapType:MKMapTypeStandard];
                                         self->mapViewFlag = @"YES";
                                         [self loadUserLocation];
                                     }
                                     else if ([self->appDel.event_categoery_Ref isEqualToString:@"hotspot"])
                                     {
+                                        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                                         [self->_mapView setMapType:MKMapTypeStandard];
                                         self->mapViewFlag = @"YES";
                                         [self loadUserLocation];
@@ -373,7 +426,7 @@
     _plusButtonsViewMain.plusButtonAnimationType = LGPlusButtonAnimationTypeRotate;
     
     [_plusButtonsViewMain setButtonsTitles:@[@"+", @"", @"", @""] forState:UIControlStateNormal];
-    [_plusButtonsViewMain setDescriptionsTexts:@[@"", @"Nearby View", @"List View", @"Map View"]];
+    [_plusButtonsViewMain setDescriptionsTexts:@[@"", @"Nearby Events", @"List View", @"Map View"]];
     [_plusButtonsViewMain setButtonsImages:@[[NSNull new], [UIImage imageNamed:@"nearby"], [UIImage imageNamed:@"listview"], [UIImage imageNamed:@"mapview"]]
                                   forState:UIControlStateNormal
                             forOrientation:LGPlusButtonsViewOrientationAll];
@@ -457,6 +510,7 @@
 }
 - (void) loadMapView
 {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     for (int i =0; i < [event_longitude count] && i < [event_latitude count]; i++)
     {
         NSString *lon = [event_longitude objectAtIndex:i];
@@ -494,7 +548,7 @@
 }
 -(void)generalEventsList
 {
-//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+   // [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSString *user_id = [[NSUserDefaults standardUserDefaults]objectForKey:@"stat_user_id"];
     self->appDel.user_Id = user_id;
@@ -521,7 +575,6 @@
     [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
      {
          NSLog(@"%@",responseObject);
-//         [MBProgressHUD hideHUDForView:self.view animated:YES];
          NSString *msg = [responseObject objectForKey:@"msg"];
          NSString *status = [responseObject objectForKey:@"status"];
          if ([msg isEqualToString:@"View Events"] && [status isEqualToString:@"success"])
@@ -650,12 +703,14 @@
 //               [self->to_month_label addObject:self->strToMonth];
 
              }
+//             [MBProgressHUD hideHUDForView:self.view animated:YES];
              if ([self->mapViewFlag isEqualToString:@"YES"])
              {
                  [self loadUserLocation];
              }
              else
              {
+                 self->_daySegment.hidden = NO;
                  self.tableView.hidden = NO;
                  self->hotspotFlag = @"NO";
                  [self.tableView reloadData];
@@ -664,6 +719,7 @@
          else
          {
              self.tableView.hidden = YES;
+             self->_daySegment.hidden = YES;
 
              UIAlertController *alert= [UIAlertController
                                         alertControllerWithTitle:@"Heyla"
@@ -689,7 +745,7 @@
 }
 -(void)generalPopularList
 {
-    //[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.searchController.searchBar.hidden = NO;
     self->appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
@@ -712,7 +768,7 @@
      {
          
          NSLog(@"%@",responseObject);
-         [MBProgressHUD hideHUDForView:self.view animated:YES];
+//         [MBProgressHUD hideHUDForView:self.view animated:YES];
          NSString *msg = [responseObject objectForKey:@"msg"];
          NSString *status = [responseObject objectForKey:@"status"];
          
@@ -852,6 +908,7 @@
              else
              {
                  [self.tableView reloadData];
+                 self->_daySegment.hidden = NO;
                  self.tableView.hidden = NO;
 //               self->_tableView.frame = CGRectMake(self.tableView.frame.origin.x,61,self.tableView.frame.size.width,self.tableView.frame.size.width);
                  self->hotspotFlag = @"NO";
@@ -860,6 +917,7 @@
          else
          {
              self.tableView.hidden = YES;
+             self->_daySegment.hidden = YES;
 
              UIAlertController *alert= [UIAlertController
                                         alertControllerWithTitle:@"Heyla"
@@ -885,7 +943,7 @@
 }
 -(void)AllEventsList
 {
-    // [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.searchController.searchBar.hidden = NO;
     self->appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
@@ -907,7 +965,7 @@
     [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
      {
          NSLog(@"%@",responseObject);
-         [MBProgressHUD hideHUDForView:self.view animated:YES];
+//         [MBProgressHUD hideHUDForView:self.view animated:YES];
          NSString *msg = [responseObject objectForKey:@"msg"];
          NSString *status = [responseObject objectForKey:@"status"];
          
@@ -963,7 +1021,7 @@
                  NSString *strContact_person = [dict objectForKey:@"contact_person"];
                  NSString *strCountry_name = [dict objectForKey:@"country_name"];
                  NSString *strDescription = [dict objectForKey:@"description"];
-                 //               NSString *strEnd_date = [dict objectForKey:@"end_date"];
+                 //NSString *strEnd_date = [dict objectForKey:@"end_date"];
                  NSString *strEvent_address = [dict objectForKey:@"event_address"];
                  NSString *strEvent_banner = [dict objectForKey:@"event_banner"];
                  NSString *strEvent_city = [dict objectForKey:@"event_city"];
@@ -989,7 +1047,7 @@
                  [self->dateFormatter setDateFormat:@"yyyy-MM-dd"];
                  self->date = [[NSDate alloc] init];
                  self->date = [self->dateFormatter dateFromString:strStart_date];
-                 // converting into our required date format
+                 //converting into our required date format
                  [self->dateFormatter setDateFormat:@"EEEE, MMM dd, yyyy"];
                  self->reqStartDateString = [self->dateFormatter stringFromDate:self->date];
                  NSLog(@"date is %@", self->reqStartDateString);
@@ -998,7 +1056,7 @@
                  [self->dateFormatter setDateFormat:@"yyyy-MM-dd"];
                  self->date = [[NSDate alloc] init];
                  self->date = [self->dateFormatter dateFromString:strend_date];
-                 // converting into our required date format
+                 //converting into our required date format
                  [self->dateFormatter setDateFormat:@"dd MMM yyyy"];
                  self->reqEndDateString = [self->dateFormatter stringFromDate:self->date];
                  NSLog(@"date is %@",self-> reqEndDateString);
@@ -1032,10 +1090,10 @@
                  [self->start_date addObject:self->reqStartDateString];
                  [self->start_time addObject:strStart_time];
                  [self->end_time addObject:strEnd_time];
-                 //               [self->date_label addObject:self->strdate];
-                 //               [self->month_label addObject:self->strMonth];
-                 //               [self->to_date_label addObject:self->strtodate];
-                 //               [self->to_month_label addObject:self->strToMonth];
+                 //[self->date_label addObject:self->strdate];
+                 //[self->month_label addObject:self->strMonth];
+                 //[self->to_date_label addObject:self->strtodate];
+                 //[self->to_month_label addObject:self->strToMonth];
              }
              
              if ([self->mapViewFlag isEqualToString:@"YES"])
@@ -1045,6 +1103,7 @@
              else
              {
                  self.tableView.hidden = NO;
+                 self->_daySegment.hidden = NO;
                  self->hotspotFlag = @"YES";
                  [self.tableView reloadData];
              }
@@ -1052,7 +1111,8 @@
          else
          {
              self.tableView.hidden = YES;
-             
+             self->_daySegment.hidden = YES;
+
              UIAlertController *alert= [UIAlertController
                                         alertControllerWithTitle:@"Heyla"
                                         message:msg
@@ -1077,7 +1137,7 @@
 }
 -(void)generalHotspotList
 {
-   // [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.searchController.searchBar.hidden = NO;
     self->appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
@@ -1099,7 +1159,7 @@
     [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
      {
          NSLog(@"%@",responseObject);
-         [MBProgressHUD hideHUDForView:self.view animated:YES];
+//         [MBProgressHUD hideHUDForView:self.view animated:YES];
          NSString *msg = [responseObject objectForKey:@"msg"];
          NSString *status = [responseObject objectForKey:@"status"];
          
@@ -1244,7 +1304,6 @@
          else
          {
              self.tableView.hidden = YES;
-
              UIAlertController *alert= [UIAlertController
                                         alertControllerWithTitle:@"Heyla"
                                         message:msg
@@ -1267,6 +1326,7 @@
          NSLog(@"error: %@", error);
      }];
 }
+
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
@@ -1274,22 +1334,24 @@
     {
         if(UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation))
         {
-            _segmentedControl.frame = CGRectMake(self.segmentView.bounds.origin.x,self.segmentView.bounds.origin.y,self.segmentView.bounds.size.width, self.segmentView.bounds.size.height);
+            _segmentedControl.frame = CGRectMake(self.segmentView.bounds.origin.x,self.segmentView.bounds.origin.y,viewWidth,self.segmentView.bounds.size.height);
            // _segmentedControl.selectionIndicatorHeight = 0.0f;
             _segmentedControl.backgroundColor = [UIColor whiteColor];
             _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
             //_segmentedControl.selectionStyle  = HMSegmentedControlSelectionStyleBox;
+           // _segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
             _segmentedControl.selectionIndicatorColor = [UIColor whiteColor];
             [self.segmentView addSubview:_segmentedControl];
             [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
         }
         else
         {
-            _segmentedControl.frame = CGRectMake(self.segmentView.bounds.origin.x,self.segmentView.bounds.origin.y,self.segmentView.bounds.size.width, self.segmentView.bounds.size.height);
+            _segmentedControl.frame = CGRectMake(self.segmentView.bounds.origin.x,self.segmentView.bounds.origin.y,viewWidth,self.segmentView.bounds.size.height);
             //_segmentedControl.selectionIndicatorHeight = 0.0f;
             _segmentedControl.backgroundColor = [UIColor whiteColor];
             _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
            // _segmentedControl.selectionStyle  = HMSegmentedControlSelectionStyleBox;
+           // _segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
             _segmentedControl.selectionIndicatorColor = [UIColor whiteColor];
             [self.segmentView addSubview:_segmentedControl];
             [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
@@ -1344,7 +1406,6 @@
             
             cell.eventStatus.text = [event_type objectAtIndex:indexPath.row];
             cell.eventTime.hidden = [event_venue objectAtIndex:indexPath.row];
-            
         }
         else
         {
@@ -1355,6 +1416,7 @@
                 cell.adv_bgView.hidden = NO;
                 cell.adv_Label.hidden = NO;
                 cell.paidView.hidden = YES;
+                cell.detailView.hidden = YES;
                 cell.eventName.text = [event_name objectAtIndex:indexPath.row];
                 cell.eventLocation.text = [event_venue objectAtIndex:indexPath.row];
                 cell.eventStatus.text = [event_type objectAtIndex:indexPath.row];
@@ -1380,6 +1442,7 @@
             {
                 cell.adv_bgView.hidden = YES;
                 cell.adv_Label.hidden = YES;
+                cell.detailView.hidden = NO;
                 cell.paidView.hidden = NO;
                 cell.eventName.text = [event_name objectAtIndex:indexPath.row];
                 NSString *imageUrl = [event_banner objectAtIndex:indexPath.row];
@@ -1451,8 +1514,9 @@
             {
                 cell.adv_bgView.hidden = NO;
                 cell.adv_Label.hidden = NO;
+                cell.detailView.hidden = YES;
                 cell.paidView.hidden = YES;
-                
+
                 cell.eventName.text = [event_name objectAtIndex:indexPath.row];
                 cell.eventLocation.text = [event_venue objectAtIndex:indexPath.row];
                 cell.eventStatus.text = [event_type objectAtIndex:indexPath.row];
@@ -1478,6 +1542,7 @@
             {
                 cell.adv_bgView.hidden = YES;
                 cell.adv_Label.hidden = YES;
+                cell.detailView.hidden = NO;
                 cell.paidView.hidden = NO;
                 if ([cell.eventStatus.text  isEqual: @"Paid"])
                 {
@@ -1501,7 +1566,7 @@
                      NSLog(@"%@",error);
                      
                  }];
-                cell.paidView.layer.cornerRadius = 5.0;
+                cell.paidView.layer.cornerRadius = 3.0;
                 cell.paidView.clipsToBounds = YES;
                 cell.eventLocation.text = [event_venue objectAtIndex:indexPath.row];
                 cell.eventStatus.text = [event_type objectAtIndex:indexPath.row];
@@ -1566,7 +1631,7 @@
     appDel.booking_status = booking_status[intbooking_status];
     
     appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
     [parameters setObject:appDel.event_id forKey:@"event_id"];
     [parameters setObject:appDel.user_Id forKey:@"user_id"];
@@ -1619,14 +1684,13 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         return 410;
     }
     else if ([[UIScreen mainScreen] bounds].size.height == 667)
     {
-        return 255;
+        return 225;
     }
     else
     {
@@ -1641,7 +1705,7 @@
     }
     else if ([[UIScreen mainScreen] bounds].size.height == 667)
     {
-        return 255;
+        return UITableViewAutomaticDimension;
     }
     else
     {
@@ -1650,10 +1714,10 @@
 }
 -(void)setupSegmentControl
 {
-    NSArray<NSString *> *titles = @[@"Favourite", @"Popular",@"All", @"HotSpot", @"LeaderBoard"];
+    NSArray<NSString *> *titles = @[@"Favourite", @"Popular",@"All Events", @"HotSpot", @"LeaderBoard"];
 
-    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionImages:@[[UIImage imageNamed:@"Fav"],[UIImage imageNamed:@"popular"],[UIImage imageNamed:@"Fav"],[UIImage imageNamed:@"Hotspot"],[UIImage imageNamed:@"leaderboard"]]
-    sectionSelectedImages:@[[UIImage imageNamed:@"Favselected"],[UIImage imageNamed:@"popularselected"],[UIImage imageNamed:@"Fav"],[UIImage imageNamed:@"Fav"],
+    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionImages:@[[UIImage imageNamed:@"Fav"],[UIImage imageNamed:@"popular"],[UIImage imageNamed:@"allevents"],[UIImage imageNamed:@"Hotspot"],[UIImage imageNamed:@"leaderboard"]]
+    sectionSelectedImages:@[[UIImage imageNamed:@"Favselected"],[UIImage imageNamed:@"popularselected"],[UIImage imageNamed:@"allevents_selected"],
                                                                             [UIImage imageNamed:@"Hotspotselected"],[UIImage imageNamed:@"leaderboardselected"]]titlesForSections:titles];
     _segmentedControl.imagePosition = HMSegmentedControlImagePositionAboveText;
     _segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor colorWithRed:122/255.0f green:126/255.0f blue:129/255.0f alpha:1.0]};
@@ -1663,7 +1727,7 @@
     {
         if(UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation))
         {
-            _segmentedControl.frame = CGRectMake(self.segmentView.bounds.origin.x,self.segmentView.bounds.origin.y,self.segmentView.bounds.size.width, self.segmentView.bounds.size.height);
+            _segmentedControl.frame = CGRectMake(self.segmentView.bounds.origin.x,self.segmentView.bounds.origin.y,viewWidth,self.segmentView.bounds.size.height);
             _segmentedControl.selectionIndicatorHeight = 0.0f;
             _segmentedControl.backgroundColor = [UIColor whiteColor];
             _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
@@ -1674,7 +1738,7 @@
         }
         else
         {
-            _segmentedControl.frame = CGRectMake(self.segmentView.bounds.origin.x,self.segmentView.bounds.origin.y,self.segmentView.bounds.size.width, self.segmentView.bounds.size.height);
+            _segmentedControl.frame = CGRectMake(self.segmentView.bounds.origin.x,self.segmentView.bounds.origin.y,viewWidth,self.segmentView.bounds.size.height);
             _segmentedControl.selectionIndicatorHeight = 0.0f;
             _segmentedControl.backgroundColor = [UIColor whiteColor];
             _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
@@ -1686,7 +1750,7 @@
     }
     else if ([[UIScreen mainScreen] bounds].size.height == 667)
     {
-        _segmentedControl.frame = CGRectMake(self.segmentView.bounds.origin.x,self.segmentView.bounds.origin.y,self.segmentView.bounds.size.width,self.segmentView.bounds.size.height);
+        _segmentedControl.frame = CGRectMake(self.segmentView.bounds.origin.x,self.segmentView.bounds.origin.y,viewWidth,self.segmentView.bounds.size.height);
         _segmentedControl.selectionIndicatorHeight = 0.0f;
         _segmentedControl.backgroundColor = [UIColor whiteColor];
         _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
@@ -1697,7 +1761,7 @@
     }
     else if ([[UIScreen mainScreen] bounds].size.height == 736)
     {
-        _segmentedControl.frame = CGRectMake(self.segmentView.bounds.origin.x,self.segmentView.bounds.origin.y,420,self.segmentView.bounds.size.height);
+        _segmentedControl.frame = CGRectMake(self.segmentView.bounds.origin.x,self.segmentView.bounds.origin.y,viewWidth,self.segmentView.bounds.size.height);
         _segmentedControl.selectionIndicatorHeight = 0.0f;
         _segmentedControl.backgroundColor = [UIColor whiteColor];
         _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
@@ -1708,7 +1772,7 @@
     }
     else if ([[UIScreen mainScreen] bounds].size.height == 812)
     {
-        _segmentedControl.frame = CGRectMake(self.segmentView.bounds.origin.x,self.segmentView.bounds.origin.y,380,55);
+        _segmentedControl.frame = CGRectMake(self.segmentView.bounds.origin.x,self.segmentView.bounds.origin.y,viewWidth,55);
         _segmentedControl.selectionIndicatorHeight = 0.0f;
         _segmentedControl.backgroundColor = [UIColor whiteColor];
         _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
@@ -1719,7 +1783,7 @@
     }
     else
     {
-        _segmentedControl.frame = CGRectMake(self.segmentView.bounds.origin.x,self.segmentView.bounds.origin.y,325,55);
+        _segmentedControl.frame = CGRectMake(self.segmentView.bounds.origin.x,self.segmentView.bounds.origin.y,viewWidth,55);
         _segmentedControl.selectionIndicatorHeight = 0.0f;
         _segmentedControl.backgroundColor = [UIColor whiteColor];
         _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
@@ -1746,32 +1810,38 @@
     {
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
-            _daySegment.hidden = NO;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,95,self.tableView.frame.size.width,820);
+           // _daySegment.hidden = NO;
+            self.daysegmentHeight.constant = 40.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,95,self.tableView.frame.size.width,800);
         }
         else if ([[UIScreen mainScreen] bounds].size.height == 812)
         {
-            _daySegment.hidden = NO;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,60,self.tableView.frame.size.width,self.tableView.frame.size.height);
+           // _daySegment.hidden = NO;
+            self.daysegmentHeight.constant = 40.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,60,self.tableView.frame.size.width,self.tableView.frame.size.height);
         }
         else if([[UIScreen mainScreen] bounds].size.height == 667)
         {
-            _daySegment.hidden = NO;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,46,self.tableView.frame.size.width,496);
+           // _daySegment.hidden = NO;
+            self.daysegmentHeight.constant = 40.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,46,self.tableView.frame.size.width,496);
         }
         else if([[UIScreen mainScreen] bounds].size.height == 736)
         {
-            _daySegment.hidden = NO;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,60,self.tableView.frame.size.width,550);
+           // _daySegment.hidden = NO;
+            self.daysegmentHeight.constant = 40.0f;
+           // _tableView.frame = CGRectMake(self.tableView.frame.origin.x,60,self.tableView.frame.size.width,550);
         }
         else
         {
-            _daySegment.hidden = NO;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,52,self.tableView.frame.size.width,414);
+            //_daySegment.hidden = NO;
+            self.daysegmentHeight.constant = 40.0f;
+           // _tableView.frame = CGRectMake(self.tableView.frame.origin.x,52,self.tableView.frame.size.width,414);
         }
         self.floating.hidden = NO;
         self.search.tintColor = [UIColor whiteColor];
         self.advanceFilter.tintColor = [UIColor whiteColor];
+        self.notificationOutlet.tintColor = [UIColor whiteColor];
         self.leaderBoardView.hidden =YES;
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         self.daySegment.selectedSegmentIndex = 0;
@@ -1785,32 +1855,38 @@
     {
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
-            _daySegment.hidden = NO;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,95,self.tableView.frame.size.width,820);
+            //_daySegment.hidden = NO;
+            self.daysegmentHeight.constant = 40.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,95,self.tableView.frame.size.width,800);
         }
         else if ([[UIScreen mainScreen] bounds].size.height == 812)
         {
-            _daySegment.hidden = NO;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,60,self.tableView.frame.size.width,self.tableView.frame.size.height);
+            //_daySegment.hidden = NO;
+            self.daysegmentHeight.constant = 40.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,60,self.tableView.frame.size.width,self.tableView.frame.size.height);
         }
         else if([[UIScreen mainScreen] bounds].size.height == 736)
         {
-            _daySegment.hidden = NO;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,60,self.tableView.frame.size.width,550);
+            //_daySegment.hidden = NO;
+            self.daysegmentHeight.constant = 40.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,60,self.tableView.frame.size.width,550);
         }
         else if([[UIScreen mainScreen] bounds].size.height == 667)
         {
-            _daySegment.hidden = NO;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,46,self.tableView.frame.size.width,496);
+            //_daySegment.hidden = NO;
+            self.daysegmentHeight.constant = 40.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,46,self.tableView.frame.size.width,496);
         }
         else
         {
-            _daySegment.hidden = NO;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,52,self.tableView.frame.size.width,414);
+            //_daySegment.hidden = NO;
+            self.daysegmentHeight.constant = 40.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,52,self.tableView.frame.size.width,414);
         }
         self.floating.hidden = NO;
         self.search.tintColor = [UIColor whiteColor];
         self.advanceFilter.tintColor = [UIColor whiteColor];
+        self.notificationOutlet.tintColor = [UIColor whiteColor];
         self.leaderBoardView.hidden =YES;
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         appDel.event_type = @"Popular";
@@ -1824,32 +1900,38 @@
     {
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
-            _daySegment.hidden = YES;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,910);
+            //_daySegment.hidden = YES;
+            self.daysegmentHeight.constant = 0.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,890);
         }
         else if ([[UIScreen mainScreen] bounds].size.height == 812)
         {
-            _daySegment.hidden = YES;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,self.tableView.frame.size.height);
+            //_daySegment.hidden = YES;
+            self.daysegmentHeight.constant = 0.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,self.tableView.frame.size.height);
         }
         else if([[UIScreen mainScreen] bounds].size.height == 736)
         {
-            _daySegment.hidden = YES;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,632);
+            //_daySegment.hidden = YES;
+            self.daysegmentHeight.constant = 0.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,632);
         }
         else if([[UIScreen mainScreen] bounds].size.height == 667)
         {
-            _daySegment.hidden = YES;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,548);
+            //_daySegment.hidden = YES;
+            self.daysegmentHeight.constant = 0.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,548);
         }
         else
         {
-            _daySegment.hidden = YES;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,445);
+            //_daySegment.hidden = YES;
+            self.daysegmentHeight.constant = 0.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,445);
         }
         self.floating.hidden = NO;
         self.search.tintColor = [UIColor whiteColor];
         self.advanceFilter.tintColor = [UIColor whiteColor];
+        self.notificationOutlet.tintColor = [UIColor whiteColor];
         self.leaderBoardView.hidden =YES;
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         appDel.event_type = @"All";
@@ -1862,32 +1944,37 @@
     {
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
-            _daySegment.hidden = YES;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,910);
+            //_daySegment.hidden = YES;
+            self.daysegmentHeight.constant = 0.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,910);
         }
         else if ([[UIScreen mainScreen] bounds].size.height == 812)
         {
-            _daySegment.hidden = YES;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,self.tableView.frame.size.height);
+            //_daySegment.hidden = YES;
+            self.daysegmentHeight.constant = 0.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,self.tableView.frame.size.height);
         }
         else if([[UIScreen mainScreen] bounds].size.height == 736)
         {
-            _daySegment.hidden = YES;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,632);
+            //_daySegment.hidden = YES;
+            self.daysegmentHeight.constant = 0.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,632);
         }
         else if([[UIScreen mainScreen] bounds].size.height == 667)
         {
-            _daySegment.hidden = YES;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,548);
+            //_daySegment.hidden = YES;
+            self.daysegmentHeight.constant = 0.0f;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,548);
         }
         else
         {
-            _daySegment.hidden = YES;
-            _tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,445);
+            //_daySegment.hidden = YES;
+            //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,445);
         }
         self.floating.hidden = NO;
         self.search.tintColor = [UIColor whiteColor];
         self.advanceFilter.tintColor = [UIColor whiteColor];
+        self.notificationOutlet.tintColor = [UIColor whiteColor];
         self.leaderBoardView.hidden =YES;
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         appDel.event_type = @"Hotspot";
@@ -1932,7 +2019,9 @@
         {
             self.search.tintColor = [UIColor clearColor];
             self.advanceFilter.tintColor = [UIColor clearColor];
+            self.notificationOutlet.tintColor = [UIColor clearColor];
             [self loadLeaderBoardPoints];
+            
             self.floating.hidden = YES;
             self.leaderBoardView.hidden =NO;
         }
@@ -1989,19 +2078,20 @@
     
     self.lb_total_points.layer.cornerRadius = 10.0;
     self.lb_total_points.clipsToBounds = YES;
-    self.loginView.layer.cornerRadius = 10.0;
+    self.loginView.layer.cornerRadius = 0.0;
     self.loginView.clipsToBounds = YES;
-    self.eventShareView.layer.cornerRadius = 10.0;
+    self.eventShareView.layer.cornerRadius = 0.0;
     self.eventShareView.clipsToBounds = YES;
-    self.reviewView.layer.cornerRadius = 10.0;
+    self.reviewView.layer.cornerRadius = 0.0;
     self.reviewView.clipsToBounds = YES;
-    self.bookingView.layer.cornerRadius = 10.0;
+    self.bookingView.layer.cornerRadius = 0.0;
     self.bookingView.clipsToBounds = YES;
-    self.checkInView.layer.cornerRadius = 10.0;
+    self.checkInView.layer.cornerRadius = 0.0;
     self.checkInView.clipsToBounds = YES;
+    
     NSString *user_id = [[NSUserDefaults standardUserDefaults]objectForKey:@"stat_user_id"];
     self->appDel.user_Id = user_id;
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
     [parameters setObject:appDel.user_Id forKey:@"user_id"];
@@ -2018,7 +2108,7 @@
      {
  
          NSLog(@"%@",responseObject);
-         [MBProgressHUD hideHUDForView:self.view animated:YES];
+//         [MBProgressHUD hideHUDForView:self.view animated:YES];
          NSString *msg = [responseObject objectForKey:@"msg"];
          NSString *status = [responseObject objectForKey:@"status"];
          
@@ -2056,21 +2146,21 @@
                  strid = [dict objectForKey:@"id"];
                  self->appDel.user_Id = [dict objectForKey:@"user_id"];
              }
-                 self.totalPoints.text = [NSString stringWithFormat:@"%@ ( %@ )",@"Total Points",strtotalPoints];
-                 self.loginCount.text = [NSString stringWithFormat:@"%@ %@ %@ %@" ,@"Login",@"(",login_points,@")"];
-                 self.eventShareCount.text =[NSString stringWithFormat:@"%@ %@ %@ %@" ,@"Share",@"(",sharing_points,@")"];
-                 self.checkInCount.text =[NSString stringWithFormat:@"%@ %@ %@ %@" ,@"Check-In",@"(",checkin_points,@")"];
-                 self.reminderCount.text =[NSString stringWithFormat:@"%@ %@ %@ %@" ,@"Review",@"(",review_points,@")"];
-                 self.bookingCount.text =[NSString stringWithFormat:@"%@ %@ %@ %@" ,@"Booking",@"(",booking_points,@")"];
+             self.totalPoints.text = [NSString stringWithFormat:@"%s%@","Total points earned",strtotalPoints];
+                 self.loginCount.text = login_points;
+                 self.eventShareCount.text = sharing_points;
+                 self.checkInCount.text = checkin_points;
+                 self.reminderCount.text = review_points;
+                 self.bookingCount.text = booking_points;
          }
          else
          {
-             self.totalPoints.text = [NSString stringWithFormat:@"%@ ( %@ )",@"Total Points",@"0"];
-             self.loginCount.text = [NSString stringWithFormat:@"%@" ,@"Login (0)"];
-             self.eventShareCount.text =[NSString stringWithFormat:@"%@" ,@"Share (0)"];
-             self.checkInCount.text =[NSString stringWithFormat:@"%@",@"Check-In (0)"];
-             self.reminderCount.text =[NSString stringWithFormat:@"%@",@"Review (0)"];
-             self.bookingCount.text =[NSString stringWithFormat:@"%@",@"Booking (0)"];
+             self.totalPoints.text = [NSString stringWithFormat:@"%s%@","Total points earned",@"0"];
+             self.loginCount.text = @"0";
+             self.eventShareCount.text = @"0";
+             self.checkInCount.text = @"0";
+             self.reminderCount.text = @"0";
+             self.bookingCount.text = @"0";
          }
      }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
@@ -2571,5 +2661,104 @@
 - (IBAction)pointsButton:(id)sender
 {
    [self performSegueWithIdentifier:@"points_page" sender:self];
+}
+- (IBAction)notificationAction:(id)sender
+{
+    appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if ([appDel.user_type isEqualToString:@"2"])
+    {
+        UIAlertController *alert= [UIAlertController
+                                   alertControllerWithTitle:@"Heyla"
+                                   message:@"Login to Access"
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction
+                             actionWithTitle:@"Ok"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                                 [self presentViewController:loginViewController animated:NO completion:nil];
+                             }];
+        
+        UIAlertAction *cancel = [UIAlertAction
+                                 actionWithTitle:@"Cancel"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     
+                                 }];
+        
+        [alert addAction:ok];
+        [alert addAction:cancel];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    else
+    {
+        [self performSegueWithIdentifier:@"notificationSegue" sender:self];
+    }
+}
+-(void)webRequestForNewNotification
+{
+    appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
+    [parameters setObject:appDel.user_Id forKey:@"user_id"];
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    
+    NSString *getEventcities = @"apimain/new_notification";
+    NSArray *components = [NSArray arrayWithObjects:baseUrl,getEventcities, nil];
+    NSString *api = [NSString pathWithComponents:components];
+    
+    [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+     {
+         
+         NSLog(@"%@",responseObject);
+         [MBProgressHUD hideHUDForView:self.view animated:YES];
+         NSString *msg = [responseObject objectForKey:@"msg"];
+         NSString *status = [responseObject objectForKey:@"status"];
+         
+         if ([msg isEqualToString:@"New Notification"] && [status isEqualToString:@"success"])
+         {
+             NSString *newNotification = [responseObject objectForKey:@"New_notification"];
+             [self changeNotificationImage:[NSString stringWithFormat:@"%@",newNotification]];
+         }
+         else
+         {
+//             UIAlertController *alert= [UIAlertController
+//                                        alertControllerWithTitle:@"Heyla"
+//                                        message:msg
+//                                        preferredStyle:UIAlertControllerStyleAlert];
+//
+//             UIAlertAction *ok = [UIAlertAction
+//                                  actionWithTitle:@"OK"
+//                                  style:UIAlertActionStyleDefault
+//                                  handler:^(UIAlertAction * action)
+//                                  {
+//
+//                                  }];
+//
+//             [alert addAction:ok];
+//             [self presentViewController:alert animated:YES completion:nil];
+         }
+     }
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+     {
+         NSLog(@"error: %@", error);
+     }];
+}
+-(void)changeNotificationImage:(NSString *)notificationCount
+{    
+    if ([notificationCount isEqualToString:@"0"])
+    {
+        [self.notificationOutlet setBackgroundImage:[UIImage imageNamed:@"notification.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    }
+    else
+    {
+        [self.notificationOutlet setBackgroundImage:[UIImage imageNamed:@"notificationred.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    }
 }
 @end

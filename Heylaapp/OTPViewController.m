@@ -199,7 +199,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"cannot be empty"
+                                   message:@"OTP required to reset password"
                                    preferredStyle:UIAlertControllerStyleAlert];
 
         UIAlertAction *ok = [UIAlertAction
@@ -217,7 +217,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"cannot be empty"
+                                   message:@"OTP required to reset password"
                                    preferredStyle:UIAlertControllerStyleAlert];
 
         UIAlertAction *ok = [UIAlertAction
@@ -235,7 +235,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"cannot be empty"
+                                   message:@"OTP required to reset password"
                                    preferredStyle:UIAlertControllerStyleAlert];
 
         UIAlertAction *ok = [UIAlertAction
@@ -253,7 +253,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"cannot be empty"
+                                   message:@"OTP required to reset password"
                                    preferredStyle:UIAlertControllerStyleAlert];
 
         UIAlertAction *ok = [UIAlertAction

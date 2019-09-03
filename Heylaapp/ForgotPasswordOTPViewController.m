@@ -18,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     _confirmOtlet.layer.cornerRadius = 8;
     _confirmOtlet.clipsToBounds = YES;
     

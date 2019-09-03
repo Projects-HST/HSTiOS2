@@ -7,12 +7,14 @@
 //
 
 #import "Settings.h"
+#import "Aboutus.h"
 
 @interface Settings ()
 {
     AppDelegate *appDel;
     BOOL isSwitchClicked;
     NSString *status;
+    NSString *selectView;
 }
 
 @end
@@ -41,7 +43,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-   return 8;
+   return 9;
 }
 
 - (void)updateNotificationStatus
@@ -71,39 +73,59 @@
     
              if ([msg isEqualToString:@"Notification Updated"] && [status isEqualToString:@"success"])
              {
-                 UIAlertController *alert= [UIAlertController
-                                            alertControllerWithTitle:@"Heyla"
-                                            message:msg
-                                            preferredStyle:UIAlertControllerStyleAlert];
+//                 UIAlertController *alert= [UIAlertController
+//                                            alertControllerWithTitle:@"Heyla"
+//                                            message:msg
+//                                            preferredStyle:UIAlertControllerStyleAlert];
+//
+//                 UIAlertAction *ok = [UIAlertAction
+//                                      actionWithTitle:@"OK"
+//                                      style:UIAlertActionStyleDefault
+//                                      handler:^(UIAlertAction * action)
+//                                      {
+//
+//                                      }];
+//
+//                 [alert addAction:ok];
+//                 [self presentViewController:alert animated:YES completion:nil];
                  
-                 UIAlertAction *ok = [UIAlertAction
-                                      actionWithTitle:@"OK"
-                                      style:UIAlertActionStyleDefault
-                                      handler:^(UIAlertAction * action)
-                                      {
-                                          
-                                      }];
+                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
                  
-                 [alert addAction:ok];
-                 [self presentViewController:alert animated:YES completion:nil];
+                 // Configure for text only and offset down
+                 hud.mode = MBProgressHUDModeText;
+                 hud.label.text = @"Push notification enabled";
+                 hud.margin = 10.f;
+                 hud.yOffset = 200.f;
+                 hud.removeFromSuperViewOnHide = YES;
+                 [hud hideAnimated:YES afterDelay:2];
              }
              else
              {
-                 UIAlertController *alert= [UIAlertController
-                                            alertControllerWithTitle:@"Heyla"
-                                            message:msg
-                                            preferredStyle:UIAlertControllerStyleAlert];
-    
-                 UIAlertAction *ok = [UIAlertAction
-                                      actionWithTitle:@"OK"
-                                      style:UIAlertActionStyleDefault
-                                      handler:^(UIAlertAction * action)
-                                      {
-    
-                                      }];
-    
-                 [alert addAction:ok];
-                 [self presentViewController:alert animated:YES completion:nil];
+//                 UIAlertController *alert= [UIAlertController
+//                                            alertControllerWithTitle:@"Heyla"
+//                                            message:msg
+//                                            preferredStyle:UIAlertControllerStyleAlert];
+//    
+//                 UIAlertAction *ok = [UIAlertAction
+//                                      actionWithTitle:@"OK"
+//                                      style:UIAlertActionStyleDefault
+//                                      handler:^(UIAlertAction * action)
+//                                      {
+//    
+//                                      }];
+//    
+//                 [alert addAction:ok];
+//                 [self presentViewController:alert animated:YES completion:nil];
+                 
+                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                 
+                 // Configure for text only and offset down
+                 hud.mode = MBProgressHUDModeText;
+                 hud.label.text = @"Push notification disabled";
+                 hud.margin = 10.f;
+                 hud.yOffset = 200.f;
+                 hud.removeFromSuperViewOnHide = YES;
+                 [hud hideAnimated:YES afterDelay:2];
              }
          }
               failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
@@ -116,11 +138,35 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row == 5)
+    if (indexPath.row == 1)
+    {
+        [self performSegueWithIdentifier:@"profileSegue" sender:self];
+    }
+    else if (indexPath.row == 4)
+    {
+        [[NSUserDefaults standardUserDefaults]setObject:@"About Us" forKey:@"selectView"];
+        [self performSegueWithIdentifier:@"aboutus" sender:self];
+    }
+    else if (indexPath.row == 5)
     {
         [self performSegueWithIdentifier:@"feedback" sender:self];
-
     }
+    else if (indexPath.row == 6)
+    {
+        [[NSUserDefaults standardUserDefaults]setObject:@"Privacy Policy" forKey:@"selectView"];
+        [self performSegueWithIdentifier:@"aboutus" sender:self];
+    }
+    else if (indexPath.row == 7)
+    {
+        [[NSUserDefaults standardUserDefaults]setObject:@"Payment Policy" forKey:@"selectView"];
+        [self performSegueWithIdentifier:@"aboutus" sender:self];
+    }
+    else if (indexPath.row == 8)
+    {
+        [[NSUserDefaults standardUserDefaults]setObject:@"Terms and Condition" forKey:@"selectView"];
+        [self performSegueWithIdentifier:@"aboutus" sender:self];
+    }
+    
 }
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -166,15 +212,10 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ //In a storyboard-based application, you will often want to do a little preparation before navigation
 
 - (IBAction)switchAction:(id)sender
 {

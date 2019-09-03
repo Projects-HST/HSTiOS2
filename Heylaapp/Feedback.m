@@ -92,24 +92,24 @@
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     }
-    else if ([self.email.text isEqualToString:@""])
-    {
-        UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"email cannot be empty"
-                                   preferredStyle:UIAlertControllerStyleAlert];
+//    else if ([self.email.text isEqualToString:@""])
+//    {
+//        UIAlertController *alert= [UIAlertController
+//                                   alertControllerWithTitle:@"Heyla"
+//                                   message:@"email cannot be empty"
+//                                   preferredStyle:UIAlertControllerStyleAlert];
         
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
+//        UIAlertAction *ok = [UIAlertAction
+//                             actionWithTitle:@"OK"
+//                             style:UIAlertActionStyleDefault
+//                             handler:^(UIAlertAction * action)
+//                             {
                                  
-                             }];
+//                             }];
         
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
+//        [alert addAction:ok];
+//        [self presentViewController:alert animated:YES completion:nil];
+//    }
     else if ([self.feedback.text isEqualToString:@""])
     {
         UIAlertController *alert= [UIAlertController

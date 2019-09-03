@@ -15,6 +15,10 @@
 {
     NSArray *searchResultsArray;
 }
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *daysegmentHeight;
+- (IBAction)notificationAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *notificationOutlet;
+@property (weak, nonatomic) IBOutlet UIView *segmentBaseView;
 @property (weak, nonatomic) IBOutlet UIView *floationgView;
 @property (weak, nonatomic) IBOutlet UIView *lb_bookingView;
 @property (weak, nonatomic) IBOutlet UIView *lb_reviewView;

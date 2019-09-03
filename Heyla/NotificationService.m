@@ -1,49 +1,31 @@
 //
-//  NotificationViewController.m
-//  NotificationServices
+//  NotificationService.m
+//  Heyla
 //
-//  Created by HappySanz on 24/10/17.
-//  Copyright © 2017 Palpro Tech. All rights reserved.
+//  Created by Happy Sanz Tech on 30/08/19.
+//  Copyright © 2019 Palpro Tech. All rights reserved.
 //
 
-#import "NotificationViewController.h"
-#import <UserNotifications/UserNotifications.h>
-#import <UserNotificationsUI/UserNotificationsUI.h>
+#import "NotificationService.h"
 
-@interface NotificationViewController () <UNNotificationContentExtension>
+@interface NotificationService ()
+
 @property (nonatomic, strong) void (^contentHandler)(UNNotificationContent *contentToDeliver);
 @property (nonatomic, strong) UNMutableNotificationContent *bestAttemptContent;
-@property IBOutlet UILabel *label;
 
 @end
 
-@implementation NotificationViewController
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any required interface initialization here.
-}
-
-- (void)didReceiveNotification:(UNNotification *)notification
-{
-    self.label.text = notification.request.content.body;
-    NSLog(@"%@",self.label.text);
-    
-}
-
-
-
-/// Save the image to disk
+@implementation NotificationService
 
 - (void)didReceiveNotificationRequest:(UNNotificationRequest *)request withContentHandler:(void (^)(UNNotificationContent * _Nonnull))contentHandler {
     self.contentHandler = contentHandler;
     self.bestAttemptContent = [request.content mutableCopy];
     
     // Modify the notification content here...
-    //self.bestAttemptContent.body = [NSString stringWithFormat:@"%@ [modified]", self.bestAttemptContent.body];
-    
-    // check for media attachment, example here uses custom payload keys mediaUrl and mediaType
+//    self.bestAttemptContent.title = [NSString stringWithFormat:@"%@ [modified]", self.bestAttemptContent.title];
+//
+//    self.contentHandler(self.bestAttemptContent);
+//
     NSDictionary *userInfo = request.content.userInfo;
     if (userInfo == nil) {
         [self contentComplete];
@@ -67,11 +49,15 @@
                        }
                        [self contentComplete];
                    }];
-    
 }
 
-- (void)serviceExtensionTimeWillExpire
-{
+//- (void)serviceExtensionTimeWillExpire {
+//    // Called just before the extension will be terminated by the system.
+//    // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
+//    self.contentHandler(self.bestAttemptContent);
+//}
+
+- (void)serviceExtensionTimeWillExpire {
     // Called just before the extension will be terminated by the system.
     // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
     [self contentComplete];
@@ -114,6 +100,6 @@
                     }
                     completionHandler(attachment);
                 }] resume];
-    
 }
+
 @end

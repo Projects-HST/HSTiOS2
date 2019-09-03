@@ -253,7 +253,7 @@
         self.plusLabel.hidden = YES;
         self.countText.text = @"0";
         self.countText.hidden = YES;
-        [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"Rs.",@"0"] forState:UIControlStateNormal];
+        [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"S$.",@"0"] forState:UIControlStateNormal];
         [self.eventDate resignFirstResponder];
     }
     else if ([self.eventTime isFirstResponder])
@@ -277,7 +277,7 @@
         {
             UIAlertController *alert= [UIAlertController
                                        alertControllerWithTitle:@"Heyla"
-                                       message:@"Please select the Plan"
+                                       message:@"Please select your plan"
                                        preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction *ok = [UIAlertAction
@@ -291,14 +291,14 @@
             [alert addAction:ok];
             [self presentViewController:alert animated:YES completion:nil];
             self.countText.text = @"0";
-            [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"Rs.",@"0"] forState:UIControlStateNormal];
+            [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"S$.",@"0"] forState:UIControlStateNormal];
         }
         else
         {
             self.eventPlan.text = selectedPlan;
             [self.eventPlan resignFirstResponder];
             self.countText.text = @"0";
-            [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"Rs.",@"0"] forState:UIControlStateNormal];
+            [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"S$.",@"0"] forState:UIControlStateNormal];
         }
     }
 }
@@ -413,7 +413,7 @@
                  }
                  self.eventTime.text = @"HH : MM";
                  self.eventPlan.text = @"Plan";
-                 [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"Rs.",@"0"] forState:UIControlStateNormal];
+                 [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"S$.",@"0"] forState:UIControlStateNormal];
                  [self->Eventtime insertObject:@"Select Time" atIndex:0];
                  [self->datapickerView reloadAllComponents];
                  
@@ -449,7 +449,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Select the time"
+                                   message:@"Please select the time"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -472,7 +472,7 @@
         self.planUmgView.hidden = YES;
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Select the time"
+                                   message:@"Please select the time"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -517,6 +517,8 @@
                  [self->plan_name removeAllObjects];
                  [self->seat_rate removeAllObjects];
                  [self->planName_seatrate  removeAllObjects];
+                 [self->plan_time_id removeAllObjects];
+                 [self->event_id removeAllObjects];
                  
                  NSArray *Plandetails = [responseObject objectForKey:@"Plandetails"];
                  for (int i = 0; i < [Plandetails count]; i++)
@@ -531,7 +533,7 @@
                      NSString *strshow_time = [dict objectForKey:@"show_time"];
                      NSString *strplan_time_id = [dict objectForKey:@"plan_time_id"];
                      NSString *strEvent_id = [dict objectForKey:@"event_id"];
-                     NSString *planName_seat = [NSString stringWithFormat:@"%@ - %@%@",strplan_name,@"Rs.",strseat_rate];
+                     NSString *planName_seat = [NSString stringWithFormat:@"%@%@%@",strplan_name,@"S$.",strseat_rate];
                      NSLog(@"%@%@%@",strevent_id,strshow_date,strshow_time);
                      [self->plan_id addObject:strplan_id];
                      [self->plan_name addObject:strplan_name];
@@ -543,7 +545,7 @@
                  }
                  self.eventPlan.enabled = YES;
                  self.planUmgView.hidden = NO;
-                 [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"Rs.",@"0"] forState:UIControlStateNormal];
+                 [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"S$.",@"0"] forState:UIControlStateNormal];
                  [self->planName_seatrate insertObject:@"Select Your Plan" atIndex:0];
                  [self->datapickerView reloadAllComponents];
                 
@@ -610,7 +612,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Please Select Your Time"
+                                   message:@"Please select your time"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -628,7 +630,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Please Select Your Plan"
+                                   message:@"Please select your plan"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -646,7 +648,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Please Select Your Plan"
+                                   message:@"Please select your plan"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -672,11 +674,11 @@
         NSString *bookingDateString = [dfTwo stringFromDate:date];
         appDel.bookingdate = bookingDateString;
         [Eventtime removeObjectAtIndex:0];
-        NSArray *splitArray = [self.eventPlan.text componentsSeparatedByString:@"-"];
+        NSArray *splitArray = [self.eventPlan.text componentsSeparatedByString:@"S$."];
         NSString *planName = [splitArray objectAtIndex:0];
-        NSArray *arr = [planName componentsSeparatedByString:@" "];
-        NSString *stt = [arr objectAtIndex:0];
-        NSUInteger Eventplan_name= [plan_name indexOfObject:stt];
+//        NSArray *arr = [planName componentsSeparatedByString:@" "];
+//        NSString *stt = [arr objectAtIndex:0];
+        NSUInteger Eventplan_name= [plan_name indexOfObject:planName];
         appDel.plan_time_id = plan_time_id[Eventplan_name];
         appDel.plan_id = plan_id[Eventplan_name];
         appDel.planEvent_id = event_id[Eventplan_name];
@@ -747,7 +749,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"select your Plan"
+                                   message:@"Please select your Plan"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -765,7 +767,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Please Select Your Time"
+                                   message:@"please select your time"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -783,7 +785,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Please Select Your Plan"
+                                   message:@"please select your plan"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -801,7 +803,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Please Select Your Plan"
+                                   message:@"please select your plan"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -817,19 +819,19 @@
     }
     else
     {
-        NSArray *splitArrayPN = [self.eventPlan.text componentsSeparatedByString:@"-"];
+        NSArray *splitArrayPN = [self.eventPlan.text componentsSeparatedByString:@"S$."];
         NSString *planName = [splitArrayPN objectAtIndex:0];
-        NSArray *arr = [planName componentsSeparatedByString:@" "];
-        NSString *stt = [arr objectAtIndex:0];
+//        NSArray *arr = [planName componentsSeparatedByString:@" "];
+//        NSString *stt = [arr objectAtIndex:0];
         
-        NSUInteger Eventplan_name = [plan_name indexOfObject:stt];
+        NSUInteger Eventplan_name = [plan_name indexOfObject:planName];
         appDel.ticlet_seat_available = seat_available[Eventplan_name];
         
-        NSArray *splitArray = [self.eventPlan.text componentsSeparatedByString:@"-"];
+        NSArray *splitArray = [self.eventPlan.text componentsSeparatedByString:@"S$."];
         NSString *str = [splitArray objectAtIndex:1];
-        NSArray *splitArray2 = [str componentsSeparatedByString:@"."];
-        NSString *seat = [splitArray2 objectAtIndex:1];
-        
+//        NSArray *splitArray2 = [str componentsSeparatedByString:@"."];
+//        NSString *seat = [splitArray2 objectAtIndex:1];
+//
         appDel.bookingdate = self.eventDate.text;
         NSString *quantity = self.countText.text;
         int value = [quantity intValue];
@@ -890,7 +892,7 @@
             self.countText.text = Count;
             appDel.totalTickets = Count;
             [selected_Seat addObject:Count];
-            float seat_rate = [seat floatValue];
+            float seat_rate = [str floatValue];
             int intpart = (int)seat_rate;
             float decpart = seat_rate - intpart;
             if(decpart == 0.0f)
@@ -900,14 +902,14 @@
     
                 NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
                 f.numberStyle = NSNumberFormatterDecimalStyle;
-                NSNumber *x = [f numberFromString:seat];
+                NSNumber *x = [f numberFromString:str];
                 NSNumber *y = [f numberFromString:Count];
                 NSNumber *z = @(x.doubleValue * y.doubleValue);
                 appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
                 appDel.total_price = [NSString stringWithFormat:@"%@",z];
                 NSLog(@"%@",appDel.total_price);
                 appDel.price = appDel.total_price;
-                [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"Rs.",appDel.price] forState:UIControlStateNormal];
+                [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"S$.",appDel.price] forState:UIControlStateNormal];
         }
      }
    }
@@ -936,7 +938,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Please Select Your Time"
+                                   message:@"please select your time"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -954,7 +956,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Please Select Your Plan"
+                                   message:@"please select your plan"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -1001,14 +1003,14 @@
         if([Count isEqualToString:@"-1"])
         {
             self.countText.text = @"0";
-            [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"RS.",@"0"] forState:UIControlStateNormal];
+            [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"S$.",@"0"] forState:UIControlStateNormal];
             self.minusOulet.enabled = NO;
         }
         else
         {
             appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
             self.minusOulet.enabled = YES;
-            [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"RS.",Count] forState:UIControlStateNormal];
+            [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"S$.",Count] forState:UIControlStateNormal];
             self.countText.text = Count;
             [selected_Seat removeLastObject];
             appDel.totalTickets = Count;
@@ -1029,7 +1031,7 @@
                 appDel.total_price = [NSString stringWithFormat:@"%@",z];
                 NSLog(@"%@",appDel.total_price);
                 appDel.price = appDel.total_price;
-                [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"Rs.",appDel.price] forState:UIControlStateNormal];
+                [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"S$.",appDel.price] forState:UIControlStateNormal];
         }
       }
    }

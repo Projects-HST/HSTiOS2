@@ -614,10 +614,9 @@
                               {
                                   [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                                   self.cropImage = [UIImage imageNamed:@"profile.png"];
-                                 // self.profImageView.image = [UIImage imageNamed:@"profile.png"];
+                                  self.profImageView.image = [UIImage imageNamed:@"profile.png"];
                                   [self profile_Pic];
                                   [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                  
                               }];
     
     [alert addAction:button0];
@@ -971,7 +970,7 @@
     {
 //      [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        NSString *url = [NSString stringWithFormat:@"%@/%@",@"https://heylaapp.com/apimain/profilePictureUpload",appDel.user_Id];
+        NSString *url = [NSString stringWithFormat:@"%@/%@",@"https://heylaapp.com/testing/apimain/profilePictureUpload",appDel.user_Id];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [request setURL:[NSURL URLWithString:url]];
         [request setHTTPMethod:@"POST"];
