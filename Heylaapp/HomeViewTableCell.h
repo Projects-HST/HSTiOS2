@@ -23,5 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *toMonthLabel;
 @property (weak, nonatomic) IBOutlet UILabel *toDateLabel;
 @property (weak, nonatomic) IBOutlet UIView *dateView;
+@property (weak, nonatomic) IBOutlet UIView *cellView;
+@property (weak, nonatomic) IBOutlet UIView *advDarkView;
 
 @end

@@ -30,6 +30,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 -(void)swiperight:(UISwipeGestureRecognizer*)gestureRecognizer
 {
     ViewTwoController *viewTwoController = [self.storyboard instantiateViewControllerWithIdentifier:@"ViewTwoController"];

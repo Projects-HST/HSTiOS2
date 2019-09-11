@@ -211,7 +211,7 @@
     defaultConfigObject.requestCachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
     NSURLSession * defaultSession = [NSURLSession sessionWithConfiguration:defaultConfigObject delegate:self delegateQueue:[NSOperationQueue mainQueue]];
     
-    NSString * scriptURL = [NSString stringWithFormat:@"https://heylaapp.com/paytm_app/generateChecksum.php"];
+    NSString * scriptURL = [NSString stringWithFormat: @"%@%@",baseUrl,@"/paytm_app/generateChecksum.php"];
     //Converts the URL string to a URL usable by NSURLSession
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:scriptURL]];
     NSString * postDataString = [NSString stringWithFormat:@"ORDER_ID=%@&TXN_AMOUNT=%@&CUST_ID=%@",appDel.order_id,appDel.price,appDel.user_Id];
@@ -333,7 +333,7 @@
     defaultConfigObject.requestCachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
     NSURLSession * defaultSession = [NSURLSession sessionWithConfiguration:defaultConfigObject delegate:self delegateQueue:[NSOperationQueue mainQueue]];
     
-    NSString * scriptURL = [NSString stringWithFormat:@"https://heylaapp.com/paytm_app/TxnStatus.php"];
+    NSString *scriptURL = [NSString stringWithFormat:@"%@%@",baseUrl,@"/paytm_app/TxnStatus.php"];
     //Converts the URL string to a URL usable by NSURLSession
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:scriptURL]];
     NSString * postDataString = [NSString stringWithFormat:@"MID=%@&STATUS=%@&ORDERID=%@&TXNAMOUNT=%@&TXNID=%@&BANKTXNID=%@&GATEWAYNAME=%@&RESPCODE=%@&RESPMSG=%@&BANKNAME=%@&PAYMENTMODE=%@&TXNDATE=%@",MID,STATUS,ORDER_ID,TXN_AMOUNT,TXNID,BANKTXNID,GATEWAYNAME,RESPCODE,RESPMSG,BANKNAME,PAYMENTMODE,TXNDATE];

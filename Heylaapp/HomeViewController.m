@@ -70,6 +70,8 @@
     NSString *strToMonth;
     NSString *dayTypeFlag;
     CGFloat viewWidth;
+    UIBarButtonItem *notification;
+    NSString *notificationCount;
 
 }
 @property (strong, nonatomic) UIScrollView *scrollView;
@@ -94,11 +96,11 @@
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     UIImage *img = [UIImage imageNamed:@"heylalogomainpage.png"];
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 0, 30, 30)];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [imgView setImage:img];
     [imgView setContentMode:UIViewContentModeScaleAspectFit];
     self.navigationItem.titleView = imgView;
-    
+    [self notificationBarButton];
     adv_status = [[NSMutableArray alloc]init];
     advertisement = [[NSMutableArray alloc]init];
     booking_status = [[NSMutableArray alloc]init];
@@ -328,6 +330,49 @@
 //    [self.tableView setContentOffset: CGPointZero animated: YES];
 }
 
+-(void)notificationBarButton
+{
+    if ([notificationCount isEqualToString:@"0"])
+    {
+        UIImage* image3 = [UIImage imageNamed:@"notification.png"];
+        CGRect frameimg = CGRectMake(15,5, 25,25);
+        
+        UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+        [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+        [someButton addTarget:self action:@selector(notificationBtn:)
+             forControlEvents:UIControlEventTouchUpInside];
+//        [someButton setShowsTouchWhenHighlighted:YES];
+        
+        notification = [[UIBarButtonItem alloc] initWithCustomView:someButton];
+        self.navigationItem.rightBarButtonItem = notification;
+    }
+    else
+    {
+        UIImage* image3 = [UIImage imageNamed:@"notificationred.png"];
+        CGRect frameimg = CGRectMake(15,5, 25,25);
+        
+        UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+        [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+        [someButton addTarget:self action:@selector(notificationBtn:)
+             forControlEvents:UIControlEventTouchUpInside];
+//        [someButton setShowsTouchWhenHighlighted:YES];
+        
+        notification = [[UIBarButtonItem alloc] initWithCustomView:someButton];
+        self.navigationItem.rightBarButtonItem = notification;
+    }
+   
+}
+-(IBAction)notificationBtn:(id)sender
+{
+    if ([notificationCount isEqualToString:@"0"])
+    {
+        [self performSegueWithIdentifier:@"notificationSegue" sender:self];
+    }
+    else
+    {
+        [self performSegueWithIdentifier:@"notificationSegue" sender:self];
+    }
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     NSString *str = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
@@ -1103,7 +1148,7 @@
              else
              {
                  self.tableView.hidden = NO;
-                 self->_daySegment.hidden = NO;
+                 self->_daySegment.hidden = YES;
                  self->hotspotFlag = @"YES";
                  [self.tableView reloadData];
              }
@@ -1417,6 +1462,7 @@
                 cell.adv_Label.hidden = NO;
                 cell.paidView.hidden = YES;
                 cell.detailView.hidden = YES;
+                cell.advDarkView.hidden = NO;
                 cell.eventName.text = [event_name objectAtIndex:indexPath.row];
                 cell.eventLocation.text = [event_venue objectAtIndex:indexPath.row];
                 cell.eventStatus.text = [event_type objectAtIndex:indexPath.row];
@@ -1444,6 +1490,7 @@
                 cell.adv_Label.hidden = YES;
                 cell.detailView.hidden = NO;
                 cell.paidView.hidden = NO;
+                cell.advDarkView.hidden = YES;
                 cell.eventName.text = [event_name objectAtIndex:indexPath.row];
                 NSString *imageUrl = [event_banner objectAtIndex:indexPath.row];
                 __weak HomeViewTableCell *weakCell = cell;
@@ -1460,6 +1507,7 @@
                  }];
                 
                 cell.eventStatus.text = [event_type objectAtIndex:indexPath.row];
+                NSLog(@"%@",cell.eventStatus.text);
                 if ([cell.eventStatus.text  isEqual: @"Paid"]) {
                     cell.paidView.backgroundColor = [UIColor colorWithRed:208/255.0f green:45/255.0f blue:39/255.0f alpha:1.0];
                 }
@@ -1516,6 +1564,7 @@
                 cell.adv_Label.hidden = NO;
                 cell.detailView.hidden = YES;
                 cell.paidView.hidden = YES;
+                cell.advDarkView.hidden = NO;
 
                 cell.eventName.text = [event_name objectAtIndex:indexPath.row];
                 cell.eventLocation.text = [event_venue objectAtIndex:indexPath.row];
@@ -1544,14 +1593,8 @@
                 cell.adv_Label.hidden = YES;
                 cell.detailView.hidden = NO;
                 cell.paidView.hidden = NO;
-                if ([cell.eventStatus.text  isEqual: @"Paid"])
-                {
-                    cell.paidView.backgroundColor = [UIColor colorWithRed:208/255.0f green:45/255.0f blue:39/255.0f alpha:1.0];
-                }
-                else
-                {
-                    cell.paidView.backgroundColor = [UIColor colorWithRed:72/255.0f green:168/255.0f blue:71/255.0f alpha:1.0];
-                }
+                cell.advDarkView.hidden = YES;
+                
                 cell.eventName.text = [event_name objectAtIndex:indexPath.row];
                 NSString *imageUrl = [event_banner objectAtIndex:indexPath.row];
                 __weak HomeViewTableCell *weakCell = cell;
@@ -1568,8 +1611,18 @@
                  }];
                 cell.paidView.layer.cornerRadius = 3.0;
                 cell.paidView.clipsToBounds = YES;
+                cell.cellView.layer.cornerRadius = 5.0;
+                cell.cellView.clipsToBounds = YES;
                 cell.eventLocation.text = [event_venue objectAtIndex:indexPath.row];
                 cell.eventStatus.text = [event_type objectAtIndex:indexPath.row];
+                if ([cell.eventStatus.text  isEqual: @"Paid"])
+                {
+                    cell.paidView.backgroundColor = [UIColor colorWithRed:208/255.0f green:45/255.0f blue:39/255.0f alpha:1.0];
+                }
+                else
+                {
+                    cell.paidView.backgroundColor = [UIColor colorWithRed:72/255.0f green:168/255.0f blue:71/255.0f alpha:1.0];
+                }
                 NSString *strStartDate = [start_date objectAtIndex:indexPath.row];
                 NSString *strEndTime = [end_date objectAtIndex:indexPath.row];
                 cell.eventTime.text = [NSString stringWithFormat:@"%@ - %@",strStartDate,strEndTime];
@@ -1841,7 +1894,7 @@
         self.floating.hidden = NO;
         self.search.tintColor = [UIColor whiteColor];
         self.advanceFilter.tintColor = [UIColor whiteColor];
-        self.notificationOutlet.tintColor = [UIColor whiteColor];
+        notification.tintColor = [UIColor whiteColor];
         self.leaderBoardView.hidden =YES;
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         self.daySegment.selectedSegmentIndex = 0;
@@ -1886,7 +1939,6 @@
         self.floating.hidden = NO;
         self.search.tintColor = [UIColor whiteColor];
         self.advanceFilter.tintColor = [UIColor whiteColor];
-        self.notificationOutlet.tintColor = [UIColor whiteColor];
         self.leaderBoardView.hidden =YES;
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         appDel.event_type = @"Popular";
@@ -1900,38 +1952,38 @@
     {
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
-            //_daySegment.hidden = YES;
+            _daySegment.hidden = YES;
             self.daysegmentHeight.constant = 0.0f;
             //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,890);
         }
         else if ([[UIScreen mainScreen] bounds].size.height == 812)
         {
-            //_daySegment.hidden = YES;
+            _daySegment.hidden = YES;
             self.daysegmentHeight.constant = 0.0f;
             //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,self.tableView.frame.size.height);
         }
         else if([[UIScreen mainScreen] bounds].size.height == 736)
         {
-            //_daySegment.hidden = YES;
+            _daySegment.hidden = YES;
             self.daysegmentHeight.constant = 0.0f;
             //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,632);
         }
         else if([[UIScreen mainScreen] bounds].size.height == 667)
         {
-            //_daySegment.hidden = YES;
+            _daySegment.hidden = YES;
             self.daysegmentHeight.constant = 0.0f;
             //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,548);
         }
         else
         {
-            //_daySegment.hidden = YES;
+            _daySegment.hidden = YES;
             self.daysegmentHeight.constant = 0.0f;
             //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,445);
         }
         self.floating.hidden = NO;
         self.search.tintColor = [UIColor whiteColor];
         self.advanceFilter.tintColor = [UIColor whiteColor];
-        self.notificationOutlet.tintColor = [UIColor whiteColor];
+        notification.tintColor = [UIColor whiteColor];
         self.leaderBoardView.hidden =YES;
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         appDel.event_type = @"All";
@@ -1944,37 +1996,37 @@
     {
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
-            //_daySegment.hidden = YES;
+            _daySegment.hidden = YES;
             self.daysegmentHeight.constant = 0.0f;
             //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,910);
         }
         else if ([[UIScreen mainScreen] bounds].size.height == 812)
         {
-            //_daySegment.hidden = YES;
+            _daySegment.hidden = YES;
             self.daysegmentHeight.constant = 0.0f;
             //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,self.tableView.frame.size.height);
         }
         else if([[UIScreen mainScreen] bounds].size.height == 736)
         {
-            //_daySegment.hidden = YES;
+            _daySegment.hidden = YES;
             self.daysegmentHeight.constant = 0.0f;
             //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,632);
         }
         else if([[UIScreen mainScreen] bounds].size.height == 667)
         {
-            //_daySegment.hidden = YES;
+            _daySegment.hidden = YES;
             self.daysegmentHeight.constant = 0.0f;
             //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,548);
         }
         else
         {
-            //_daySegment.hidden = YES;
+            _daySegment.hidden = YES;
             //_tableView.frame = CGRectMake(self.tableView.frame.origin.x,0,self.tableView.frame.size.width,445);
         }
         self.floating.hidden = NO;
         self.search.tintColor = [UIColor whiteColor];
         self.advanceFilter.tintColor = [UIColor whiteColor];
-        self.notificationOutlet.tintColor = [UIColor whiteColor];
+        notification.tintColor = [UIColor whiteColor];
         self.leaderBoardView.hidden =YES;
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         appDel.event_type = @"Hotspot";
@@ -2019,7 +2071,7 @@
         {
             self.search.tintColor = [UIColor clearColor];
             self.advanceFilter.tintColor = [UIColor clearColor];
-            self.notificationOutlet.tintColor = [UIColor clearColor];
+            notification.tintColor = [UIColor clearColor];
             [self loadLeaderBoardPoints];
             
             self.floating.hidden = YES;
@@ -2146,7 +2198,7 @@
                  strid = [dict objectForKey:@"id"];
                  self->appDel.user_Id = [dict objectForKey:@"user_id"];
              }
-             self.totalPoints.text = [NSString stringWithFormat:@"%s%@","Total points earned",strtotalPoints];
+             self.totalPoints.text = [NSString stringWithFormat:@"%s %@","Total points earned",strtotalPoints];
                  self.loginCount.text = login_points;
                  self.eventShareCount.text = sharing_points;
                  self.checkInCount.text = checkin_points;
@@ -2155,7 +2207,7 @@
          }
          else
          {
-             self.totalPoints.text = [NSString stringWithFormat:@"%s%@","Total points earned",@"0"];
+             self.totalPoints.text = [NSString stringWithFormat:@"%s %@","Total points earned",@"0"];
              self.loginCount.text = @"0";
              self.eventShareCount.text = @"0";
              self.checkInCount.text = @"0";
@@ -2724,7 +2776,8 @@
          if ([msg isEqualToString:@"New Notification"] && [status isEqualToString:@"success"])
          {
              NSString *newNotification = [responseObject objectForKey:@"New_notification"];
-             [self changeNotificationImage:[NSString stringWithFormat:@"%@",newNotification]];
+             self->notificationCount =[NSString stringWithFormat:@"%@",newNotification];
+             [self notificationBarButton];
          }
          else
          {
@@ -2750,15 +2803,15 @@
          NSLog(@"error: %@", error);
      }];
 }
--(void)changeNotificationImage:(NSString *)notificationCount
-{    
-    if ([notificationCount isEqualToString:@"0"])
-    {
-        [self.notificationOutlet setBackgroundImage:[UIImage imageNamed:@"notification.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    }
-    else
-    {
-        [self.notificationOutlet setBackgroundImage:[UIImage imageNamed:@"notificationred.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    }
-}
+//-(void)changeNotificationImage:(NSString *)notificationCount
+//{
+//    if ([notificationCount isEqualToString:@"0"])
+//    {
+//        [self.notificationOutlet setBackgroundImage:[UIImage imageNamed:@"notification.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//    }
+//    else
+//    {
+//        [self.notificationOutlet setBackgroundImage:[UIImage imageNamed:@"notificationred.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//    }
+//}
 @end

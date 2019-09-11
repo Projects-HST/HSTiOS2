@@ -289,6 +289,7 @@
     {
          if (!error)
          {
+             [MBProgressHUD hideHUDForView:self.view animated:YES];
              NSLog(@"fetched user:%@  and Email : %@", result,result[@"email"]);
              NSLog(@"fetched user:%@  and Email : %@", result,result[@"first_name"]);
              self->appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;

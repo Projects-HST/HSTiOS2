@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Heylaapp/LoginViewController.m"
-            timestampString = "589206156.866043"
+            timestampString = "589717587.735016"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "512"
-            endingLineNumber = "512"
+            startingLineNumber = "513"
+            endingLineNumber = "513"
             landmarkName = "-viewTwoSignUpBtn:"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Heylaapp/LoginViewController.m"
-            timestampString = "589206156.866122"
+            timestampString = "589717587.735321"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "494"
-            endingLineNumber = "494"
+            startingLineNumber = "495"
+            endingLineNumber = "495"
             landmarkName = "-viewTwoSignUpBtn:"
             landmarkType = "7">
          </BreakpointContent>
@@ -250,11 +250,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Heylaapp/HomeViewController.m"
-            timestampString = "589206156.866351"
+            timestampString = "589718334.510977"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1808"
-            endingLineNumber = "1808"
+            startingLineNumber = "1860"
+            endingLineNumber = "1860"
             landmarkName = "-segmentAction:"
             landmarkType = "7">
          </BreakpointContent>
@@ -266,60 +266,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Heylaapp/HomeViewController.m"
-            timestampString = "589206156.866411"
+            timestampString = "589718334.511291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1785"
-            endingLineNumber = "1785"
+            startingLineNumber = "1837"
+            endingLineNumber = "1837"
             landmarkName = "-setupSegmentControl"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Heylaapp/BookingViewController.m"
-            timestampString = "589206156.8664809"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "667"
-            endingLineNumber = "667"
-            landmarkName = "-amountBtn:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Heylaapp/BookingViewController.m"
-            timestampString = "589206156.866516"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "748"
-            endingLineNumber = "748"
-            landmarkName = "-plusBtn:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Heylaapp/BookingViewController.m"
-            timestampString = "589206156.8665479"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "821"
-            endingLineNumber = "821"
-            landmarkName = "-plusBtn:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -586,11 +538,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Heylaapp/HomeViewController.m"
-            timestampString = "589206156.86685"
+            timestampString = "589718334.511613"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "532"
-            endingLineNumber = "532"
+            startingLineNumber = "577"
+            endingLineNumber = "577"
             landmarkName = "-locationManager:didFailWithError:"
             landmarkType = "7">
          </BreakpointContent>
@@ -681,13 +633,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Heylaapp/ReviewTicketBookingController.m"
-            timestampString = "589206435.0703911"
+            filePath = "Heylaapp/LoginViewController.m"
+            timestampString = "589717587.735775"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
-            landmarkName = "-payNowButton:"
+            startingLineNumber = "293"
+            endingLineNumber = "293"
+            landmarkName = "-facebookInfo"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -697,13 +649,93 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Heylaapp/ReviewTicketBookingController.m"
-            timestampString = "589206449.414512"
+            filePath = "Heylaapp/LoginViewController.m"
+            timestampString = "589717587.735975"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "271"
-            endingLineNumber = "271"
-            landmarkName = "-paytmKaro"
+            startingLineNumber = "312"
+            endingLineNumber = "312"
+            landmarkName = "-facebookLogin"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Heylaapp/LoginViewController.m"
+            timestampString = "589717587.736165"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "333"
+            endingLineNumber = "333"
+            landmarkName = "-facebookLogin"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Heylaapp/LoginViewController.m"
+            timestampString = "589717587.736354"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "602"
+            endingLineNumber = "602"
+            landmarkName = "-viewTwoSignUpBtn:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Heylaapp/LoginViewController.m"
+            timestampString = "589717587.736554"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "591"
+            endingLineNumber = "591"
+            landmarkName = "-viewTwoSignUpBtn:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Heylaapp/HomeViewController.m"
+            timestampString = "589718334.511905"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "619"
+            endingLineNumber = "619"
+            landmarkName = "-generalEventsList"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Heylaapp/HomeViewController.m"
+            timestampString = "589781973.671991"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1427"
+            endingLineNumber = "1427"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

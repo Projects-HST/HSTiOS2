@@ -14,7 +14,6 @@
     AppDelegate *appDel;
 }
 @end
-
 @implementation CCResultViewController
 //@synthesize transStatus;
 
@@ -22,7 +21,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        //Custom initialization
     }
     return self;
 }
@@ -39,7 +38,7 @@
     self.navigationItem.titleView = imgView;
     self.navigationItem.hidesBackButton = YES;
     appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//    self.mainView.layer.cornerRadius = 5.0;
+//  self.mainView.layer.cornerRadius = 5.0;
     self.continueOtlet.layer.cornerRadius = 5.0;
     NSDate *currentDate = [[NSDate alloc] init];
     NSTimeZone *timeZone = [NSTimeZone defaultTimeZone];
@@ -55,7 +54,9 @@
         self.orderNumber.text = appDel.order_id;
         self.transcationDate.text = localDateString;
         self.amount.text = appDel.price;
-        self.statusLabel.text = @"Transaction Success !";
+        self.newtxt.text = @"Yay!";
+        self.statusLabel.text = @"Transaction Successful!";
+        self.newtxt.textColor = [UIColor colorWithRed:64/255.0f green:181/255.0f blue:73/255.0f alpha:1.0];
         self.statusLabel.textColor = [UIColor colorWithRed:64/255.0f green:181/255.0f blue:73/255.0f alpha:1.0];
         self.FinalStatus.text = @"Success";
         [_continueOtlet setTitle:@"Continue" forState:UIControlStateNormal];
@@ -68,7 +69,9 @@
         self.orderNumber.text = appDel.order_id;
         self.transcationDate.text = localDateString;
         self.amount.text = appDel.price;
-        self.statusLabel.text = @"Transaction Cancel";
+        self.newtxt.text = @"Aw!";
+        self.statusLabel.text = @"Transaction Cancelled!";
+        self.newtxt.textColor = [UIColor colorWithRed:244/255.0f green:163/255.0f blue:55/255.0f alpha:1.0];
         self.statusLabel.textColor = [UIColor colorWithRed:244/255.0f green:163/255.0f blue:55/255.0f alpha:1.0];
         self.FinalStatus.text = @"Canceled";
         [_continueOtlet setTitle:@"Try Again" forState:UIControlStateNormal];
@@ -81,7 +84,9 @@
         self.orderNumber.text = appDel.order_id;
         self.transcationDate.text = localDateString;
         self.amount.text = appDel.price;
-        self.statusLabel.text = @"Transaction Failed";
+        self.newtxt.text = @"Aw!";
+        self.statusLabel.text = @"Transaction Failed!";
+        self.newtxt.textColor = [UIColor colorWithRed:191/255.0f green:59/255.0f blue:48/255.0f alpha:1.0];
         self.statusLabel.textColor = [UIColor colorWithRed:191/255.0f green:59/255.0f blue:48/255.0f alpha:1.0];
         self.FinalStatus.text = @"Failed";
         [_continueOtlet setTitle:@"Try Again" forState:UIControlStateNormal];

@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *orderNumber;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *statusImageView;
+@property (weak, nonatomic) IBOutlet UILabel *newtxt;
 //- (IBAction)OKBtn:(id)sender;
 //    @property (strong, nonatomic) IBOutlet UILabel *resultLabel;
 //    @property (strong, nonatomic) NSString *transStatus;

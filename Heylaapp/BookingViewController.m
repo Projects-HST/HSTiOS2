@@ -123,7 +123,7 @@
                  
                  [self->monthName addObject:strDate];
              }
-             [self->monthName insertObject:@"Select the Date" atIndex:0];
+             [self->monthName insertObject:@"Select Date" atIndex:0];
          }
          else
          {
@@ -261,7 +261,7 @@
         self.eventTime.text = selectedTime;
         appDel.selected_Event_time = self.eventTime.text;
         [self getPlans];
-        self.eventPlan.text = @"Plan";
+//        self.eventPlan.text = @"Plan";
         self.eventPlan.textColor = [UIColor blackColor];
         self.minusOulet.enabled = YES;
         self.plusOutlet.enabled = YES;
@@ -273,11 +273,12 @@
     }
     else if ([self.eventPlan isFirstResponder])
     {
-        if ([self.eventPlan.text isEqualToString:@"Select Your Plan"])
+        
+        if ([selectedPlan isEqualToString:@"Select Plan"])
         {
             UIAlertController *alert= [UIAlertController
                                        alertControllerWithTitle:@"Heyla"
-                                       message:@"Please select your plan"
+                                       message:@"Please pick a plan!"
                                        preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction *ok = [UIAlertAction
@@ -349,11 +350,11 @@
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     }
-    else if ([self.eventDate.text isEqualToString:@"Select the Date"])
+    else if ([self.eventDate.text isEqualToString:@"Select Date"])
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Date Not Selected"
+                                   message:@"Date not selected!"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -449,7 +450,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Please select the time"
+                                   message:@"Please select a time!"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -472,7 +473,7 @@
         self.planUmgView.hidden = YES;
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Please select the time"
+                                   message:@"Please select a time!"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -546,7 +547,7 @@
                  self.eventPlan.enabled = YES;
                  self.planUmgView.hidden = NO;
                  [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"S$.",@"0"] forState:UIControlStateNormal];
-                 [self->planName_seatrate insertObject:@"Select Your Plan" atIndex:0];
+                 [self->planName_seatrate insertObject:@"Select Plan" atIndex:0];
                  [self->datapickerView reloadAllComponents];
                 
              }
@@ -612,7 +613,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Please select your time"
+                                   message:@"Please select a time!"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -626,29 +627,29 @@
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     }
-    else if ([self.eventPlan.text isEqualToString:@"Plan"])
+//    else if ([self.eventPlan.text isEqualToString:@"Select Plan"])
+//    {
+//        UIAlertController *alert= [UIAlertController
+//                                   alertControllerWithTitle:@"Heyla"
+//                                   message:@"Please pick a plan!"
+//                                   preferredStyle:UIAlertControllerStyleAlert];
+//
+//        UIAlertAction *ok = [UIAlertAction
+//                             actionWithTitle:@"OK"
+//                             style:UIAlertActionStyleDefault
+//                             handler:^(UIAlertAction * action)
+//                             {
+//
+//                             }];
+//
+//        [alert addAction:ok];
+//        [self presentViewController:alert animated:YES completion:nil];
+//    }
+    else if ([self.eventPlan.text isEqualToString:@"Select Plan"])
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Please select your plan"
-                                   preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 
-                             }];
-        
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    else if ([self.eventPlan.text isEqualToString:@"Select Your Plan"])
-    {
-        UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"Please select your plan"
+                                   message:@"Please pick a plan!"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -749,7 +750,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Please select your Plan"
+                                   message:@"Please pick a plan!"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -767,7 +768,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"please select your time"
+                                   message:@"Please select a time!"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -785,7 +786,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"please select your plan"
+                                   message:@"Please pick a plan!"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -799,11 +800,11 @@
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     }
-    else if ([self.eventPlan.text isEqualToString:@"Select Your Plan"])
+    else if ([self.eventPlan.text isEqualToString:@"Select Plan"])
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"please select your plan"
+                                   message:@"Please pick a plan!"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -920,7 +921,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@""
+                                   message:@"Please pick a plan!"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -934,11 +935,12 @@
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     }
+    
     else if ([self.eventTime.text isEqualToString:@"HH : MM"])
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"please select your time"
+                                   message:@"Please select a time!"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -952,11 +954,12 @@
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     }
-    else if ([self.eventPlan.text isEqualToString:@"Plan"])
+    
+    else if ([self.eventPlan.text isEqualToString:@"Select Plan"])
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"please select your plan"
+                                   message:@"Please pick a plan!"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -970,7 +973,8 @@
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     }
-    else if ([self.eventPlan.text isEqualToString:@"Select Your Plan"])
+    
+    else if ([self.eventPlan.text isEqualToString:@"Select Plan"])
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
