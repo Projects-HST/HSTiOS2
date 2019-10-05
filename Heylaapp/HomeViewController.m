@@ -11,6 +11,7 @@
 #import "LSFloatingActionMenu.h"
 #import <QuartzCore/QuartzCore.h>
 #import "LGPlusButtonsView.h"
+#import "MBProgressHUD.h"
 
 @interface HomeViewController ()
 {
@@ -74,6 +75,7 @@
     NSString *notificationCount;
 
 }
+
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UIView *exampleView;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
@@ -82,7 +84,6 @@
 @property (nonatomic, strong) MKMapView *mapView;
 @property (nonatomic, strong) UISearchController *searchController;
 @property (strong, nonatomic) LGPlusButtonsView *plusButtonsViewMain;
-
 
 @end
 
@@ -96,10 +97,20 @@
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     UIImage *img = [UIImage imageNamed:@"heylalogomainpage.png"];
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    [imgView setImage:img];
-    [imgView setContentMode:UIViewContentModeScaleAspectFit];
-    self.navigationItem.titleView = imgView;
+//    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+//    [imgView setImage:img];
+//    [imgView setContentMode:UIViewContentModeScaleAspectFit];
+//    self.navigationItem.titleView = imgView;
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [button addTarget:self
+               action:@selector(navTitleBtn:)
+     forControlEvents:UIControlEventTouchUpInside];
+    [button setImage:img forState:UIControlStateNormal];
+    button.frame = CGRectMake(0, 0, 30.0, 30.0);
+    button.tintColor = UIColor.whiteColor;
+    self.navigationItem.titleView = button;
+    
     [self notificationBarButton];
     adv_status = [[NSMutableArray alloc]init];
     advertisement = [[NSMutableArray alloc]init];
@@ -222,8 +233,9 @@
     self.searchController.delegate = self;
     self.searchController.dimsBackgroundDuringPresentation = NO; // default is YES
     self.searchController.hidesNavigationBarDuringPresentation = NO;
-    self.searchController.searchBar.barTintColor = [UIColor colorWithRed:62/255.0f green:142/255.0f blue:204/255.0f alpha:1.0];
+    self.searchController.searchBar.barTintColor = [UIColor colorWithRed:62/255.0f green:142/255.0f blue:203/255.0f alpha:1.0];
     self.searchController.searchBar.tintColor = [UIColor whiteColor];
+ //   self.searchController.searchTextField.backgroundColor = [UIColor whiteColor];
     
     _eventArray = [[NSMutableArray alloc] init];
     _filterdItems = [[NSMutableArray alloc]init];
@@ -321,6 +333,7 @@
     //  [self generalEventsList];
     self.search.tintColor = [UIColor whiteColor];
     self.advanceFilter.tintColor = [UIColor whiteColor];
+    self.notificationOutlet.tintColor = [UIColor whiteColor];
     self->appDel.login_type = [[NSUserDefaults standardUserDefaults]objectForKey:@"login_type"];
 //    self.LeaderBoardimageView.layer.cornerRadius = self.LeaderBoardimageView.frame.size.width / 2;
 //    self.LeaderBoardimageView.clipsToBounds = YES;
@@ -330,12 +343,24 @@
 //    [self.tableView setContentOffset: CGPointZero animated: YES];
 }
 
+-(IBAction)notificationBtn:(id)sender
+{
+    if ([notificationCount isEqualToString:@"0"])
+    {
+        [self performSegueWithIdentifier:@"notificationSegue" sender:self];
+    }
+    else
+    {
+        [self performSegueWithIdentifier:@"notificationSegue" sender:self];
+    }
+}
+
 -(void)notificationBarButton
 {
     if ([notificationCount isEqualToString:@"0"])
     {
         UIImage* image3 = [UIImage imageNamed:@"notification.png"];
-        CGRect frameimg = CGRectMake(15,5, 25,25);
+        CGRect frameimg = CGRectMake(15,5, 24,24);
         
         UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
         [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
@@ -349,7 +374,7 @@
     else
     {
         UIImage* image3 = [UIImage imageNamed:@"notificationred.png"];
-        CGRect frameimg = CGRectMake(15,5, 25,25);
+        CGRect frameimg = CGRectMake(15,5, 24,24);
         
         UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
         [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
@@ -362,24 +387,18 @@
     }
    
 }
--(IBAction)notificationBtn:(id)sender
+-(IBAction)navTitleBtn:(id)sender
 {
-    if ([notificationCount isEqualToString:@"0"])
-    {
-        [self performSegueWithIdentifier:@"notificationSegue" sender:self];
-    }
-    else
-    {
-        [self performSegueWithIdentifier:@"notificationSegue" sender:self];
-    }
+       NSIndexPath* top = [NSIndexPath indexPathForRow:NSNotFound inSection:0];
+       [self.tableView scrollToRowAtIndexPath:top atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    NSString *str = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+    NSString *str = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfostat"];
     if ([str isEqualToString:@"alertUserIfno"])
     {
         
-        [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"userInfo"];
+        [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"userInfostat"];
         UIAlertController * alert=[UIAlertController alertControllerWithTitle:@"Explore Heyla"
                                                                           message:@"Learn about Heyla app to make the most of it"
                                                                    preferredStyle:UIAlertControllerStyleAlert];
@@ -523,11 +542,120 @@
     [self.tableView addSubview:_plusButtonsViewMain];
 }
 
+-(void)setUpFloatingButtonForMapview
+{
+    _plusButtonsViewMain = [LGPlusButtonsView plusButtonsViewWithNumberOfButtons:4
+                                                         firstButtonIsPlusButton:YES
+                                                                   showAfterInit:YES
+                                                                   actionHandler:^(LGPlusButtonsView *plusButtonView, NSString *title, NSString *description, NSUInteger index)
+                            {
+                                NSLog(@"actionHandler | title: %@, description: %@, index: %lu", title, description, (long unsigned)index);
+                                
+                                if (index == 1)
+                                {
+                                    [self performSegueWithIdentifier:@"to_nearby" sender:self];
+                                }
+                                else if (index == 2)
+                                {
+                                    self.searchController.searchBar.hidden = YES;
+                                    UIStoryboard *storyboard  = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                                    HomeViewController *homeviewController = [storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
+                                    [self.navigationController pushViewController:homeviewController animated:YES];
+                                    self->mapViewFlag = @"NO";
+                                }
+                                else if (index == 3)
+                                {
+                                    self.navigationItem.rightBarButtonItems = nil;
+                                    self.searchController.searchBar.hidden = YES;
+                                    self.tipsLabel.text = [NSString stringWithFormat:@"Click at index %d", (int)index];
+                                    if ([self->appDel.event_categoery_Ref isEqualToString:@"general"])
+                                    {
+                                        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                                        [self->_mapView setMapType:MKMapTypeStandard];
+                                        self->mapViewFlag = @"YES";
+                                        [self loadUserLocation];
+                                    }
+                                    else if ([self->appDel.event_categoery_Ref isEqualToString:@"popular"])
+                                    {
+                                        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                                        [self->_mapView setMapType:MKMapTypeStandard];
+                                        self->mapViewFlag = @"YES";
+                                        [self loadUserLocation];
+                                    }
+                                    else if ([self->appDel.event_categoery_Ref isEqualToString:@"hotspot"])
+                                    {
+                                        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                                        [self->_mapView setMapType:MKMapTypeStandard];
+                                        self->mapViewFlag = @"YES";
+                                        [self loadUserLocation];
+                                    }
+                                }
+                            }];
+    
+    _plusButtonsViewMain.observedScrollView = self.tableView;
+    _plusButtonsViewMain.showHideOnScroll = NO;
+    _plusButtonsViewMain.coverColor = [UIColor colorWithWhite:1.f alpha:0.7];
+    _plusButtonsViewMain.position = LGPlusButtonsViewPositionBottomRight;
+    _plusButtonsViewMain.plusButtonAnimationType = LGPlusButtonAnimationTypeRotate;
+    
+    [_plusButtonsViewMain setButtonsTitles:@[@"+", @"", @"", @""] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setDescriptionsTexts:@[@"", @"Nearby Events", @"List View", @"Map View"]];
+    [_plusButtonsViewMain setButtonsImages:@[[NSNull new], [UIImage imageNamed:@"nearby"], [UIImage imageNamed:@"listview"], [UIImage imageNamed:@"mapview"]]
+                                  forState:UIControlStateNormal
+                            forOrientation:LGPlusButtonsViewOrientationAll];
+    
+    [_plusButtonsViewMain setButtonsAdjustsImageWhenHighlighted:NO];
+    [_plusButtonsViewMain setButtonsBackgroundColor:[UIColor colorWithRed:0.f green:0.5 blue:1.f alpha:1.f] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setButtonsBackgroundColor:[UIColor colorWithRed:0.2 green:0.6 blue:1.f alpha:1.f] forState:UIControlStateHighlighted];
+    [_plusButtonsViewMain setButtonsBackgroundColor:[UIColor colorWithRed:0.2 green:0.6 blue:1.f alpha:1.f] forState:UIControlStateHighlighted|UIControlStateSelected];
+    [_plusButtonsViewMain setButtonsSize:CGSizeMake(44.f, 44.f) forOrientation:LGPlusButtonsViewOrientationAll];
+    [_plusButtonsViewMain setButtonsLayerCornerRadius:44.f/2.f forOrientation:LGPlusButtonsViewOrientationAll];
+    [_plusButtonsViewMain setButtonsTitleFont:[UIFont boldSystemFontOfSize:24.f] forOrientation:LGPlusButtonsViewOrientationAll];
+    [_plusButtonsViewMain setButtonsLayerShadowColor:[UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1.f]];
+    [_plusButtonsViewMain setButtonsLayerShadowOpacity:0.5];
+    [_plusButtonsViewMain setButtonsLayerShadowRadius:3.f];
+    [_plusButtonsViewMain setButtonsLayerShadowOffset:CGSizeMake(0.f, 2.f)];
+    [_plusButtonsViewMain setButtonAtIndex:0 size:CGSizeMake(56.f, 56.f)
+                            forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    [_plusButtonsViewMain setButtonAtIndex:0 layerCornerRadius:56.f/2.f
+                            forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    [_plusButtonsViewMain setButtonAtIndex:0 titleFont:[UIFont systemFontOfSize:40.f]
+                            forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    [_plusButtonsViewMain setButtonAtIndex:0 titleOffset:CGPointMake(0.f, -3.f) forOrientation:LGPlusButtonsViewOrientationAll];
+    [_plusButtonsViewMain setButtonAtIndex:3 backgroundColor:[UIColor colorWithRed:208.0/255 green:45.0/255 blue:39.0/255 alpha:1.0] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setButtonAtIndex:3 backgroundColor:[UIColor colorWithRed:208.0/255 green:45.0/255 blue:39.0/255 alpha:1.0] forState:UIControlStateHighlighted];
+    [_plusButtonsViewMain setButtonAtIndex:1 backgroundColor:[UIColor colorWithRed:1.f green:0.5 blue:0.f alpha:1.f] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setButtonAtIndex:1 backgroundColor:[UIColor colorWithRed:1.f green:0.5 blue:0.f alpha:1.f] forState:UIControlStateHighlighted];
+    [_plusButtonsViewMain setButtonAtIndex:2 backgroundColor:[UIColor colorWithRed:0.f green:0.7 blue:0.f alpha:1.f] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setButtonAtIndex:2 backgroundColor:[UIColor colorWithRed:0.f green:0.7 blue:0.f alpha:1.f] forState:UIControlStateHighlighted];
+    
+    [_plusButtonsViewMain setDescriptionsBackgroundColor:[UIColor whiteColor]];
+    [_plusButtonsViewMain setDescriptionsTextColor:[UIColor blackColor]];
+    [_plusButtonsViewMain setDescriptionsLayerShadowColor:[UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1.f]];
+    [_plusButtonsViewMain setDescriptionsLayerShadowOpacity:0.25];
+    [_plusButtonsViewMain setDescriptionsLayerShadowRadius:1.f];
+    [_plusButtonsViewMain setDescriptionsLayerShadowOffset:CGSizeMake(0.f, 1.f)];
+    [_plusButtonsViewMain setDescriptionsLayerCornerRadius:6.f forOrientation:LGPlusButtonsViewOrientationAll];
+    [_plusButtonsViewMain setDescriptionsContentEdgeInsets:UIEdgeInsetsMake(4.f, 8.f, 4.f, 8.f) forOrientation:LGPlusButtonsViewOrientationAll];
+    
+    for (NSUInteger i=1; i<=3; i++)
+        [_plusButtonsViewMain setButtonAtIndex:i offset:CGPointMake(-6.f, 0.f)
+                                forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        [_plusButtonsViewMain setButtonAtIndex:0 titleOffset:CGPointMake(0.f, -2.f) forOrientation:LGPlusButtonsViewOrientationLandscape];
+        [_plusButtonsViewMain setButtonAtIndex:0 titleFont:[UIFont systemFontOfSize:32.f] forOrientation:LGPlusButtonsViewOrientationLandscape];
+    }
+    
+    [self.mapView addSubview:_plusButtonsViewMain];
+}
+
 - (void)loadUserLocation
 {
-    _mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height - 50)];
-    [self.tableView addSubview:_mapView];
-    [self.mapView addSubview:_plusButtonsViewMain];
+    _mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0,0,self.containerView.bounds.size.width,self.containerView.bounds.size.height)];
+    [self.containerView addSubview:_mapView];
+    [self setUpFloatingButtonForMapview];
     objLocationManager = [[CLLocationManager alloc] init];
     objLocationManager.delegate = self;
     objLocationManager.distanceFilter = kCLDistanceFilterNone;
@@ -593,7 +721,6 @@
 }
 -(void)generalEventsList
 {
-   // [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSString *user_id = [[NSUserDefaults standardUserDefaults]objectForKey:@"stat_user_id"];
     self->appDel.user_Id = user_id;
@@ -619,7 +746,9 @@
     NSLog(@"%@",api);
     [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
      {
+        [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
          NSLog(@"%@",responseObject);
+        [MBProgressHUD hideHUDForView:self.tableView animated:YES];
          NSString *msg = [responseObject objectForKey:@"msg"];
          NSString *status = [responseObject objectForKey:@"status"];
          if ([msg isEqualToString:@"View Events"] && [status isEqualToString:@"success"])
@@ -700,18 +829,18 @@
                  self->date = [[NSDate alloc] init];
                  self->date = [self->dateFormatter dateFromString:strStart_date];
                  // converting into our required date format
-                 [self->dateFormatter setDateFormat:@"MMMM dd yyyy"];
+                 [self->dateFormatter setDateFormat:@"dd-MMM-yyyy"];
                  self->reqStartDateString = [self->dateFormatter stringFromDate:self->date];
-                 NSLog(@"date is %@", self->reqStartDateString);
-                 
+//                 NSLog(@"date is %@", self->reqStartDateString);
+//
                  self->dateFormatter = [[NSDateFormatter alloc] init];
                  [self->dateFormatter setDateFormat:@"yyyy-MM-dd"];
                  self->date = [[NSDate alloc] init];
                  self->date = [self->dateFormatter dateFromString:strend_date];
                  // converting into our required date format
-                 [self->dateFormatter setDateFormat:@"MMMM dd yyyy"];
+                 [self->dateFormatter setDateFormat:@"dd-MMM-yyyy"];
                  self->reqEndDateString = [self->dateFormatter stringFromDate:self->date];
-                 NSLog(@"date is %@", self->reqEndDateString);
+//                 NSLog(@"date is %@", self->reqEndDateString);
                  
                  [self->adv_status addObject:strAdv_status];
                  [self->advertisement addObject:strAdvertisement];
@@ -748,7 +877,6 @@
 //               [self->to_month_label addObject:self->strToMonth];
 
              }
-//             [MBProgressHUD hideHUDForView:self.view animated:YES];
              if ([self->mapViewFlag isEqualToString:@"YES"])
              {
                  [self loadUserLocation];
@@ -790,7 +918,7 @@
 }
 -(void)generalPopularList
 {
-//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
     self.searchController.searchBar.hidden = NO;
     self->appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
@@ -811,9 +939,8 @@
     
     [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
      {
-         
+         [MBProgressHUD hideHUDForView:self.tableView animated:YES];
          NSLog(@"%@",responseObject);
-//         [MBProgressHUD hideHUDForView:self.view animated:YES];
          NSString *msg = [responseObject objectForKey:@"msg"];
          NSString *status = [responseObject objectForKey:@"status"];
          
@@ -896,7 +1023,7 @@
                  self->date = [[NSDate alloc] init];
                  self->date = [self->dateFormatter dateFromString:strStart_date];
                  // converting into our required date format
-                 [self->dateFormatter setDateFormat:@"MMMM dd yyyy"];
+                 [self->dateFormatter setDateFormat:@"dd-MMM-yyyy"];
                  self->reqStartDateString = [self->dateFormatter stringFromDate:self->date];
                  NSLog(@"date is %@",self->reqStartDateString);
                  
@@ -905,7 +1032,7 @@
                  self->date = [[NSDate alloc] init];
                  self->date = [self->dateFormatter dateFromString:strend_date];
                  // converting into our required date format
-                 [self->dateFormatter setDateFormat:@"MMMM dd yyyy"];
+                 [self->dateFormatter setDateFormat:@"dd-MMM-yyyy"];
                  self->reqEndDateString = [self->dateFormatter stringFromDate:self->date];
                  NSLog(@"date is %@",self->reqEndDateString);
                  
@@ -945,7 +1072,6 @@
 //                 [self->to_month_label addObject:self->strToMonth];
 
              }
-             
              if ([self->mapViewFlag isEqualToString:@"YES"])
              {
                  [self loadUserLocation];
@@ -988,7 +1114,7 @@
 }
 -(void)AllEventsList
 {
-//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
     self.searchController.searchBar.hidden = NO;
     self->appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
@@ -1009,8 +1135,8 @@
     
     [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
      {
+        [MBProgressHUD hideHUDForView:self.tableView animated:YES];
          NSLog(@"%@",responseObject);
-//         [MBProgressHUD hideHUDForView:self.view animated:YES];
          NSString *msg = [responseObject objectForKey:@"msg"];
          NSString *status = [responseObject objectForKey:@"status"];
          
@@ -1093,7 +1219,7 @@
                  self->date = [[NSDate alloc] init];
                  self->date = [self->dateFormatter dateFromString:strStart_date];
                  //converting into our required date format
-                 [self->dateFormatter setDateFormat:@"EEEE, MMM dd, yyyy"];
+                 [self->dateFormatter setDateFormat:@"dd-MMM-yyyy"];
                  self->reqStartDateString = [self->dateFormatter stringFromDate:self->date];
                  NSLog(@"date is %@", self->reqStartDateString);
                  
@@ -1102,7 +1228,7 @@
                  self->date = [[NSDate alloc] init];
                  self->date = [self->dateFormatter dateFromString:strend_date];
                  //converting into our required date format
-                 [self->dateFormatter setDateFormat:@"dd MMM yyyy"];
+                 [self->dateFormatter setDateFormat:@"dd-MMM-yyyy"];
                  self->reqEndDateString = [self->dateFormatter stringFromDate:self->date];
                  NSLog(@"date is %@",self-> reqEndDateString);
                  
@@ -1149,7 +1275,7 @@
              {
                  self.tableView.hidden = NO;
                  self->_daySegment.hidden = YES;
-                 self->hotspotFlag = @"YES";
+                 self->hotspotFlag = @"NO";
                  [self.tableView reloadData];
              }
          }
@@ -1182,7 +1308,7 @@
 }
 -(void)generalHotspotList
 {
-//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
     self.searchController.searchBar.hidden = NO;
     self->appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
@@ -1203,8 +1329,8 @@
     
     [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
      {
+        [MBProgressHUD hideHUDForView:self.tableView animated:YES];
          NSLog(@"%@",responseObject);
-//         [MBProgressHUD hideHUDForView:self.view animated:YES];
          NSString *msg = [responseObject objectForKey:@"msg"];
          NSString *status = [responseObject objectForKey:@"status"];
          
@@ -1287,7 +1413,7 @@
                  self->date = [[NSDate alloc] init];
                  self->date = [self->dateFormatter dateFromString:strStart_date];
                  // converting into our required date format
-                 [self->dateFormatter setDateFormat:@"EEEE, MMM dd, yyyy"];
+                 [self->dateFormatter setDateFormat:@"dd-MMM-yyyy"];
                  self->reqStartDateString = [self->dateFormatter stringFromDate:self->date];
                  NSLog(@"date is %@", self->reqStartDateString);
                  
@@ -1296,7 +1422,7 @@
                  self->date = [[NSDate alloc] init];
                  self->date = [self->dateFormatter dateFromString:strend_date];
                  // converting into our required date format
-                 [self->dateFormatter setDateFormat:@"dd MMM yyyy"];
+                 [self->dateFormatter setDateFormat:@"dd-MMM-yyyy"];
                  self->reqEndDateString = [self->dateFormatter stringFromDate:self->date];
                  NSLog(@"date is %@",self-> reqEndDateString);
                  
@@ -1565,7 +1691,7 @@
                 cell.detailView.hidden = YES;
                 cell.paidView.hidden = YES;
                 cell.advDarkView.hidden = NO;
-
+                
                 cell.eventName.text = [event_name objectAtIndex:indexPath.row];
                 cell.eventLocation.text = [event_venue objectAtIndex:indexPath.row];
                 cell.eventStatus.text = [event_type objectAtIndex:indexPath.row];
@@ -1611,8 +1737,6 @@
                  }];
                 cell.paidView.layer.cornerRadius = 3.0;
                 cell.paidView.clipsToBounds = YES;
-                cell.cellView.layer.cornerRadius = 5.0;
-                cell.cellView.clipsToBounds = YES;
                 cell.eventLocation.text = [event_venue objectAtIndex:indexPath.row];
                 cell.eventStatus.text = [event_type objectAtIndex:indexPath.row];
                 if ([cell.eventStatus.text  isEqual: @"Paid"])
@@ -1628,6 +1752,8 @@
                 cell.eventTime.text = [NSString stringWithFormat:@"%@ - %@",strStartDate,strEndTime];
             }
         }
+                cell.cellView.layer.cornerRadius = 3.0;
+                cell.cellView.clipsToBounds = YES;
     }
     return cell;
 }
@@ -1683,6 +1809,9 @@
     NSUInteger intbooking_status = [event_name indexOfObject:appDel.event_Name];
     appDel.booking_status = booking_status[intbooking_status];
     
+     NSUInteger inthotspotStatus = [event_name indexOfObject:appDel.event_Name];
+     appDel.hotspotStatus = hotspot_status[inthotspotStatus];
+    
     appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
 //    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
@@ -1727,6 +1856,7 @@
              self->appDel.event_rating = @"";
              self->appDel.reviewList_id = @"";
              self->appDel.reviewUsername = @"";
+             [[NSUserDefaults standardUserDefaults]setObject:@"NO" forKey:@"advnce_filter"];
              [self performSegueWithIdentifier:@"home_eventdetail" sender:self];
          }
      }
@@ -1750,21 +1880,21 @@
         return 225;
     }
 }
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        return 410;
-    }
-    else if ([[UIScreen mainScreen] bounds].size.height == 667)
-    {
-        return UITableViewAutomaticDimension;
-    }
-    else
-    {
-        return 225;
-    }
-}
+//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+//       {
+//           return 410;
+//       }
+//       else if ([[UIScreen mainScreen] bounds].size.height == 667)
+//       {
+//           return 225;
+//       }
+//       else
+//       {
+//           return 225;
+//      }
+//}
 -(void)setupSegmentControl
 {
     NSArray<NSString *> *titles = @[@"Favourite", @"Popular",@"All Events", @"HotSpot", @"LeaderBoard"];
@@ -1892,9 +2022,10 @@
            // _tableView.frame = CGRectMake(self.tableView.frame.origin.x,52,self.tableView.frame.size.width,414);
         }
         self.floating.hidden = NO;
-        self.search.tintColor = [UIColor whiteColor];
-        self.advanceFilter.tintColor = [UIColor whiteColor];
-        notification.tintColor = [UIColor whiteColor];
+//        self.search.tintColor = [UIColor whiteColor];
+//        self.advanceFilter.tintColor = [UIColor whiteColor];
+//        self.notificationOutlet.tintColor = [UIColor whiteColor];
+//        notification.tintColor = [UIColor whiteColor];
         self.leaderBoardView.hidden =YES;
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         self.daySegment.selectedSegmentIndex = 0;
@@ -1902,6 +2033,7 @@
         appDel.event_type = @"Favourite";
         self.search.tintColor = [UIColor whiteColor];
         self.advanceFilter.tintColor = [UIColor whiteColor];
+        self.notificationOutlet.tintColor = [UIColor whiteColor];
         [self generalEventsList];
     }
     else if (_segmentedControl.selectedSegmentIndex == 1)
@@ -1939,13 +2071,14 @@
         self.floating.hidden = NO;
         self.search.tintColor = [UIColor whiteColor];
         self.advanceFilter.tintColor = [UIColor whiteColor];
+        self.notificationOutlet.tintColor = [UIColor whiteColor];
         self.leaderBoardView.hidden =YES;
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         appDel.event_type = @"Popular";
         self.daySegment.selectedSegmentIndex = 0;
         dayTypeFlag = @"All";
-        self.search.tintColor = [UIColor whiteColor];
-        self.advanceFilter.tintColor = [UIColor whiteColor];
+//        self.search.tintColor = [UIColor whiteColor];
+//        self.advanceFilter.tintColor = [UIColor whiteColor];
         [self generalPopularList];
     }
     else if (_segmentedControl.selectedSegmentIndex == 2)
@@ -1984,12 +2117,13 @@
         self.search.tintColor = [UIColor whiteColor];
         self.advanceFilter.tintColor = [UIColor whiteColor];
         notification.tintColor = [UIColor whiteColor];
+        self.notificationOutlet.tintColor = [UIColor whiteColor];
         self.leaderBoardView.hidden =YES;
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         appDel.event_type = @"All";
         dayTypeFlag = @"All";
-        self.search.tintColor = [UIColor whiteColor];
-        self.advanceFilter.tintColor = [UIColor whiteColor];
+//        self.search.tintColor = [UIColor whiteColor];
+//        self.advanceFilter.tintColor = [UIColor whiteColor];
         [self AllEventsList];
     }
     else if (_segmentedControl.selectedSegmentIndex == 3)
@@ -2027,12 +2161,13 @@
         self.search.tintColor = [UIColor whiteColor];
         self.advanceFilter.tintColor = [UIColor whiteColor];
         notification.tintColor = [UIColor whiteColor];
+        self.notificationOutlet.tintColor = [UIColor whiteColor];
         self.leaderBoardView.hidden =YES;
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         appDel.event_type = @"Hotspot";
         dayTypeFlag = @"All";
-        self.search.tintColor = [UIColor whiteColor];
-        self.advanceFilter.tintColor = [UIColor whiteColor];
+//        self.search.tintColor = [UIColor whiteColor];
+//        self.advanceFilter.tintColor = [UIColor whiteColor];
         [self generalHotspotList];
 
     }
@@ -2071,7 +2206,7 @@
         {
             self.search.tintColor = [UIColor clearColor];
             self.advanceFilter.tintColor = [UIColor clearColor];
-            notification.tintColor = [UIColor clearColor];
+            self.notificationOutlet.tintColor = [UIColor clearColor];
             [self loadLeaderBoardPoints];
             
             self.floating.hidden = YES;
@@ -2128,17 +2263,17 @@
          }];
     }
     
-    self.lb_total_points.layer.cornerRadius = 10.0;
+    self.lb_total_points.layer.cornerRadius = 3.0;
     self.lb_total_points.clipsToBounds = YES;
-    self.loginView.layer.cornerRadius = 0.0;
+    self.loginView.layer.cornerRadius = 3.0;
     self.loginView.clipsToBounds = YES;
-    self.eventShareView.layer.cornerRadius = 0.0;
+    self.eventShareView.layer.cornerRadius = 3.0;
     self.eventShareView.clipsToBounds = YES;
-    self.reviewView.layer.cornerRadius = 0.0;
+    self.reviewView.layer.cornerRadius = 3.0;
     self.reviewView.clipsToBounds = YES;
-    self.bookingView.layer.cornerRadius = 0.0;
+    self.bookingView.layer.cornerRadius = 3.0;
     self.bookingView.clipsToBounds = YES;
-    self.checkInView.layer.cornerRadius = 0.0;
+    self.checkInView.layer.cornerRadius = 3.0;
     self.checkInView.clipsToBounds = YES;
     
     NSString *user_id = [[NSUserDefaults standardUserDefaults]objectForKey:@"stat_user_id"];

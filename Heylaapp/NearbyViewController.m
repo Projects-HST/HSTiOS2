@@ -595,7 +595,7 @@
                      self->date = [[NSDate alloc] init];
                      self->date = [self->dateFormatter dateFromString:strStart_date];
                      // converting into our required date format
-                     [self->dateFormatter setDateFormat:@"dd MMM yyyy"];
+                     [self->dateFormatter setDateFormat:@"dd-MMM-yyyy"];
                      self->reqDateString = [self->dateFormatter stringFromDate:self->date];
                      NSLog(@"date is %@",self->reqDateString);
                      
@@ -604,7 +604,7 @@
                      self->date = [[NSDate alloc] init];
                      self->date = [self->dateFormatter dateFromString:strend_date];
                      // converting into our required date format
-                     [self->dateFormatter setDateFormat:@"MMMM dd yyyy"];
+                     [self->dateFormatter setDateFormat:@"dd-MMM-yyyy"];
                      self->reqDateString = [self->dateFormatter stringFromDate:self->date];
                      NSLog(@"date is %@",self->reqDateString);
                      

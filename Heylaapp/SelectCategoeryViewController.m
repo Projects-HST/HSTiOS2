@@ -105,6 +105,8 @@
                  [self->user_preference addObject:strUser_preference];
              }
              [[NSUserDefaults standardUserDefaults]setObject:self->category_name forKey:@"preferenceName_Array"];
+             [[NSUserDefaults standardUserDefaults]setObject:self->category_id forKey:@"preferenceId_Array"];
+
              [self.collectionView reloadData];
          }
          else

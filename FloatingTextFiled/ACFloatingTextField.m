@@ -7,6 +7,7 @@
 //
 
 #import "ACFloatingTextField.h"
+#import <objc/runtime.h>
 
 @implementation ACFloatingTextField
 
@@ -171,7 +172,7 @@
     _labelPlaceholder.font = [UIFont fontWithName:@"Muli" size:13];
     _labelPlaceholder.hidden = YES;
     [self addSubview:_labelPlaceholder];
-
+    
 }
 
 #pragma mark  Adding Error Label in textfield.
@@ -268,6 +269,7 @@
         self.labelPlaceholder.textColor = self.selectedPlaceHolderColor;
         bottmLineFrame.origin.y = CGRectGetHeight(self.frame)-2;
         [self setValue:self.selectedPlaceHolderColor forKeyPath:@"_placeholderLabel.textColor"];
+        
 
     }
     else{

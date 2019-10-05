@@ -1,6 +1,6 @@
 //
 //  LoginViewController.h
-//  Heylaapp
+//  Heylaap
 //
 //  Created by HappySanz on 25/10/17.
 //  Copyright © 2017 Palpro Tech. All rights reserved.
@@ -12,7 +12,7 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface LoginViewController : UIViewController <UITextFieldDelegate,CLLocationManagerDelegate,MKMapViewDelegate>
+@interface LoginViewController : UIViewController <UITextFieldDelegate,CLLocationManagerDelegate,MKMapViewDelegate,UIPopoverPresentationControllerDelegate>
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIButton *signIn;
 - (IBAction)signInBtn:(id)sender;
@@ -27,11 +27,11 @@
 
 - (IBAction)viewTwoSignUpBtn:(id)sender;
 - (IBAction)passwordEyeBtn:(id)sender;
-@property (strong, nonatomic) IBOutlet ACFloatingTextField *SignUpUserName;
-@property (strong, nonatomic) IBOutlet ACFloatingTextField *SignUpMobileNo;
-@property (strong, nonatomic) IBOutlet ACFloatingTextField *signUpPassword;
-@property (strong, nonatomic) IBOutlet ACFloatingTextField *signInUserName;
-@property (strong, nonatomic) IBOutlet ACFloatingTextField *signInPassword;
+@property (strong, nonatomic) IBOutlet UITextField *SignUpUserName;
+@property (strong, nonatomic) IBOutlet UITextField *SignUpMobileNo;
+@property (strong, nonatomic) IBOutlet UITextField *signUpPassword;
+@property (strong, nonatomic) IBOutlet UITextField *signInUserName;
+@property (strong, nonatomic) IBOutlet UITextField *signInPassword;
 - (IBAction)signInPaswrdEyeBtn:(id)sender;
 @property (strong, nonatomic) IBOutlet UIImageView *signEyeImageView;
 @property (strong, nonatomic) IBOutlet UIImageView *signInImageView;

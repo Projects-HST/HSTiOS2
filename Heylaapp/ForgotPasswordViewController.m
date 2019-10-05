@@ -79,7 +79,22 @@
 {
     if ([self.emailTextfiled.text isEqualToString:@""])
     {
-        [_emailTextfiled showErrorWithText:@"Enter email ID"];
+       // [_emailTextfiled showErrorWithText:@"Enter email ID"];
+        UIAlertController *alert= [UIAlertController
+                                   alertControllerWithTitle:@"Heyla"
+                                   message:@"Enter email ID"
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 
+                             }];
+        
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
     }
     else
     {

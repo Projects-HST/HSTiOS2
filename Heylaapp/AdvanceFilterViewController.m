@@ -18,10 +18,12 @@
     NSMutableArray *eventTypeArray;
     NSMutableArray *eventCategoeryArray;
     NSMutableArray *preference;
+    NSMutableArray *preferenceID;
     NSMutableArray *eventCityArray;
     NSString *streventType;
     NSString *streventCategoery;
     NSString *streventPrefernce;
+    NSString *streventPrefernceID;
     NSString *streventcity;
     NSString *selectedDateToday;
     NSString *selectedDateTommorow;
@@ -73,6 +75,7 @@
     eventTypeArray = [[NSMutableArray alloc]init];
     eventCategoeryArray = [[NSMutableArray alloc]init];
     preference = [[NSMutableArray alloc]init];
+    preferenceID = [[NSMutableArray alloc]init];
     eventCityArray = [[NSMutableArray alloc]init];
     
     [eventTypeArray addObject:@"Select Event Type"];
@@ -84,6 +87,7 @@
     [eventCategoeryArray addObject:@"Popular"];
     
     preference = [[NSUserDefaults standardUserDefaults]objectForKey:@"preferenceName_Array"];
+    preferenceID = [[NSUserDefaults standardUserDefaults]objectForKey:@"preferenceId_Array"];
    // eventCityArray = [[NSUserDefaults standardUserDefaults]objectForKey:@"cityName_Array"];
     
     datePicker=[[UIDatePicker alloc]init];
@@ -147,7 +151,7 @@
          if ([msg isEqualToString:@"Price Range"] && [status isEqualToString:@"success"])
          {
              NSString *Value = [responseObject objectForKey:@"Pricerange"];
-             self.sliderSelectedValue.text = [NSString stringWithFormat:@"%@%@",@"Rs.",Value] ;
+             self.sliderSelectedValue.text = [NSString stringWithFormat:@"%@%@",@"S$.",Value] ;
              self->_maximumValue = [Value floatValue];
              self->_slider.maximumValue = self->_maximumValue;
              self->_slider.minimumValue = 0;
@@ -172,6 +176,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    streventPrefernceID = @"";
     appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
     [parameters setObject:appDel.user_Id forKey:@"user_id"];
@@ -250,7 +255,7 @@
         [formatter setDateFormat:@"YYYY-MM-dd"];
         self.dateTextFiled.text=[NSString stringWithFormat:@"%@",[formatter stringFromDate:datePicker.date]];
         self.dateTextFiled.textColor = [UIColor whiteColor];
-        selectedDate = self.dateTextFiled.text;
+        selectedDateToday = self.dateTextFiled.text;
         [self.dateTextFiled resignFirstResponder];
     }
 }
@@ -351,6 +356,7 @@
         else if([self.eventPreference isFirstResponder])
         {
             streventPrefernce = preference[row];
+            streventPrefernceID = preferenceID[row];
         }
         else if([self.eventCity isFirstResponder])
         {
@@ -480,9 +486,9 @@
                                       toDate:[NSDate date]
                                      options:0];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"YYYY-MM-DD"];
+    [dateFormat setDateFormat:@"YYYY-MM-dd"];
     NSString *dateString = [dateFormat stringFromDate:tomorrow];
-    selectedDateTommorow = dateString;
+    selectedDateToday = dateString;
 
 }
 - (IBAction)cancelBtn:(id)sender
@@ -506,37 +512,144 @@
 
 - (IBAction)searchBtn:(id)sender
 {
-    if ([self.eventCity.text isEqualToString:@"Select Your City"])
+    if ([selectedDateToday isEqualToString:@""] && [selectedDateTommorow isEqualToString:@""] && [selectedDate isEqualToString:@""] && [self.fromDate.text isEqualToString:@""] && [self.toDate.text isEqualToString:@""] && [self.eventType.text isEqualToString:@""] && [self.eventCategoery.text isEqualToString:@""] && ([streventPrefernceID isEqualToString:@""]) && [self.eventCity.text isEqualToString:@""] && [sliderFinalValue isEqualToString:@""])
     {
         UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"Please select the city"
-                                   preferredStyle:UIAlertControllerStyleAlert];
+                                          alertControllerWithTitle:@"Heyla"
+                                          message:@"Select at least one criteria."
+                                          preferredStyle:UIAlertControllerStyleAlert];
+               
+               UIAlertAction *ok = [UIAlertAction
+                                    actionWithTitle:@"OK"
+                                    style:UIAlertActionStyleDefault
+                                    handler:^(UIAlertAction * action)
+                                    {
+                                        
+                                    }];
+               
+               [alert addAction:ok];
+               [self presentViewController:alert animated:YES completion:nil];
+    }
+    if(![self.fromDate.text isEqualToString:@""] || ![self.toDate.text isEqualToString:@""])
+    {
         
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
+        if ([self.fromDate.text isEqualToString:@""])
+        {
+            UIAlertController *alert= [UIAlertController
+                                              alertControllerWithTitle:@"Heyla"
+                                              message:@"You need select both from and to dates"
+                                              preferredStyle:UIAlertControllerStyleAlert];
+                   
+                   UIAlertAction *ok = [UIAlertAction
+                                        actionWithTitle:@"OK"
+                                        style:UIAlertActionStyleDefault
+                                        handler:^(UIAlertAction * action)
+                                        {
+                                            
+                                        }];
+                   
+                   [alert addAction:ok];
+                   [self presentViewController:alert animated:YES completion:nil];
+        }
+        else if ([self.toDate.text isEqualToString:@""])
+        {
+            UIAlertController *alert= [UIAlertController
+                                        alertControllerWithTitle:@"Heyla"
+                                        message:@"You need select both from and to dates"
+                                        preferredStyle:UIAlertControllerStyleAlert];
                                  
-                             }];
-        
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
+                                 UIAlertAction *ok = [UIAlertAction
+                                                      actionWithTitle:@"OK"
+                                                      style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * action)
+                                                      {
+                                                          
+                                                      }];
+                                 
+                                 [alert addAction:ok];
+                                 [self presentViewController:alert animated:YES completion:nil];
+        }
+        else
+        {
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
+            [parameters setObject:selectedDateToday forKey:@"single_date"];
+//            [parameters setObject:selectedDateTommorow forKey:@"single_date"];
+//            [parameters setObject:selectedDate forKey:@"single_date"];
+            [parameters setObject:self.fromDate.text forKey:@"from_date"];
+            [parameters setObject:self.toDate.text forKey:@"to_date"];
+            [parameters setObject:self.eventType.text forKey:@"event_type"];
+            [parameters setObject:self.eventCategoery.text forKey:@"event_category"];
+            [parameters setObject:streventPrefernceID forKey:@"selected_preference"];
+            [parameters setObject:self.eventCity.text forKey:@"selected_city"];
+            [parameters setObject:sliderFinalValue forKey:@"price_range"];
+            
+            
+            AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+            manager.requestSerializer = [AFJSONRequestSerializer serializer];
+            [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+            
+            NSString *advanceSearch = @"apimain/advanceSearch";
+            NSArray *components = [NSArray arrayWithObjects:baseUrl,advanceSearch, nil];
+            NSString *api = [NSString pathWithComponents:components];
+            
+            [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+             {
+                 
+                 NSLog(@"%@",responseObject);
+                 [MBProgressHUD hideHUDForView:self.view animated:YES];
+                 NSString *msg = [responseObject objectForKey:@"msg"];
+                 NSString *status = [responseObject objectForKey:@"status"];
+                 
+                 if ([msg isEqualToString:@"View Events"] && [status isEqualToString:@"success"])
+                 {
+                     
+                     NSArray *eventListArray = [responseObject objectForKey:@"Eventdetails"];
+                     [[NSUserDefaults standardUserDefaults]setObject:eventListArray forKey:@"eventList_AdvSearch"];
+                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Booking" bundle:nil];
+                     AdvanceFilterResultViewController *advanceFilterResultViewController = (AdvanceFilterResultViewController *)[storyboard instantiateViewControllerWithIdentifier:@"AdvanceFilterResultViewController"];
+                     [self.navigationController pushViewController:advanceFilterResultViewController animated:YES];
+                 }
+                 else
+                 {
+                     UIAlertController *alert= [UIAlertController
+                                                alertControllerWithTitle:@"Heyla"
+                                                message:msg
+                                                preferredStyle:UIAlertControllerStyleAlert];
+                     
+                     UIAlertAction *ok = [UIAlertAction
+                                          actionWithTitle:@"OK"
+                                          style:UIAlertActionStyleDefault
+                                          handler:^(UIAlertAction * action)
+                                          {
+                                              
+                                          }];
+                     
+                     [alert addAction:ok];
+                     [self presentViewController:alert animated:YES completion:nil];
+                 }
+             }
+                  failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+             {
+                 NSLog(@"error: %@", error);
+             }];
+        }
     }
     else
     {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
-        [parameters setObject:selectedDateToday forKey:@"today_date"];
-        [parameters setObject:selectedDateTommorow forKey:@"tomorrow_date"];
-        [parameters setObject:selectedDate forKey:@"single_date"];
+        [parameters setObject:selectedDateToday forKey:@"single_date"];
+//        [parameters setObject:selectedDateTommorow forKey:@"single_date"];
+//        [parameters setObject:selectedDate forKey:@"single_date"];
         [parameters setObject:self.fromDate.text forKey:@"from_date"];
         [parameters setObject:self.toDate.text forKey:@"to_date"];
         [parameters setObject:self.eventType.text forKey:@"event_type"];
         [parameters setObject:self.eventCategoery.text forKey:@"event_category"];
-        [parameters setObject:self.eventPreference.text forKey:@"selected_preference"];
+        [parameters setObject:streventPrefernceID forKey:@"selected_preference"];
         [parameters setObject:self.eventCity.text forKey:@"selected_city"];
         [parameters setObject:sliderFinalValue forKey:@"price_range"];
         
@@ -618,14 +731,14 @@
 }
 - (IBAction)sliderButton:(id)sender
 {
-    NSString *strsliderValue = [NSString stringWithFormat:@"%@%d",@"Rs.",(int)floorf(self->_slider.value)];
+    NSString *strsliderValue = [NSString stringWithFormat:@"%@%d",@"S$.",(int)floorf(self->_slider.value)];
     NSString *strVal = [NSString stringWithFormat:@"%@",strsliderValue];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     sliderFinalValue = [NSString stringWithFormat:@"%d%@",(int)floorf(self->_slider.value),@".00"];
     
     // Configure for text only and offset down
     hud.mode = MBProgressHUDModeText;
-    hud.label.text = [NSString stringWithFormat:@"%@ %@ - %@%@",@"Price Range:",@"Rs.0",strVal,@".00"];
+    hud.label.text = [NSString stringWithFormat:@"%@ %@ - %@%@",@"Price Range:",@"S$.0",strVal,@".00"];
     hud.margin = 10.f;
     hud.yOffset = 200.f;
     hud.removeFromSuperViewOnHide = YES;

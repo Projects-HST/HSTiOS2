@@ -19,9 +19,10 @@
 {
      [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-
-    [[NSUserDefaults standardUserDefaults]setObject:@"hide" forKey:@"showSplash"];
     
+    [[NSUserDefaults standardUserDefaults]setObject:@"hide" forKey:@"showSplash"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"alertUserIfno" forKey:@"userInfostat"];
+
     UISwipeGestureRecognizer * swipeleft=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeleft:)];
     swipeleft.direction=UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:swipeleft];
@@ -45,10 +46,9 @@
 {
     LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
     [self presentViewController:loginViewController animated:NO completion:nil];
-    
-    UINavigationController *navigationController = [[UINavigationController       alloc]initWithRootViewController:loginViewController];
-    [self.navigationController pushViewController:navigationController animated:YES];
 
+    UINavigationController *navigationController = [[UINavigationController alloc]initWithRootViewController:loginViewController];
+    [self.navigationController pushViewController:navigationController animated:YES];
 }
 
 - (IBAction)nextBtn:(id)sender

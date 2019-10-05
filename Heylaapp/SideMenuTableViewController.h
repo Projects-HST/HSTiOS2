@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SideMenuTableViewController : UIViewController
+@interface SideMenuTableViewController : UIViewController <UIPopoverPresentationControllerDelegate>
 - (IBAction)profileImageButton:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

@@ -30,8 +30,60 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
-    self->isSwitchClicked = true;
     self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
+    [self checkingForNotification];
+}
+
+- (void)checkingForNotification
+{
+            appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
+            [parameters setObject:appDel.user_Id forKey:@"user_id"];
+
+            AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+            manager.requestSerializer = [AFJSONRequestSerializer serializer];
+            [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+        
+            NSString *getEventCountries = @"apimain/profileDetails";
+            NSArray *components = [NSArray arrayWithObjects:baseUrl,getEventCountries, nil];
+            NSString *api = [NSString pathWithComponents:components];
+        
+            [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+             {
+        
+                 NSLog(@"%@",responseObject);
+                 [MBProgressHUD hideHUDForView:self.view animated:YES];
+                 NSString *msg = [responseObject objectForKey:@"msg"];
+                 NSString *status = [responseObject objectForKey:@"status"];
+        
+
+                 if ([msg isEqualToString:@"User Details"] && [status isEqualToString:@"Success"])
+                 {
+                     NSDictionary *dict = [responseObject objectForKey:@"userData"];
+                     NSString *newsletter_status = [dict objectForKey:@"newsletter_status"];
+                     if ([newsletter_status isEqualToString:@"Y"])
+                     {
+                         self->isSwitchClicked = false;
+                         self->status = @"Y";
+                         [self->_switchOutlet setOn:YES animated:YES];
+
+                     }
+                     else
+                     {
+                         self->isSwitchClicked = true;
+                         self->status = @"N";
+                         [self->_switchOutlet setOn:NO animated:YES];
+                     }
+
+                 }
+
+             }
+                  failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+             {
+                 NSLog(@"error: %@", error);
+             }];
 }
 
 #pragma mark - Table view data source

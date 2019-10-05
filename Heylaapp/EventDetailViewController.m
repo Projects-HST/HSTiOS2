@@ -30,10 +30,23 @@
 {
     [super viewDidLoad];
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
-    wishlistButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"favED"] style:UIBarButtonItemStylePlain target:self action:@selector(Add:)];
-    wishlistButton.width = 20.0;
+    
+     UIImage* image3 = [UIImage imageNamed:@"favED.png"];
+     CGRect frameimg = CGRectMake(15,5, 25,25);
+            
+    UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+    [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+    [someButton addTarget:self action:@selector(Add:)
+    forControlEvents:UIControlEventTouchUpInside];
+    //        [someButton setShowsTouchWhenHighlighted:YES];
+            
+    wishlistButton = [[UIBarButtonItem alloc] initWithCustomView:someButton];
     self.navigationItem.rightBarButtonItem = wishlistButton;
-    wishlistButton.tintColor = [UIColor whiteColor];
+    
+//    wishlistButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"favED"] style:UIBarButtonItemStylePlain target:self action:@selector(Add:)];
+//    wishlistButton.width = 15.0;
+//    self.navigationItem.rightBarButtonItem = wishlistButton;
+//    wishlistButton.tintColor = [UIColor whiteColor];
     
     shareButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"shareED"] style:UIBarButtonItemStylePlain target:self action:@selector(share:)];
     shareButton.width = 20.0;
@@ -94,35 +107,36 @@
     
     self.eventNameLabel.text = appDel.event_Name;
     self.adressLabel.text = appDel.event_Address;
-    if ([appDel.event_type isEqualToString:@"Hotspot"])
+    NSLog(@"%@",appDel.event_type);
+    if ([appDel.hotspotStatus isEqualToString:@"Y"])
     {
-        self.dateLabel.hidden = YES;
-        self.dateImage.hidden = YES;
+        self.dateImage.hidden = NO;
+        self.dateLabel.text = @"-";
     }
     else
     {
         self.dateLabel.hidden = NO;
         self.dateImage.hidden = NO;
         
-        self->dateFormatter = [[NSDateFormatter alloc] init];
-        [self->dateFormatter setDateFormat:@"MMMM dd yyyy"];
-        self->date = [[NSDate alloc] init];
-        self->date = [self->dateFormatter dateFromString:appDel.event_StartDate];
-        // converting into our required date format
-        [self->dateFormatter setDateFormat:@"dd-MM-yyyy"];
-        self->reqStartDateString = [self->dateFormatter stringFromDate:self->date];
-        NSLog(@"date is %@", self->reqStartDateString);
+//        self->dateFormatter = [[NSDateFormatter alloc] init];
+//        [self->dateFormatter setDateFormat:@"MMMM dd yyyy"];
+//        self->date = [[NSDate alloc] init];
+//        self->date = [self->dateFormatter dateFromString:appDel.event_StartDate];
+//        // converting into our required date format
+//        [self->dateFormatter setDateFormat:@"dd-MM-yyyy"];
+//        self->reqStartDateString = [self->dateFormatter stringFromDate:self->date];
+//        NSLog(@"date is %@", self->reqStartDateString);
+//
+//        self->dateFormatter = [[NSDateFormatter alloc] init];
+//        [self->dateFormatter setDateFormat:@"MMMM dd yyyy"];
+//        self->date = [[NSDate alloc] init];
+//        self->date = [self->dateFormatter dateFromString:appDel.event_EndDate];
+//        // converting into our required date format
+//        [self->dateFormatter setDateFormat:@"dd-MM-yyyy"];
+//        self->reqEndDateString = [self->dateFormatter stringFromDate:self->date];
+//        NSLog(@"date is %@",self->reqEndDateString);
         
-        self->dateFormatter = [[NSDateFormatter alloc] init];
-        [self->dateFormatter setDateFormat:@"MMMM dd yyyy"];
-        self->date = [[NSDate alloc] init];
-        self->date = [self->dateFormatter dateFromString:appDel.event_EndDate];
-        // converting into our required date format
-        [self->dateFormatter setDateFormat:@"dd-MM-yyyy"];
-        self->reqEndDateString = [self->dateFormatter stringFromDate:self->date];
-        NSLog(@"date is %@",self->reqEndDateString);
-        
-        self.dateLabel.text = [NSString stringWithFormat:@"%@ to %@",reqStartDateString,reqEndDateString];
+        self.dateLabel.text = [NSString stringWithFormat:@"%@ to %@",appDel.event_StartDate,appDel.event_EndDate];
         NSLog(@"%@%@",reqStartDateString,reqEndDateString);
 
     }
@@ -274,17 +288,37 @@
          
          if ([status isEqualToString:@"success"])
          {
-             UIImage *image = [UIImage imageNamed:@"favselectedED"];
-             [self->wishlistButton setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-             self->wishlistButton.tintColor = [UIColor clearColor];
+//             UIImage *image = [UIImage imageNamed:@"favselectedED"];
+//             [self->wishlistButton setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//             self->wishlistButton.tintColor = [UIColor clearColor];
+              UIImage* image3 = [UIImage imageNamed:@"favselectedED.png"];
+                                CGRect frameimg = CGRectMake(15,5, 25,25);
+              UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+              [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+              [someButton addTarget:self action:@selector(Add:)
+              forControlEvents:UIControlEventTouchUpInside];
+              //        [someButton setShowsTouchWhenHighlighted:YES];
+                      
+             self->wishlistButton = [[UIBarButtonItem alloc] initWithCustomView:someButton];
+             self.navigationItem.rightBarButtonItem = self->wishlistButton;
              self->appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
              self->appDel.wishlist_id = [responseObject objectForKey:@"wishlist_id"];
              self->favImageFlag = @"1";
          }
          else
          {
-             UIImage *image = [UIImage imageNamed:@"favED"];
-             [self->wishlistButton setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//             UIImage *image = [UIImage imageNamed:@"favED"];
+//             [self->wishlistButton setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+             UIImage* image3 = [UIImage imageNamed:@"favED.png"];
+                               CGRect frameimg = CGRectMake(15,5, 25,25);
+                               UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+                               [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+                               [someButton addTarget:self action:@selector(Add:)
+                               forControlEvents:UIControlEventTouchUpInside];
+                          //        [someButton setShowsTouchWhenHighlighted:YES];
+                                  
+                         self->wishlistButton = [[UIBarButtonItem alloc] initWithCustomView:someButton];
+                         self.navigationItem.rightBarButtonItem = self->wishlistButton;
              self->wishlistButton.tintColor = [UIColor whiteColor];
              self->favImageFlag = @"0";
          }
@@ -421,7 +455,7 @@
                      
                      UIAlertController *alert= [UIAlertController
                                                 alertControllerWithTitle:@"Heyla"
-                                                message:msg
+                                                message:[NSString stringWithFormat:@"%@%@",@"You have successfully check-in for the event-",self->appDel.event_Name]
                                                 preferredStyle:UIAlertControllerStyleAlert];
                      
                      UIAlertAction* ok = [UIAlertAction
@@ -460,9 +494,10 @@
         }
         else
         {
+            appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
             UIAlertController *alert= [UIAlertController
                                        alertControllerWithTitle:@"Heyla"
-                                       message:@"Move closer to the location"
+                                       message:[NSString stringWithFormat:@"%@ %@",@"Please check-in once you've reached",appDel.event_Name]
                                        preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction *ok = [UIAlertAction
@@ -860,20 +895,44 @@
                  {
                      self->favImageFlag = @"1";
                      self->appDel.wishlist_id = [responseObject objectForKey:@"wishlist_id"];
-                     UIImage *image = [UIImage imageNamed:@"favselectedED"];
-                     [self->wishlistButton setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-                     self->wishlistButton.tintColor = [UIColor clearColor];
+//                     UIImage *image = [UIImage imageNamed:@"favselectedED"];
+//                     [self->wishlistButton setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//                     self->wishlistButton.tintColor = [UIColor blackColor];
                      
-                     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                     UIImage* image3 = [UIImage imageNamed:@"favselectedED.png"];
+                                       CGRect frameimg = CGRectMake(15,5, 25,25);
+                                       UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+                                       [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+                                       [someButton addTarget:self action:@selector(Add:)
+                                       forControlEvents:UIControlEventTouchUpInside];
+                     self->wishlistButton = [[UIBarButtonItem alloc] initWithCustomView:someButton];
+                     self.navigationItem.rightBarButtonItem = self->wishlistButton;
+
                      
-                     // Configure for text only and offset down
-                     hud.mode = MBProgressHUDModeText;
-                     hud.label.text = @"Wishlist added";
-                     hud.margin = 10.f;
-                     hud.yOffset = 200.f;
-                     hud.removeFromSuperViewOnHide = YES;
-                     [hud hideAnimated:YES afterDelay:2];
+//                     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+//
+//                     // Configure for text only and offset down
+//                     hud.mode = MBProgressHUDModeText;
+//                     hud.label.text = @"Wishlist added";
+//                     hud.margin = 10.f;
+//                     hud.yOffset = 200.f;
+//                     hud.removeFromSuperViewOnHide = YES;
+//                     [hud hideAnimated:YES afterDelay:2];
                      
+                     UIAlertController *alert= [UIAlertController
+                                                alertControllerWithTitle:@"Heyla"
+                                                message:@"Wishlist added"
+                                                preferredStyle:UIAlertControllerStyleAlert];
+                                         
+                     UIAlertAction* ok = [UIAlertAction
+                                          actionWithTitle:@"OK"
+                                          style:UIAlertActionStyleDefault
+                                          handler:^(UIAlertAction * action)
+                                          {
+                                              
+                                          }];
+                     [alert addAction:ok];
+                     [self presentViewController:alert animated:YES completion:nil];
                  }
                  else
                  {
@@ -920,22 +979,46 @@
                  NSString *msg = [responseObject objectForKey:@"msg"];
                  NSString *status = [responseObject objectForKey:@"status"];
                  
-                 if ([msg isEqualToString:@"Wishlist Deleted"] && [status isEqualToString:@"success"])
+                 if ([msg isEqualToString:@"Event removed from wish list!"] && [status isEqualToString:@"success"])
                  {
                      self->favImageFlag = @"0";
-                     UIImage *image = [UIImage imageNamed:@"favED"];
-                     [self->wishlistButton setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-                     self->wishlistButton.tintColor = [UIColor clearColor];
+//                     UIImage *image = [UIImage imageNamed:@"favED"];
+//                     [self->wishlistButton setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//                     self->wishlistButton.tintColor = [UIColor clearColor];
                      
-                     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                     UIImage* image3 = [UIImage imageNamed:@"favED.png"];
+                                        CGRect frameimg = CGRectMake(15,5, 25,25);
+                                        UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+                                        [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+                                        [someButton addTarget:self action:@selector(Add:)
+                                        forControlEvents:UIControlEventTouchUpInside];
+                                        self->wishlistButton = [[UIBarButtonItem alloc] initWithCustomView:someButton];
+                                        self.navigationItem.rightBarButtonItem = self->wishlistButton;
                      
-                     // Configure for text only and offset down
-                     hud.mode = MBProgressHUDModeText;
-                     hud.label.text = @"Wishlist Removed";
-                     hud.margin = 10.f;
-                     hud.yOffset = 200.f;
-                     hud.removeFromSuperViewOnHide = YES;
-                     [hud hideAnimated:YES afterDelay:2];
+                     UIAlertController *alert= [UIAlertController
+                                                alertControllerWithTitle:@"Heyla"
+                                                message:msg
+                                                preferredStyle:UIAlertControllerStyleAlert];
+                                         
+                     UIAlertAction* ok = [UIAlertAction
+                                          actionWithTitle:@"OK"
+                                          style:UIAlertActionStyleDefault
+                                          handler:^(UIAlertAction * action)
+                                          {
+                                              
+                                          }];
+                     [alert addAction:ok];
+                     [self presentViewController:alert animated:YES completion:nil];
+                     
+//                     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//
+//                     // Configure for text only and offset down
+//                     hud.mode = MBProgressHUDModeText;
+//                     hud.label.text = @"Wishlist Removed";
+//                     hud.margin = 10.f;
+//                     hud.yOffset = 200.f;
+//                     hud.removeFromSuperViewOnHide = YES;
+//                     [hud hideAnimated:YES afterDelay:2];
                      
                  }
                  else

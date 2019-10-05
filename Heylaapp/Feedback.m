@@ -92,24 +92,24 @@
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     }
-//    else if ([self.email.text isEqualToString:@""])
-//    {
-//        UIAlertController *alert= [UIAlertController
-//                                   alertControllerWithTitle:@"Heyla"
-//                                   message:@"email cannot be empty"
-//                                   preferredStyle:UIAlertControllerStyleAlert];
-        
-//        UIAlertAction *ok = [UIAlertAction
-//                             actionWithTitle:@"OK"
-//                             style:UIAlertActionStyleDefault
-//                             handler:^(UIAlertAction * action)
-//                             {
-                                 
-//                             }];
-        
-//        [alert addAction:ok];
-//        [self presentViewController:alert animated:YES completion:nil];
-//    }
+    else if ([self.email.text isEqualToString:@""])
+       {
+           UIAlertController *alert= [UIAlertController
+                                      alertControllerWithTitle:@"Heyla"
+                                      message:@"email cannot be empty"
+                                      preferredStyle:UIAlertControllerStyleAlert];
+           
+           UIAlertAction *ok = [UIAlertAction
+                                actionWithTitle:@"OK"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                {
+                                    
+                                }];
+           
+           [alert addAction:ok];
+           [self presentViewController:alert animated:YES completion:nil];
+       }
     else if ([self.feedback.text isEqualToString:@""])
     {
         UIAlertController *alert= [UIAlertController
@@ -130,34 +130,11 @@
     }
     else
     {
-        NSString *emailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,10}";
-        NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
-        
-        if ([emailTest evaluateWithObject:self.email.text] == NO)
-        {
-            UIAlertController *alert= [UIAlertController
-                                       alertControllerWithTitle:@"Heyla"
-                                       message:@"Enter Valid Email Address"
-                                       preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction *ok = [UIAlertAction
-                                 actionWithTitle:@"OK"
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction * action)
-                                 {
-                                     
-                                 }];
-            
-            [alert addAction:ok];
-            [self presentViewController:alert animated:YES completion:nil];
-        }
-        else
-        {
-            [self feedBackRequest];
-        }
-       
+        [self feedBackRequest];
     }
+       
 }
+//}
 -(void)feedBackRequest
 {
     appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -188,7 +165,7 @@
          {
              UIAlertController *alert= [UIAlertController
                                         alertControllerWithTitle:@"Heyla"
-                                        message:msg
+                                        message:@"Thank you for your feedaback!"
                                         preferredStyle:UIAlertControllerStyleAlert];
              
              UIAlertAction *ok = [UIAlertAction

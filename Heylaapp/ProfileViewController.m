@@ -131,9 +131,14 @@
     listpickerView.dataSource = self;
     [self.occupation setInputView:listpickerView];
     [self.genderTexfiled setInputView:listpickerView];
-    [self.country setInputView:listpickerView];
-    [self.state setInputView:listpickerView];
-    [self.city setInputView:listpickerView];
+//    [self.country setInputView:listpickerView];
+//    [self.state setInputView:listpickerView];
+//    [self.city setInputView:listpickerView];
+    
+    self.country.delegate = self;
+    self.state.delegate = self;
+    self.city.delegate = self;
+
 
     country_Name = [[NSMutableArray alloc]init];
     country_id = [[NSMutableArray alloc]init];
@@ -163,9 +168,9 @@
     
     [self.occupation setInputAccessoryView:listToolBar];
     [self.genderTexfiled setInputAccessoryView:listToolBar];
-    [self.country setInputAccessoryView:listToolBar];
-    [self.state setInputAccessoryView:listToolBar];
-    [self.city setInputAccessoryView:listToolBar];
+//    [self.country setInputAccessoryView:listToolBar];
+//    [self.state setInputAccessoryView:listToolBar];
+//    [self.city setInputAccessoryView:listToolBar];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
@@ -268,9 +273,9 @@
     self.state.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"state"];
     self.city.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"city"];
     self.pincode.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"pincode"];
-    strcountry_id = [[NSUserDefaults standardUserDefaults]objectForKey:@"country_id"];
-    strstate_id = [[NSUserDefaults standardUserDefaults]objectForKey:@"state_id"];
-    strcity_id = [[NSUserDefaults standardUserDefaults]objectForKey:@"city_id"];
+    self.country.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"country_id"];
+    self.state.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"state_id"];
+    self.city.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"city_id"];
     strnews_letter = [[NSUserDefaults standardUserDefaults]objectForKey:@"new_Letter"];
     
     if (!strcountry_id.length)
@@ -808,42 +813,42 @@
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     }
-    else if([self.city.text isEqualToString:@"Select Your City"])
-    {
-        UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"Please select your city"
-                                   preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 
-                             }];
-        
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    else if([self.state.text isEqualToString:@"Select Your state"])
-    {
-        UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"Please select your state"
-                                   preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 
-                             }];
-        
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
+//    else if([self.city.text isEqualToString:@"Select Your City"])
+//    {
+//        UIAlertController *alert= [UIAlertController
+//                                   alertControllerWithTitle:@"Heyla"
+//                                   message:@"Please select your city"
+//                                   preferredStyle:UIAlertControllerStyleAlert];
+//
+//        UIAlertAction *ok = [UIAlertAction
+//                             actionWithTitle:@"OK"
+//                             style:UIAlertActionStyleDefault
+//                             handler:^(UIAlertAction * action)
+//                             {
+//
+//                             }];
+//
+//        [alert addAction:ok];
+//        [self presentViewController:alert animated:YES completion:nil];
+//    }
+//    else if([self.state.text isEqualToString:@"Select Your state"])
+//    {
+//        UIAlertController *alert= [UIAlertController
+//                                   alertControllerWithTitle:@"Heyla"
+//                                   message:@"Please select your state"
+//                                   preferredStyle:UIAlertControllerStyleAlert];
+//
+//        UIAlertAction *ok = [UIAlertAction
+//                             actionWithTitle:@"OK"
+//                             style:UIAlertActionStyleDefault
+//                             handler:^(UIAlertAction * action)
+//                             {
+//
+//                             }];
+//
+//        [alert addAction:ok];
+//        [self presentViewController:alert animated:YES completion:nil];
+//    }
     else
     {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -861,9 +866,10 @@
         [[NSUserDefaults standardUserDefaults]setObject:self.state.text forKey:@"state"];
         [[NSUserDefaults standardUserDefaults]setObject:self.city.text forKey:@"city"];
         [[NSUserDefaults standardUserDefaults]setObject:self.pincode.text forKey:@"pincode"];
-        [[NSUserDefaults standardUserDefaults]setObject:strcountry_id forKey:@"country_id"];
-        [[NSUserDefaults standardUserDefaults]setObject:strstate_id forKey:@"state_id"];
-        [[NSUserDefaults standardUserDefaults]setObject:strcity_id forKey:@"city_id"];
+        NSLog(@"%@",self.pincode.text);
+//        [[NSUserDefaults standardUserDefaults]setObject:self.country.text forKey:@"country_id"];
+//        [[NSUserDefaults standardUserDefaults]setObject:self.state.text forKey:@"state_id"];
+//        [[NSUserDefaults standardUserDefaults]setObject:self.city.text forKey:@"city_id"];
         NSString *srrNewsletter = [[NSUserDefaults standardUserDefaults]objectForKey:@"new_Letter"];
         [[NSUserDefaults standardUserDefaults]setObject:srrNewsletter forKey:@"new_Letter"];
         NSLog(@"%@",srrNewsletter);
@@ -878,11 +884,11 @@
         [parameters setObject:self.addressLine.text forKey:@"address_line_1"];
         [parameters setObject:self.addressLineTwo.text forKey:@"address_line_2"];
         [parameters setObject:self.addressLineThree.text forKey:@"address_line_3"];
-        [parameters setObject:strcountry_id forKey:@"country_id"];
-        [parameters setObject:strstate_id forKey:@"state_id"];
-        [parameters setObject:strcity_id forKey:@"city_id"];
+        [parameters setObject:self.country.text forKey:@"country_id"];
+        [parameters setObject:self.state.text forKey:@"state_id"];
+        [parameters setObject:self.city.text forKey:@"city_id"];
         [parameters setObject:self.pincode.text forKey:@"zip_code"];
-        [parameters setObject:srrNewsletter forKey:@"news_letter"];
+//        [parameters setObject:srrNewsletter forKey:@"news_letter"];
 
         AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -900,11 +906,15 @@
              NSString *msg = [responseObject objectForKey:@"msg"];
              NSString *status = [responseObject objectForKey:@"status"];
 
-             if ([msg isEqualToString:@"Profile Updated"] && [status isEqualToString:@"success"])
+             if ([msg isEqualToString:@"Changes made are saved"] && [status isEqualToString:@"success"])
              {
                  NSString *str = [[NSUserDefaults standardUserDefaults]objectForKey:@"From_page"];
                  
                  if ([str isEqualToString:@"city"])
+                 {
+                     [self performSegueWithIdentifier:@"to_selectCity" sender:self];
+                 }
+                 else if ([str isEqualToString:@"OTP"])
                  {
                      [self performSegueWithIdentifier:@"to_selectCity" sender:self];
                  }
@@ -932,7 +942,6 @@
              }
              else
              {
-
                  UIAlertController *alert= [UIAlertController
                                             alertControllerWithTitle:@"Heyla"
                                             message:msg
@@ -970,7 +979,7 @@
     {
 //      [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        NSString *url = [NSString stringWithFormat:@"%@/%@",@"https://heylaapp.com/testing/apimain/profilePictureUpload",appDel.user_Id];
+        NSString *url = [NSString stringWithFormat:@"%@/%@",@"https://heylaapp.com/apimain/profilePictureUpload",appDel.user_Id];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [request setURL:[NSURL URLWithString:url]];
         [request setHTTPMethod:@"POST"];
@@ -1028,12 +1037,25 @@
     }
     else if (theTextField == self.addressLineThree)
     {
-        [theTextField resignFirstResponder];
+        [_country becomeFirstResponder];
     }
-    else if (theTextField == self.pincode )
+    else if (theTextField == self.country)
     {
-        [theTextField resignFirstResponder];
+        [_state becomeFirstResponder];
     }
+    else if (theTextField == self.state)
+    {
+        [_city becomeFirstResponder];
+    }
+    else if (theTextField == self.city)
+    {
+        [_pincode becomeFirstResponder];
+    }
+    else if (theTextField == self.pincode)
+    {
+       [theTextField resignFirstResponder];
+    }
+   
     return YES;
 }
 -(BOOL)textFieldShouldEndEditing:(UITextField *)textField

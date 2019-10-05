@@ -702,7 +702,7 @@ static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
     }
 }
 
-- (void)setProgressObject:(NSProgress *)progressObject {
+- (void)setProgressObject:(NSProgress *)progressObject  API_AVAILABLE(ios(7.0)){
     if (progressObject != _progressObject) {
         _progressObject = progressObject;
         [self setNSProgressDisplayLinkEnabled:YES];

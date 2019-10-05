@@ -34,17 +34,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-        
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    _login.layer.cornerRadius = 8;
+    _login.layer.cornerRadius = 5;
     _login.clipsToBounds = YES;
-    _facebook.layer.cornerRadius = 8;
+    _facebook.layer.cornerRadius = 5;
     _facebook.clipsToBounds = YES;
-    _google.layer.cornerRadius = 8;
+    _google.layer.cornerRadius = 5;
     _google.layer.borderWidth = 0.5;
     _google.layer.borderColor = [UIColor lightGrayColor].CGColor;
     _google.clipsToBounds = YES;
-    _signUpBtnOtlet.layer.cornerRadius = 8;
+    _signUpBtnOtlet.layer.cornerRadius = 5;
     _signUpBtnOtlet.clipsToBounds = YES;
     self.signUpView.hidden = YES;
     self.signInView.hidden = NO;
@@ -55,6 +54,8 @@
     _SignUpUserName.delegate = self;
     _SignUpMobileNo.delegate = self;
     _signUpPassword.delegate = self;
+    
+    
     UISwipeGestureRecognizer * swipeleft=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeleft:)];
     swipeleft.direction=UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:swipeleft];
@@ -114,6 +115,15 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
     action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
+    
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
+}
+
+-(void)setPlaceHolderoColor
+{
+   // [_SignUpUserName setValue:[UIColor blackColor] forKeyPath:@"_placeholderLabel.textColor"];
 }
 - (void)loadUserLocation
 {
@@ -168,7 +178,7 @@
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    self.scrollViewTwo.contentSize = CGSizeMake(self.view.frame.size.width,410);
+    self.scrollViewTwo.contentSize = CGSizeMake(self.view.frame.size.width,630);
 }
 - (void)keyboardWasShown:(NSNotification*)notification
 {
@@ -433,11 +443,41 @@
 {
     if ([self.signInUserName.text isEqualToString:@""])
     {
-        [_signInUserName showErrorWithText:@"Username cannot be empty"];
+     //   [_signInUserName showErrorWithText:@"Username cannot be empty"];
+        UIAlertController *alert= [UIAlertController
+                                                     alertControllerWithTitle:@"Heyla"
+                                                     message:@"Username cannot be empty"
+                                                     preferredStyle:UIAlertControllerStyleAlert];
+                                              
+                          UIAlertAction *ok = [UIAlertAction
+                                               actionWithTitle:@"OK"
+                                               style:UIAlertActionStyleDefault
+                                               handler:^(UIAlertAction * action)
+                                               {
+                                                   
+                                               }];
+                          
+                          [alert addAction:ok];
+                          [self presentViewController:alert animated:YES completion:nil];
     }
     else if ([self.signInPassword.text isEqualToString:@""])
     {
-        [_signInPassword showErrorWithText:@"Username cannot be empty"];
+       // [_signInPassword showErrorWithText:@"Username cannot be empty"];
+        UIAlertController *alert= [UIAlertController
+                                              alertControllerWithTitle:@"Heyla"
+                                              message:@"Password cannot be empty"
+                                              preferredStyle:UIAlertControllerStyleAlert];
+                                       
+                   UIAlertAction *ok = [UIAlertAction
+                                        actionWithTitle:@"OK"
+                                        style:UIAlertActionStyleDefault
+                                        handler:^(UIAlertAction * action)
+                                        {
+                                            
+                                        }];
+                   
+                   [alert addAction:ok];
+                   [self presentViewController:alert animated:YES completion:nil];
     }
     else
     {
@@ -468,23 +508,98 @@
     {
         if ([emailTest evaluateWithObject:self.SignUpUserName.text] == NO)
         {
-            [_SignUpUserName showErrorWithText:@"Enter valid email address"];
+         //   [_SignUpUserName showErrorWithText:@"Enter valid email address"];
+           UIAlertController *alert= [UIAlertController
+                                       alertControllerWithTitle:@"Heyla"
+                                       message:@"Enter valid email address"
+                                       preferredStyle:UIAlertControllerStyleAlert];
+                                
+            UIAlertAction *ok = [UIAlertAction
+                                 actionWithTitle:@"OK"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     
+                                 }];
+            
+            [alert addAction:ok];
+            [self presentViewController:alert animated:YES completion:nil];
         }
         else if ([self.SignUpMobileNo.text isEqualToString:@""])
         {
-            [_SignUpMobileNo showErrorWithText:@"Mobilenumber cannot be empty"];
+           // [_SignUpMobileNo showErrorWithText:@"Mobilenumber cannot be empty"];
+           UIAlertController *alert= [UIAlertController
+                                       alertControllerWithTitle:@"Heyla"
+                                       message:@"Mobilenumber cannot be empty"
+                                       preferredStyle:UIAlertControllerStyleAlert];
+                                
+            UIAlertAction *ok = [UIAlertAction
+                                 actionWithTitle:@"OK"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     
+                                 }];
+            
+            [alert addAction:ok];
+            [self presentViewController:alert animated:YES completion:nil];
         }
         else if (appDel.mobileNumber.length != 10)
         {
-            [_SignUpMobileNo showErrorWithText:@"Enter valid mobile number."];
+           // [_SignUpMobileNo showErrorWithText:@"Enter valid mobile number."];
+              UIAlertController *alert= [UIAlertController
+                                                 alertControllerWithTitle:@"Heyla"
+                                                 message:@"Enter valid mobile number."
+                                                 preferredStyle:UIAlertControllerStyleAlert];
+                                          
+                      UIAlertAction *ok = [UIAlertAction
+                                           actionWithTitle:@"OK"
+                                           style:UIAlertActionStyleDefault
+                                           handler:^(UIAlertAction * action)
+                                           {
+                                               
+                                           }];
+                      
+                      [alert addAction:ok];
+                      [self presentViewController:alert animated:YES completion:nil];
         }
         else if ([self.signUpPassword.text isEqualToString:@""])
         {
-            [_signUpPassword showErrorWithText:@"Password cannot be empty"];
-        }
+           // [_signUpPassword showErrorWithText:@"Password cannot be empty"];
+            UIAlertController *alert= [UIAlertController
+                                       alertControllerWithTitle:@"Heyla"
+                                       message:@"Password cannot be empty"
+                                       preferredStyle:UIAlertControllerStyleAlert];
+                                
+            UIAlertAction *ok = [UIAlertAction
+                                 actionWithTitle:@"OK"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     
+                                 }];
+            
+            [alert addAction:ok];
+            [self presentViewController:alert animated:YES completion:nil];
+}
         else if (password.length < 6)
         {
-            [_signUpPassword showErrorWithText:@"Password should contain atleast 6 characters"];
+           // [_signUpPassword showErrorWithText:@"Password should contain atleast 6 characters"];
+            UIAlertController *alert= [UIAlertController
+                                       alertControllerWithTitle:@"Heyla"
+                                       message:@"Password should contain atleast 6 characters"
+                                       preferredStyle:UIAlertControllerStyleAlert];
+                                
+            UIAlertAction *ok = [UIAlertAction
+                                 actionWithTitle:@"OK"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     
+                                 }];
+            
+            [alert addAction:ok];
+            [self presentViewController:alert animated:YES completion:nil];
         }
         else
         {
@@ -532,6 +647,7 @@
                      [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"state_id"];
                      [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"city_id"];
                      [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"new_Letter"];
+                     [[NSUserDefaults standardUserDefaults]setObject:@"alertUserIfno" forKey:@"userInfostat"];
                      NSString *log_Type = @"";
                      [[NSUserDefaults standardUserDefaults]setObject:log_Type forKey:@"login_type"];
                      self->appDel.login_type = [[NSUserDefaults standardUserDefaults]objectForKey:@"login_type"];
@@ -572,19 +688,79 @@
     }
     else if ([self.SignUpMobileNo.text isEqualToString:@""])
     {
-        [_SignUpMobileNo showErrorWithText:@"Mobilenumber cannot be empty"];
+       // [_SignUpMobileNo showErrorWithText:@"Mobilenumber cannot be empty"];
+        UIAlertController *alert= [UIAlertController
+                                   alertControllerWithTitle:@"Heyla"
+                                   message:@"Mobilenumber cannot be empty"
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 
+                             }];
+        
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
     }
     else if (appDel.mobileNumber.length != 10)
     {
-        [_SignUpMobileNo showErrorWithText:@"Enter valid mobile number."];
+       // [_SignUpMobileNo showErrorWithText:@"Enter valid mobile number."];
+        UIAlertController *alert= [UIAlertController
+                                   alertControllerWithTitle:@"Heyla"
+                                   message:@"Enter valid mobile number."
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 
+                             }];
+        
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
     }
     else if ([self.signUpPassword.text isEqualToString:@""])
     {
-        [_signUpPassword showErrorWithText:@"Password cannot be empty"];
+       // [_signUpPassword showErrorWithText:@"Password cannot be empty"];
+        UIAlertController *alert= [UIAlertController
+                                   alertControllerWithTitle:@"Heyla"
+                                   message:@"Password cannot be empty"
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 
+                             }];
+        
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
     }
     else if (password.length < 6)
     {
-        [_signUpPassword showErrorWithText:@"Password should contain atleast 6 characters"];
+       // [_signUpPassword showErrorWithText:@"Password should contain atleast 6 characters"];
+        UIAlertController *alert= [UIAlertController
+                                   alertControllerWithTitle:@"Heyla"
+                                   message:@"Password should contain atleast 6 characters"
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 
+                             }];
+        
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
     }
     else
     {
@@ -596,7 +772,7 @@
         [parameters setObject:self.SignUpUserName.text forKey:@"email_id"];
         [parameters setObject:appDel.mobileNumber forKey:@"mobile_no"];
         [parameters setObject:password forKey:@"password"];
-        [parameters setObject:deviceToken forKey:@"gcm_key"];
+        [parameters setObject:@"dakjsdjadhk" forKey:@"gcm_key"];
         [parameters setObject:@"2" forKey:@"mobile_type"];
 
         AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
@@ -777,7 +953,7 @@
             NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
             [parameters setObject:self.signInUserName.text forKey:@"username"];
             [parameters setObject:self.signInPassword.text forKey:@"password"];
-            [parameters setObject:deviceToken forKey:@"gcm_key"];
+            [parameters setObject:@"dakjsdjadhk" forKey:@"gcm_key"];
             [parameters setObject:@"2" forKey:@"mobile_type"];
             AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
             manager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -898,7 +1074,7 @@
     NSString *deviceToken = [[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken_Key"];
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
     [parameters setObject:Identifier forKey:@"unique_id"];
-    [parameters setObject:deviceToken forKey:@"gcm_key"];
+    [parameters setObject:@"dakjsdjadhk" forKey:@"gcm_key"];
     [parameters setObject:@"2" forKey:@"mobile_type"];
     
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
@@ -1003,4 +1179,5 @@
     [_signInUserName resignFirstResponder];
     [_signInPassword resignFirstResponder];
 }
+
 @end

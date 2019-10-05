@@ -153,6 +153,7 @@
 		68F9BC851FC5A762006702A2 /* Place@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 68F9BC7F1FC5A756006702A2 /* Place@3x.png */; };
 		68FA39D81FC1AB23004C90E2 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68FA39D71FC1AB23004C90E2 /* HomeViewController.m */; };
 		68FA94AB1FCD7CAF006652FE /* AdvanceFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68FA94AA1FCD7CAF006652FE /* AdvanceFilterViewController.m */; };
+		6B4C43EA233F889100EE0ACC /* SignUpWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4C43E9233F889100EE0ACC /* SignUpWelcomeViewController.m */; };
 		6B4CA2722016088800D04856 /* Pointsunselectlarge@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA26F2016088700D04856 /* Pointsunselectlarge@1x.png */; };
 		6B4CA2732016088800D04856 /* Pointsunselectlarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA2702016088700D04856 /* Pointsunselectlarge@2x.png */; };
 		6B4CA2742016088800D04856 /* Pointsunselectlarge@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA2712016088800D04856 /* Pointsunselectlarge@3x.png */; };
@@ -655,6 +656,8 @@
 		68FA39D71FC1AB23004C90E2 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		68FA94A91FCD7CAF006652FE /* AdvanceFilterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdvanceFilterViewController.h; sourceTree = "<group>"; };
 		68FA94AA1FCD7CAF006652FE /* AdvanceFilterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdvanceFilterViewController.m; sourceTree = "<group>"; };
+		6B4C43E8233F889100EE0ACC /* SignUpWelcomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignUpWelcomeViewController.h; sourceTree = "<group>"; };
+		6B4C43E9233F889100EE0ACC /* SignUpWelcomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignUpWelcomeViewController.m; sourceTree = "<group>"; };
 		6B4CA26F2016088700D04856 /* Pointsunselectlarge@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pointsunselectlarge@1x.png"; sourceTree = "<group>"; };
 		6B4CA2702016088700D04856 /* Pointsunselectlarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pointsunselectlarge@2x.png"; sourceTree = "<group>"; };
 		6B4CA2712016088800D04856 /* Pointsunselectlarge@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pointsunselectlarge@3x.png"; sourceTree = "<group>"; };
@@ -1145,6 +1148,8 @@
 				68F8C4521FBF0B3F00E17912 /* ConfirmPasswordViewController.m */,
 				68F6EC651FA37BB100FB64CF /* OTPViewController.h */,
 				68F6EC661FA37BB100FB64CF /* OTPViewController.m */,
+				6B4C43E8233F889100EE0ACC /* SignUpWelcomeViewController.h */,
+				6B4C43E9233F889100EE0ACC /* SignUpWelcomeViewController.m */,
 				6884D7BC1FA89DE8000BB968 /* ChangeNumberViewController.h */,
 				6884D7BD1FA89DE9000BB968 /* ChangeNumberViewController.m */,
 				6818707B1FB04754009B1E5A /* ProfileViewController.h */,
@@ -1743,7 +1748,7 @@
 			isa = PBXProject;
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Original;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Palpro Tech";
 				TargetAttributes = {
 					6801D5FB1F9E155D000946A2 = {
@@ -2190,6 +2195,7 @@
 				6884D7BE1FA89DFA000BB968 /* ChangeNumberViewController.m in Sources */,
 				6BCBF412213D0C9F00FE360A /* PointsViewController.m in Sources */,
 				6B8CB2EF201B0BFF00821B89 /* EventImageTableViewCell.m in Sources */,
+				6B4C43EA233F889100EE0ACC /* SignUpWelcomeViewController.m in Sources */,
 				6BB586E620BD8EAA00D459AF /* LGSideMenuView.m in Sources */,
 				6B7A12D42317AEAF0033655D /* NotificationCell.m in Sources */,
 				6BB586E320BD8EAA00D459AF /* LGSideMenuController.m in Sources */,
@@ -2422,7 +2428,7 @@
 					Pods,
 				);
 				INFOPLIST_FILE = Heylaapp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2442,10 +2448,10 @@
 					"$(OTHER_LDFLAGS)",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.happysanz.heylaapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.visionpalpro.heylaapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -2479,7 +2485,7 @@
 					Pods,
 				);
 				INFOPLIST_FILE = Heylaapp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2499,10 +2505,10 @@
 					"$(OTHER_LDFLAGS)",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.happysanz.heylaapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.visionpalpro.heylaapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
@@ -2516,11 +2522,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6V986NC4N5;
 				INFOPLIST_FILE = Heyla/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.happysanz.heylaapp.NotificationService;
+				PRODUCT_BUNDLE_IDENTIFIER = com.visionpalpro.heylaapp.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -2537,10 +2543,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6V986NC4N5;
 				INFOPLIST_FILE = Heyla/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.happysanz.heylaapp.NotificationService;
+				PRODUCT_BUNDLE_IDENTIFIER = com.visionpalpro.heylaapp.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;

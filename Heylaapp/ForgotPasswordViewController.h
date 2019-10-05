@@ -13,7 +13,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *send;
 - (IBAction)sendBtn:(id)sender;
 - (IBAction)backBtn:(id)sender;
-@property (strong, nonatomic) IBOutlet ACFloatingTextField *emailTextfiled;
+@property (strong, nonatomic) IBOutlet UITextField *emailTextfiled;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end

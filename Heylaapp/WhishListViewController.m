@@ -42,6 +42,11 @@
     NSMutableArray *Eventdetails;
     NSMutableArray *wishlist_id;
     NSArray *EventdetailsArr;
+    
+    NSDateFormatter *dateFormatter;
+    NSDate *date;
+    NSString *reqStartDateString;
+    NSString *reqEndDateString;
 }
 @end
 
@@ -178,14 +183,32 @@
                  NSString *strWishlist_id = [dict objectForKey:@"wishlist_id"];
                  
                  
-                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                 [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-                 NSDate *date = [[NSDate alloc] init];
-                 date = [dateFormatter dateFromString:strStart_date];
+//                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//                 [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+//                 NSDate *date = [[NSDate alloc] init];
+//                 date = [dateFormatter dateFromString:strStart_date];
+//                 // converting into our required date format
+//                 [dateFormatter setDateFormat:@"MMMM dd yyyy"];
+//                 NSString *reqDateString = [dateFormatter stringFromDate:date];
+//                 NSLog(@"date is %@", reqDateString);
+                 
+                 self->dateFormatter = [[NSDateFormatter alloc] init];
+                 [self->dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                 self->date = [[NSDate alloc] init];
+                 self->date = [self->dateFormatter dateFromString:strStart_date];
                  // converting into our required date format
-                 [dateFormatter setDateFormat:@"MMMM dd yyyy"];
-                 NSString *reqDateString = [dateFormatter stringFromDate:date];
-                 NSLog(@"date is %@", reqDateString);
+                 [self->dateFormatter setDateFormat:@"dd-MMM-yyyy"];
+                 self->reqStartDateString = [self->dateFormatter stringFromDate:self->date];
+                 NSLog(@"date is %@",self->reqStartDateString);
+                 
+                 self->dateFormatter = [[NSDateFormatter alloc] init];
+                 [self->dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                 self->date = [[NSDate alloc] init];
+                 self->date = [self->dateFormatter dateFromString:strEnd_date];
+                 // converting into our required date format
+                 [self->dateFormatter setDateFormat:@"dd-MMM-yyyy"];
+                 self->reqEndDateString = [self->dateFormatter stringFromDate:self->date];
+                 NSLog(@"date is %@",self->reqEndDateString);
                  
                  [self->adv_status addObject:strAdv_status];
                  [self->booking_status addObject:strBooking_status];
@@ -195,7 +218,7 @@
                  [self->contact_person addObject:strContact_person];
                  [self->country_name addObject:strCountry_name];
                  [self->description addObject:strDescription];
-                 [self->end_date addObject:strEnd_date];
+                 [self->end_date addObject:self->reqEndDateString];
                  [self->event_address addObject:strEvent_address];
                  [self->event_banner addObject:strEvent_banner];
                  [self->event_city addObject:strEvent_city];
@@ -212,7 +235,7 @@
                  [self->popularity addObject:strPopularity];
                  [self->primary_contact_no addObject:strPrimary_contact_no];
                  [self->secondary_contact_no addObject:strSecondary_contact_no];
-                 [self->start_date addObject:strStart_date];
+                 [self->start_date addObject:self->reqStartDateString];
                  [self->start_time addObject:strStart_time];
                  [self->end_time addObject:strEnd_time];
                  [self->wishlist_id addObject:strWishlist_id];
@@ -277,7 +300,7 @@
     {
         HomeViewTableCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.eventName.text = [event_name objectAtIndex:indexPath.row];
-        cell.eventTime.text = [event_venue objectAtIndex:indexPath.row];
+        cell.eventTime.text = [NSString stringWithFormat:@"%@ - %@",[start_time objectAtIndex:indexPath.row],[end_time objectAtIndex:indexPath.row]];
         NSString *imageUrl = [event_banner objectAtIndex:indexPath.row];
         __weak HomeViewTableCell *weakCell = cell;
         UIImage *placeholderImage = [UIImage imageNamed:@"placeholder.jpg"];
@@ -300,7 +323,7 @@
         {
             cell.paidView.backgroundColor = [UIColor colorWithRed:72/255.0f green:168/255.0f blue:71/255.0f alpha:1.0];
         }
-        cell.paidView.layer.cornerRadius = 5.0;
+        cell.paidView.layer.cornerRadius = 3.0;
         cell.paidView.clipsToBounds = YES;
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
@@ -310,7 +333,7 @@
     {
         HomeViewTableCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.eventName.text = [event_name objectAtIndex:indexPath.row];
-        cell.eventTime.text = [NSString stringWithFormat:@"%@ %@",[start_date objectAtIndex:indexPath.row],[end_date objectAtIndex:indexPath.row]];
+        cell.eventTime.text = [NSString stringWithFormat:@"%@ - %@",[start_date objectAtIndex:indexPath.row],[end_date objectAtIndex:indexPath.row]];
         NSString *imageUrl = [event_banner objectAtIndex:indexPath.row];
         __weak HomeViewTableCell *weakCell = cell;
         UIImage *placeholderImage = [UIImage imageNamed:@"placeholder.jpg"];
@@ -450,15 +473,19 @@
          }];
     }
 }
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-        return 450;
+        return 410;
     }
     else if ([[UIScreen mainScreen] bounds].size.height == 667)
     {
-        return 280;
+        return 225;
     }
     else
     {

@@ -14,6 +14,7 @@
 
 @implementation SideMenuMainViewController
 
+
 - (void)setupWithType:(NSUInteger)type
 {
     self.type = type;

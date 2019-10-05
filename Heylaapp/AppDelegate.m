@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <UserNotifications/UserNotifications.h>
+#import "LGSideMenuController.h"
 
 @import GoogleMaps;
 
@@ -61,34 +62,31 @@
         
         if ([status isEqualToString:@"signIn"])
         {
-            [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"userInfo"];
+            [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"userInfostat"];
             self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//            HomeViewController *homeViewController = [storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
-//            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:homeViewController];
-//            self.window.rootViewController = nav;
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"NavigationController"];
             [navigationController setViewControllers:@[[storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"]]];
-            
+
             SideMenuMainViewController *sideMenuMainViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SideMenuMainViewController"]; //or
             sideMenuMainViewController.rootViewController = navigationController;
             [sideMenuMainViewController setupWithType:0];
-            self.window.rootViewController = navigationController;
+            self.window.rootViewController = sideMenuMainViewController;
             [self.window makeKeyAndVisible];
-            
-            UIWindow *window = UIApplication.sharedApplication.delegate.window;
-            window.rootViewController = sideMenuMainViewController;
-            
-            [UIView transitionWithView:window
-                              duration:0.3
-                               options:UIViewAnimationOptionTransitionCrossDissolve
-                            animations:nil
-                            completion:nil];
+
+
+//            UIWindow *window = UIApplication.sharedApplication.delegate.window;
+//            window.rootViewController = sideMenuMainViewController;
+//
+//            [UIView transitionWithView:window
+//                              duration:0
+//                               options:UIViewAnimationOptionTransitionCrossDissolve
+//                            animations:nil
+//                            completion:nil];
         }
         else
         {
-            [[NSUserDefaults standardUserDefaults]setObject:@"alertUserIfno" forKey:@"userInfo"];
+            [[NSUserDefaults standardUserDefaults]setObject:@"alertUserIfno" forKey:@"userInfostat"];
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
             [self.window makeKeyAndVisible];

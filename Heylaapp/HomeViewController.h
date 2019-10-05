@@ -49,7 +49,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *LeaderBoardimageView;
 @property (strong, nonatomic) IBOutlet UIButton *floating;
 - (IBAction)floatibgBtn:(id)sender;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *search;
 - (IBAction)searchBtn:(id)sender;
 @property (nonatomic, strong)NSMutableArray *eventArray;
@@ -65,6 +65,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *loginCount;
 @property (strong, nonatomic) IBOutlet UILabel *totalPoints;
 @property (strong, nonatomic) UIWindow *window;
+@property (weak, nonatomic) IBOutlet UIView *containerView;
 
 -(UIImage *)makeRoundedImage:(UIImage *) image
                       radius: (float) radius;

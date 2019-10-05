@@ -85,6 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @note To still allow touches to pass through the HUD, you can set hud.userInteractionEnabled = NO.
  * @attention MBProgressHUD is a UI class and should therefore only be accessed on the main thread.
  */
+API_AVAILABLE(ios(7.0))
 @interface MBProgressHUD : UIView
 
 /**

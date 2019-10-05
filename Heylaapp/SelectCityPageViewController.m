@@ -29,10 +29,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     self.currentCity.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"locatedCity"];
     self.countryTxtFiled.text  = @"Singapore";
+    self.locationTitle.text = @"Explore events in and around the\n Lion City";
     //[[NSUserDefaults standardUserDefaults]objectForKey:@"locatedCity"];
 //    _countryTxtFiled.layer.cornerRadius = 10.0;
 //    _countryTxtFiled.layer.borderWidth = 1.0;
@@ -152,6 +152,7 @@
     [tracker set:kGAIScreenName value:@"cityPage"];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
     self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
+    
 }
 -(void)getEventCity
 {

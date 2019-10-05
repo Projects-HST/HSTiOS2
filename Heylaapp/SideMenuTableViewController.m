@@ -27,6 +27,7 @@
     staticMenu = @[@"userName"];
     [self getProfileDetails];
 }
+
 -(void)getProfileDetails
 {
     appDel = (AppDelegate*)[UIApplication sharedApplication].delegate;
@@ -114,6 +115,8 @@
              [[NSUserDefaults standardUserDefaults]setObject:self->appDel.state_id forKey:@"state_id"];
              [[NSUserDefaults standardUserDefaults]setObject:self->appDel.city_id forKey:@"city_id"];
              [[NSUserDefaults standardUserDefaults]setObject:self->appDel.newsletter_status forKey:@"new_Letter"];
+             
+             [self.tableView reloadData];
          }
          else
          {
@@ -138,10 +141,6 @@
      {
          NSLog(@"error: %@", error);
      }];
-}
--(void)viewWillAppear:(BOOL)animated
-{
-    [self.tableView reloadData];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -593,10 +592,12 @@
                                  [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"from_sideMenu"];
                                  [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"selected_city_prof"];
                                  [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"TranscationStatus"];
-                                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"userInfo"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"userInfostat"];
                                  [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"remember_me"];
                                  [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"locatedCity"];
                                  [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"for_Alert"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"for_Alert"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"advnce_filter"];
                                  [self performSegueWithIdentifier:@"signOut" sender:self];
                              }];
         

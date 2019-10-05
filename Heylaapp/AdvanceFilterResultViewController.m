@@ -43,6 +43,11 @@
     NSMutableArray *Eventdetails;
     NSMutableArray *date_label;
     NSMutableArray *month_label;
+    
+    NSDateFormatter *dateFormatter;
+    NSDate *date;
+    NSString *reqStartDateString;
+    NSString *reqEndDateString;
 }
 @end
 
@@ -83,8 +88,9 @@
     end_time = [[NSMutableArray alloc]init];
     date_label = [[NSMutableArray alloc]init];
     month_label = [[NSMutableArray alloc]init];
+    Eventdetails = [[NSMutableArray alloc]init];
     
-    
+    [Eventdetails removeAllObjects];
     Eventdetails = [[NSUserDefaults standardUserDefaults]objectForKey:@"eventList_AdvSearch"];
     
     [adv_status removeAllObjects];
@@ -155,13 +161,31 @@
         NSDate *date = [[NSDate alloc] init];
         date = [dateFormatter dateFromString:strStart_date];
         // converting into our required date format
-        [dateFormatter setDateFormat:@"EEEE, MMM dd, yyyy"];
+        [dateFormatter setDateFormat:@"dd-MMM-yyyy"];
         NSString *reqDateString = [dateFormatter stringFromDate:date];
         NSLog(@"date is %@", reqDateString);
         
-        NSArray *testArray = [reqDateString componentsSeparatedByString:@" "];
-        NSString *strdate = [testArray objectAtIndex:1];
-        NSString *strMonth = [testArray objectAtIndex:2];
+//        NSArray *testArray = [reqDateString componentsSeparatedByString:@" "];
+//        NSString *strdate = [testArray objectAtIndex:1];
+//        NSString *strMonth = [testArray objectAtIndex:2];
+        
+        self->dateFormatter = [[NSDateFormatter alloc] init];
+        [self->dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        self->date = [[NSDate alloc] init];
+        self->date = [self->dateFormatter dateFromString:strStart_date];
+        // converting into our required date format
+        [self->dateFormatter setDateFormat:@"dd-MMM-yyyy"];
+        self->reqStartDateString = [self->dateFormatter stringFromDate:self->date];
+        NSLog(@"date is %@",self->reqStartDateString);
+        
+        self->dateFormatter = [[NSDateFormatter alloc] init];
+        [self->dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        self->date = [[NSDate alloc] init];
+        self->date = [self->dateFormatter dateFromString:strEnd_date];
+        // converting into our required date format
+        [self->dateFormatter setDateFormat:@"dd-MMM-yyyy"];
+        self->reqEndDateString = [self->dateFormatter stringFromDate:self->date];
+        NSLog(@"date is %@",self->reqEndDateString);
         
         [adv_status addObject:strAdv_status];
         [booking_status addObject:strBooking_status];
@@ -171,7 +195,7 @@
         [contact_person addObject:strContact_person];
         [country_name addObject:strCountry_name];
         [description addObject:strDescription];
-        [end_date addObject:strEnd_date];
+        [end_date addObject:reqEndDateString];
         [event_address addObject:strEvent_address];
         [event_banner addObject:strEvent_banner];
         [event_city addObject:strEvent_city];
@@ -188,11 +212,11 @@
         [popularity addObject:strPopularity];
         [primary_contact_no addObject:strPrimary_contact_no];
         [secondary_contact_no addObject:strSecondary_contact_no];
-        [start_date addObject:strStart_date];
+        [start_date addObject:reqStartDateString];
         [start_time addObject:strStart_time];
         [end_time addObject:strEnd_time];
-        [date_label addObject:strdate];
-        [month_label addObject:strMonth];
+       // [date_label addObject:strdate];
+       // [month_label addObject:strMonth];
     }
     [self.tableView  reloadData];
 }
@@ -210,37 +234,85 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     HomeViewTableCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
   
-        cell.eventName.text = [event_name objectAtIndex:indexPath.row];
-        cell.dateLabel.text = [date_label objectAtIndex:indexPath.row];
-        cell.monthLabel.text = [month_label objectAtIndex:indexPath.row];
-        NSString *imageUrl = [event_banner objectAtIndex:indexPath.row];
-        __weak HomeViewTableCell *weakCell = cell;
-        UIImage *placeholderImage = [UIImage imageNamed:@"placeholder.jpg"];
-        NSURLRequest *request = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:imageUrl]];
-        [cell.eventImageView setImageWithURLRequest:request placeholderImage:placeholderImage success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image)
-         {
-             weakCell.eventImageView.image = image;
-             
-         } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error)
-    {
-             
-             NSLog(@"%@",error);
-             
-         }];
-        
-        cell.eventLocation.text = [event_venue objectAtIndex:indexPath.row];
-        cell.eventStatus.text = [event_type objectAtIndex:indexPath.row];
-        if ([cell.eventStatus.text  isEqual: @"Paid"])
-        {
-            cell.paidView.backgroundColor = [UIColor colorWithRed:208/255.0f green:45/255.0f blue:39/255.0f alpha:1.0];
-        }
-        else
-        {
-            cell.paidView.backgroundColor = [UIColor colorWithRed:72/255.0f green:168/255.0f blue:71/255.0f alpha:1.0];
-        }
-        NSString *strStartTime = [start_time objectAtIndex:indexPath.row];
-        NSString *strendTime = [end_time objectAtIndex:indexPath.row];
-        cell.eventTime.text = [NSString stringWithFormat:@"%@ - %@",strStartTime,strendTime];
+        NSString *strhotSpot = [hotspot_status objectAtIndex:indexPath.row];
+       if ([strhotSpot isEqualToString:@"Y"])
+       {
+                   cell.paidView.layer.cornerRadius = 3.0;
+                   cell.paidView.clipsToBounds = YES;
+                   cell.eventName.text = [event_name objectAtIndex:indexPath.row];
+//                   cell.dateLabel.text = [date_label objectAtIndex:indexPath.row];
+//                   cell.monthLabel.text = [month_label objectAtIndex:indexPath.row];
+                   NSString *imageUrl = [event_banner objectAtIndex:indexPath.row];
+                   __weak HomeViewTableCell *weakCell = cell;
+                   UIImage *placeholderImage = [UIImage imageNamed:@"placeholder.jpg"];
+                   NSURLRequest *request = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:imageUrl]];
+                   [cell.eventImageView setImageWithURLRequest:request placeholderImage:placeholderImage success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image)
+                    {
+                        weakCell.eventImageView.image = image;
+                        
+                    } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error)
+               {
+                        
+                        NSLog(@"%@",error);
+                        
+                    }];
+                   
+                   cell.eventLocation.text = [event_venue objectAtIndex:indexPath.row];
+                   cell.eventStatus.text = [event_type objectAtIndex:indexPath.row];
+                   if ([cell.eventStatus.text  isEqual: @"Paid"])
+                   {
+                       cell.paidView.backgroundColor = [UIColor colorWithRed:208/255.0f green:45/255.0f blue:39/255.0f alpha:1.0];
+                      
+                   }
+                   else
+                   {
+                       cell.paidView.backgroundColor = [UIColor colorWithRed:72/255.0f green:168/255.0f blue:71/255.0f alpha:1.0];
+                       
+                   }
+           //       NSString *strStartTime = [start_time objectAtIndex:indexPath.row];
+           //       NSString *strendTime = [end_time objectAtIndex:indexPath.row];
+                   cell.eventTime.text = [NSString stringWithFormat:@"%@ to %@",[start_time objectAtIndex:indexPath.row],[end_time objectAtIndex:indexPath.row]];
+       }
+       else
+       {
+            cell.paidView.layer.cornerRadius = 3.0;
+                   cell.paidView.clipsToBounds = YES;
+                   cell.eventName.text = [event_name objectAtIndex:indexPath.row];
+//                   cell.dateLabel.text = [date_label objectAtIndex:indexPath.row];
+//                   cell.monthLabel.text = [month_label objectAtIndex:indexPath.row];
+                   NSString *imageUrl = [event_banner objectAtIndex:indexPath.row];
+                   __weak HomeViewTableCell *weakCell = cell;
+                   UIImage *placeholderImage = [UIImage imageNamed:@"placeholder.jpg"];
+                   NSURLRequest *request = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:imageUrl]];
+                   [cell.eventImageView setImageWithURLRequest:request placeholderImage:placeholderImage success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image)
+                    {
+                        weakCell.eventImageView.image = image;
+                        
+                    } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error)
+               {
+                        
+                        NSLog(@"%@",error);
+                        
+                    }];
+                   
+                   cell.eventLocation.text = [event_venue objectAtIndex:indexPath.row];
+                   cell.eventStatus.text = [event_type objectAtIndex:indexPath.row];
+                   if ([cell.eventStatus.text  isEqual: @"Paid"])
+                   {
+                       cell.paidView.backgroundColor = [UIColor colorWithRed:208/255.0f green:45/255.0f blue:39/255.0f alpha:1.0];
+                      
+                   }
+                   else
+                   {
+                       cell.paidView.backgroundColor = [UIColor colorWithRed:72/255.0f green:168/255.0f blue:71/255.0f alpha:1.0];
+                       
+                   }
+           //       NSString *strStartTime = [start_time objectAtIndex:indexPath.row];
+           //       NSString *strendTime = [end_time objectAtIndex:indexPath.row];
+                   cell.eventTime.text = [NSString stringWithFormat:@"%@ to %@",[start_date objectAtIndex:indexPath.row],[end_date objectAtIndex:indexPath.row]];
+       }
+       
+
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
     return cell;
@@ -294,6 +366,9 @@
     NSUInteger intbooking_status = [event_name indexOfObject:appDel.event_Name];
     appDel.booking_status = booking_status[intbooking_status];
     
+    NSUInteger inthotspotStatus = [event_name indexOfObject:appDel.event_Name];
+    appDel.hotspotStatus = hotspot_status[inthotspotStatus];
+    
     [[NSUserDefaults standardUserDefaults]setObject:@"YES" forKey:@"advnce_filter"];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     EventDetailViewController *eventDetail = [storyboard instantiateViewControllerWithIdentifier:@"EventDetailViewController"];
@@ -301,20 +376,20 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        return 450;
-    }
-    else if ([[UIScreen mainScreen] bounds].size.height == 667)
-    {
-        return 280;
-    }
-    else
-    {
-        return 225;
-    }
+       {
+           return 410;
+       }
+       else if ([[UIScreen mainScreen] bounds].size.height == 667)
+       {
+           return 225;
+       }
+       else
+       {
+           return 225;
+       }
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

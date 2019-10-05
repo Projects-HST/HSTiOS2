@@ -193,6 +193,14 @@
     }
         return cell;
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+        return UITableViewAutomaticDimension;
+}
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 120;
+}
 -(void)reportButtonClicked:(UIButton*)sender
 {
     if (sender.tag == 1)

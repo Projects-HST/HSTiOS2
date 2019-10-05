@@ -14,7 +14,7 @@
 - (IBAction)eyeBtn:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *submit;
 - (IBAction)submitBtn:(id)sender;
-@property (strong, nonatomic) IBOutlet ACFloatingTextField *newpassword;
+@property (strong, nonatomic) IBOutlet UITextField *newpassword;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 
 @end

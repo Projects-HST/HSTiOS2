@@ -66,11 +66,41 @@
 
     if ([self.newpassword.text isEqualToString:@""])
     {
-        [_newpassword showErrorWithText:@"Give a new password to reset!"];
+//        [_newpassword showErrorWithText:@"Give a new password to reset!"];
+        UIAlertController *alert= [UIAlertController
+                                   alertControllerWithTitle:@"Heyla"
+                                   message:@"Password should contain atleast 6 characters"
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 
+                             }];
+        
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
     }
     else if (password.length < 6)
     {
-        [_newpassword showErrorWithText:@"Password should contain atleast 6 characters"];
+//        [_newpassword showErrorWithText:@"Password should contain atleast 6 characters"];
+        UIAlertController *alert= [UIAlertController
+                                   alertControllerWithTitle:@"Heyla"
+                                   message:@"Password should contain atleast 6 characters"
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 
+                             }];
+        
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
     }
     else
     {

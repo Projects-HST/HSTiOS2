@@ -310,7 +310,8 @@
                      }
                      else
                      {
-                         [self performSegueWithIdentifier:@"to_profile" sender:self];
+                         [[NSUserDefaults standardUserDefaults]setObject:@"OTP" forKey:@"From_page"];
+                         [self performSegueWithIdentifier:@"signupWelcomeScreen" sender:self];
                      }
 
                      }
