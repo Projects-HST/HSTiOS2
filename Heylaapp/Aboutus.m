@@ -21,35 +21,35 @@
     // Do any additional setup after loading the view.
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     
-    NSString *selectedView = [[NSUserDefaults standardUserDefaults]objectForKey:@"selectView"];
-    if ([selectedView isEqualToString:@"About Us"])
-    {
-        self.title = @"About Us";
-        NSURL *url = [NSURL URLWithString:@"https://heylaapp.com/about-us"];
-        NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-        [_webView loadRequest:requestObj];
-    }
-    else if ([selectedView isEqualToString:@"Privacy Policy"])
-    {
-        self.title = @"Privacy Policy";
-        NSURL *url = [NSURL URLWithString:@"https://heylaapp.com/privacy"];
-        NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-        [_webView loadRequest:requestObj];
-    }
-    else if ([selectedView isEqualToString:@"Payment Policy"])
-    {
-        self.title = @"Payment Policy";
-        NSURL *url = [NSURL URLWithString:@"https://heylaapp.com/payment"];
-        NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-        [_webView loadRequest:requestObj];
-    }
-    else if ([selectedView isEqualToString:@"Terms and Condition"])
-    {
-        self.title = @"Terms and Condition";
-        NSURL *url = [NSURL URLWithString:@"https://heylaapp.com/terms"];
-        NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-        [_webView loadRequest:requestObj];
-    }
+//    NSString *selectedView = [[NSUserDefaults standardUserDefaults]objectForKey:@"selectView"];
+//    if ([selectedView isEqualToString:@"About Us"])
+//    {
+//        self.title = @"About Us";
+//        NSURL *url = [NSURL URLWithString:@"https://heylaapp.com/about-us"];
+//        NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+//        [_webView loadRequest:requestObj];
+//    }
+//    else if ([selectedView isEqualToString:@"Privacy Policy"])
+//    {
+//        self.title = @"Privacy Policy";
+//        NSURL *url = [NSURL URLWithString:@"https://heylaapp.com/privacy"];
+//        NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+//        [_webView loadRequest:requestObj];
+//    }
+//    else if ([selectedView isEqualToString:@"Payment Policy"])
+//    {
+//        self.title = @"Payment Policy";
+//        NSURL *url = [NSURL URLWithString:@"https://heylaapp.com/payment"];
+//        NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+//        [_webView loadRequest:requestObj];
+//    }
+//    else if ([selectedView isEqualToString:@"Terms and Condition"])
+//    {
+//        self.title = @"Terms and Condition";
+//        NSURL *url = [NSURL URLWithString:@"https://heylaapp.com/terms"];
+//        NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+//        [_webView loadRequest:requestObj];
+//    }
 }
 
 /*

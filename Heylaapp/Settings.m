@@ -196,8 +196,8 @@
     }
     else if (indexPath.row == 4)
     {
-        [[NSUserDefaults standardUserDefaults]setObject:@"About Us" forKey:@"selectView"];
-        [self performSegueWithIdentifier:@"aboutus" sender:self];
+        [[NSUserDefaults standardUserDefaults]setObject:@"aboutus" forKey:@"policys"];
+        [self performSegueWithIdentifier:@"privacyPolicy" sender:self];
     }
     else if (indexPath.row == 5)
     {
@@ -205,18 +205,18 @@
     }
     else if (indexPath.row == 6)
     {
-        [[NSUserDefaults standardUserDefaults]setObject:@"Privacy Policy" forKey:@"selectView"];
-        [self performSegueWithIdentifier:@"aboutus" sender:self];
+        [[NSUserDefaults standardUserDefaults]setObject:@"privacypolicy" forKey:@"policys"];
+        [self performSegueWithIdentifier:@"privacyPolicy" sender:self];
     }
     else if (indexPath.row == 7)
     {
-        [[NSUserDefaults standardUserDefaults]setObject:@"Payment Policy" forKey:@"selectView"];
-        [self performSegueWithIdentifier:@"aboutus" sender:self];
+        [[NSUserDefaults standardUserDefaults]setObject:@"paymentpolicy" forKey:@"policys"];
+        [self performSegueWithIdentifier:@"privacyPolicy" sender:self];
     }
     else if (indexPath.row == 8)
     {
-        [[NSUserDefaults standardUserDefaults]setObject:@"Terms and Condition" forKey:@"selectView"];
-        [self performSegueWithIdentifier:@"aboutus" sender:self];
+        [[NSUserDefaults standardUserDefaults]setObject:@"termsConditn" forKey:@"policys"];
+        [self performSegueWithIdentifier:@"privacyPolicy" sender:self];
     }
     
 }

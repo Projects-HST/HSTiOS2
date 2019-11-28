@@ -1292,7 +1292,7 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
 
 #pragma mark - Animations
 
-- (void)showAnimated:(BOOL)animated completionHandler:(void(^)())completionHandler
+- (void)showAnimated:(BOOL)animated completionHandler:(void(^)(void))completionHandler
 {
     if (!self.isShowing)
     {
@@ -1332,16 +1332,16 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
                                animated:animated
                       completionHandler:^(BOOL result)
                  {
-                     if (result && index == _buttonsArray.count-1)
+                    if (result && index == self->_buttonsArray.count-1)
                      {
                          if (completionHandler) completionHandler();
 
                          // -----
 
-                         if (_didShowHandler) _didShowHandler(self);
+                         if (self->_didShowHandler) self->_didShowHandler(self);
 
-                         if (_delegate && [_delegate respondsToSelector:@selector(plusButtonsViewDidShow:)])
-                             [_delegate plusButtonsViewDidShow:self];
+                         if (self->_delegate && [self->_delegate respondsToSelector:@selector(plusButtonsViewDidShow:)])
+                             [self->_delegate plusButtonsViewDidShow:self];
 
                          [[NSNotificationCenter defaultCenter] postNotificationName:kLGPlusButtonsViewDidShowNotification object:self userInfo:nil];
                      }
@@ -1355,7 +1355,7 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
     }
 }
 
-- (void)hideAnimated:(BOOL)animated completionHandler:(void(^)())completionHandler
+- (void)hideAnimated:(BOOL)animated completionHandler:(void(^)(void))completionHandler
 {
     if (self.isShowing)
     {
@@ -1394,7 +1394,7 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
                                animated:animated
                       completionHandler:^(BOOL result)
                  {
-                     if (result && index == _buttonsArray.count-1)
+                    if (result && index == self->_buttonsArray.count-1)
                      {
                          self.hidden = YES;
 
@@ -1402,10 +1402,10 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
 
                          // -----
 
-                         if (_didHideHandler) _didHideHandler(self);
+                         if (self->_didHideHandler) self->_didHideHandler(self);
 
-                         if (_delegate && [_delegate respondsToSelector:@selector(plusButtonsViewDidHide:)])
-                             [_delegate plusButtonsViewDidHide:self];
+                         if (self->_delegate && [self->_delegate respondsToSelector:@selector(plusButtonsViewDidHide:)])
+                             [self->_delegate plusButtonsViewDidHide:self];
 
                          [[NSNotificationCenter defaultCenter] postNotificationName:kLGPlusButtonsViewDidHideNotification object:self userInfo:nil];
                      }
@@ -1421,7 +1421,7 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
 
 #pragma mark -
 
-- (void)showButtonsAnimated:(BOOL)animated completionHandler:(void(^)())completionHandler
+- (void)showButtonsAnimated:(BOOL)animated completionHandler:(void(^)(void))completionHandler
 {
     if (self.isFirstButtonIsPlusButton)
     {
@@ -1462,16 +1462,16 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
                                animated:animated
                       completionHandler:^(BOOL result)
                  {
-                     if (result && index == _buttonsArray.count-1)
+                    if (result && index == self->_buttonsArray.count-1)
                      {
                          if (completionHandler) completionHandler();
 
                          // -----
 
-                         if (_didShowButtonsHandler) _didShowButtonsHandler(self);
+                         if (self->_didShowButtonsHandler) self->_didShowButtonsHandler(self);
 
-                         if (_delegate && [_delegate respondsToSelector:@selector(plusButtonsViewDidShowButtons:)])
-                             [_delegate plusButtonsViewDidShowButtons:self];
+                         if (self->_delegate && [self->_delegate respondsToSelector:@selector(plusButtonsViewDidShowButtons:)])
+                             [self->_delegate plusButtonsViewDidShowButtons:self];
 
                          [[NSNotificationCenter defaultCenter] postNotificationName:kLGPlusButtonsViewDidShowButtonsNotification object:self userInfo:nil];
                      }
@@ -1484,7 +1484,7 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
     }
 }
 
-- (void)hideButtonsAnimated:(BOOL)animated completionHandler:(void(^)())completionHandler
+- (void)hideButtonsAnimated:(BOOL)animated completionHandler:(void(^)(void))completionHandler
 {
     if (self.isFirstButtonIsPlusButton)
     {
@@ -1525,16 +1525,16 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
                                animated:animated
                       completionHandler:^(BOOL result)
                  {
-                     if (result && index == _buttonsArray.count-1)
+                    if (result && index == self->_buttonsArray.count-1)
                      {
                          if (completionHandler) completionHandler();
 
                          // -----
 
-                         if (_didHideButtonsHandler) _didHideButtonsHandler(self);
+                         if (self->_didHideButtonsHandler) self->_didHideButtonsHandler(self);
 
-                         if (_delegate && [_delegate respondsToSelector:@selector(plusButtonsViewDidHideButtons:)])
-                             [_delegate plusButtonsViewDidHideButtons:self];
+                         if (self->_delegate && [self->_delegate respondsToSelector:@selector(plusButtonsViewDidHideButtons:)])
+                             [self->_delegate plusButtonsViewDidHideButtons:self];
 
                          [[NSNotificationCenter defaultCenter] postNotificationName:kLGPlusButtonsViewDidHideButtonsNotification object:self userInfo:nil];
                      }
@@ -1576,7 +1576,7 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
                                                      delay:0.f
                                                 animations:^(void)
              {
-                 _coverView.alpha = 1.f;
+                self->_coverView.alpha = 1.f;
              }
                                                 completion:nil];
         }
@@ -1609,13 +1609,13 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
                                                      delay:0.f
                                                 animations:^(void)
              {
-                 _coverView.alpha = 0.f;
+                self->_coverView.alpha = 0.f;
              }
                                                 completion:^(BOOL finished)
              {
                  if (finished)
                  {
-                     _coverView.hidden = YES;
+                     self->_coverView.hidden = YES;
 
                      if ([self.superview isKindOfClass:[UIScrollView class]])
                          [(UIScrollView *)self.superview setScrollEnabled:YES];
@@ -2050,7 +2050,7 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
 
 #pragma mark - Support
 
-+ (void)animateStandardWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay animations:(void(^)())animations completion:(void(^)(BOOL finished))completion
++ (void)animateStandardWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay animations:(void(^)(void))animations completion:(void(^)(BOOL finished))completion
 {
     if ([UIDevice currentDevice].systemVersion.floatValue >= 7.0)
     {

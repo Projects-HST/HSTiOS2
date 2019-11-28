@@ -288,7 +288,7 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonAnimationType)
 
 #pragma mark -
 
-- (void)showAnimated:(BOOL)animated completionHandler:(void(^)())completionHandler;
+- (void)showAnimated:(BOOL)animated completionHandler:(void(^)(void))completionHandler;
 - (void)hideAnimated:(BOOL)animated completionHandler:(void(^)())completionHandler;
 
 - (void)showButtonsAnimated:(BOOL)animated completionHandler:(void(^)())completionHandler;

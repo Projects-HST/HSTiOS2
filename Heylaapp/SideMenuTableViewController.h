@@ -12,5 +12,6 @@
 - (IBAction)profileImageButton:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+- (IBAction)shareBtnOutlet:(id)sender;
 
 @end

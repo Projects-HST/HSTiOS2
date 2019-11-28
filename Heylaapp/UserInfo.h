@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIImageView *bgImgView;
 @property (weak, nonatomic) IBOutlet UIButton *nextOutlet;
 @property (weak, nonatomic) IBOutlet UIButton *skipOutlet;
+- (IBAction)previousAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *previousOutlet;
 
 @end
 

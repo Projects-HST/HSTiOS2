@@ -297,7 +297,7 @@
               [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
               [someButton addTarget:self action:@selector(Add:)
               forControlEvents:UIControlEventTouchUpInside];
-              //        [someButton setShowsTouchWhenHighlighted:YES];
+              //[someButton setShowsTouchWhenHighlighted:YES];
                       
              self->wishlistButton = [[UIBarButtonItem alloc] initWithCustomView:someButton];
              self.navigationItem.rightBarButtonItem = self->wishlistButton;
@@ -307,18 +307,18 @@
          }
          else
          {
-//             UIImage *image = [UIImage imageNamed:@"favED"];
-//             [self->wishlistButton setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//           UIImage *image = [UIImage imageNamed:@"favED"];
+//           [self->wishlistButton setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
              UIImage* image3 = [UIImage imageNamed:@"favED.png"];
                                CGRect frameimg = CGRectMake(15,5, 25,25);
                                UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
                                [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
                                [someButton addTarget:self action:@selector(Add:)
                                forControlEvents:UIControlEventTouchUpInside];
-                          //        [someButton setShowsTouchWhenHighlighted:YES];
+                          //   [someButton setShowsTouchWhenHighlighted:YES];
                                   
-                         self->wishlistButton = [[UIBarButtonItem alloc] initWithCustomView:someButton];
-                         self.navigationItem.rightBarButtonItem = self->wishlistButton;
+             self->wishlistButton = [[UIBarButtonItem alloc] initWithCustomView:someButton];
+             self.navigationItem.rightBarButtonItem = self->wishlistButton;
              self->wishlistButton.tintColor = [UIColor whiteColor];
              self->favImageFlag = @"0";
          }
@@ -603,8 +603,8 @@
     [self presentViewController:controller animated:YES completion:nil];
     
     UIPopoverPresentationController *popController = [controller popoverPresentationController];
-    popController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-    popController.barButtonItem = self.navigationItem.leftBarButtonItem;
+    popController.permittedArrowDirections = UIPopoverArrowDirectionUp;
+    popController.barButtonItem = self->shareButton;
     
     // access the completion handler
     controller.completionWithItemsHandler = ^(NSString *activityType,

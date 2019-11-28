@@ -177,6 +177,7 @@
         cell.userImageView.layer.cornerRadius = cell.userImageView.frame.size.width / 2;
         cell.userImageView.clipsToBounds = YES;
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        
         if ([appDel.user_type isEqualToString:@"2"])
         {
             cell.UserName.text = @"Guest User";
@@ -476,20 +477,24 @@
             [self performSegueWithIdentifier:@"whishlist" sender:self];
         }
     }
-    else if(indexPath.row == 5)
-    {
-        appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;        
-        NSString *theMessage = @"Hey! Get the Heyla app and win some exciting rewards.";
-        NSString *strURL=[NSString stringWithFormat:@"https://itunes.apple.com/us/app/heyla/id1328232644?ls=1&mt=8"];
-        NSURL *urlReq = [NSURL URLWithString:strURL];
-        NSArray *items = @[theMessage,urlReq];
-        
-        // build an activity view controller
-        UIActivityViewController *controller = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
-        // and present it
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [self presentActivityController:controller];
-    }
+//    else if(indexPath.row == 5)
+//    {
+//
+//        appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//        NSString *theMessage = [NSString stringWithFormat:@"Hey! Get the Heyla app and win some exciting rewards."];
+//        NSString *strURL=[NSString stringWithFormat:@"https://itunes.apple.com/us/app/heyla/id1328232644?ls=1&mt=8"];
+//        NSURL *urlReq = [NSURL URLWithString:strURL];
+//        NSArray *items = @[theMessage,urlReq];
+//
+//        // build an activity view controller
+//        UIActivityViewController *controller = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
+//
+//        // and present it
+//        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//
+//        [self presentActivityController:controller];
+//
+//    }
     else if(indexPath.row == 6)
     {
         UIApplication *application = [UIApplication sharedApplication];
@@ -616,14 +621,12 @@
 }
 - (void)presentActivityController:(UIActivityViewController *)controller
 {
+    [MBProgressHUD hideHUDForView:self.view animated:YES]; 
     // for iPad: make the presentation a Popover
     controller.modalPresentationStyle = UIModalPresentationPopover;
     [self presentViewController:controller animated:YES completion:nil];
     
-    UIPopoverPresentationController *popController = [controller popoverPresentationController];
-    popController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-    popController.sourceView = self.view;
-    
+  
     // access the completion handler
     controller.completionWithItemsHandler = ^(NSString *activityType,
                                               BOOL completed,
@@ -660,5 +663,35 @@
 -(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
     return NO;
+}
+- (IBAction)shareBtnOutlet:(id)sender
+{
+      appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+      NSString *theMessage = [NSString stringWithFormat:@"Hey! Get the Heyla app and win some exciting rewards."];
+      NSString *strURL=[NSString stringWithFormat:@"https://itunes.apple.com/us/app/heyla/id1328232644?ls=1&mt=8"];
+      NSURL *urlReq = [NSURL URLWithString:strURL];
+      NSArray *items = @[theMessage,urlReq];
+      
+      // build an activity view controller
+      UIActivityViewController *controller = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
+              
+      // and present it
+      [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+      {
+          UIPopoverPresentationController *popController = [controller popoverPresentationController];
+          popController.permittedArrowDirections = UIPopoverArrowDirectionLeft;
+          popController.sourceView = sender;
+          popController.sourceRect = CGRectMake(105, 23, 0, 0);
+      }
+      else
+      {
+          UIPopoverPresentationController *popController = [controller popoverPresentationController];
+          popController.sourceView = self.view;
+      }
+      
+      [self presentActivityController:controller];
+              
 }
 @end

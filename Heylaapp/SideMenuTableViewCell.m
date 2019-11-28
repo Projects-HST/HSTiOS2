@@ -20,4 +20,8 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)shareBtnOutlet:(id)sender {
+}
+- (IBAction)shareBtnAction:(id)sender {
+}
 @end
