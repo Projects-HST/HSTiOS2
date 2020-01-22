@@ -32,7 +32,7 @@
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     
      UIImage* image3 = [UIImage imageNamed:@"favED.png"];
-     CGRect frameimg = CGRectMake(15,5, 25,25);
+     CGRect frameimg = CGRectMake(15,5, 35,35);
             
     UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
     [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
@@ -870,6 +870,16 @@
     {
         if ([favImageFlag isEqualToString:@"0"])
         {
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            UIImage* image3 = [UIImage imageNamed:@"favselectedED.png"];
+            CGRect frameimg = CGRectMake(15,5, 25,25);
+            UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+            [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+            [someButton addTarget:self action:@selector(Add:)
+            forControlEvents:UIControlEventTouchUpInside];
+            self->wishlistButton = [[UIBarButtonItem alloc] initWithCustomView:someButton];
+            self.navigationItem.rightBarButtonItem = self->wishlistButton;
+            
             appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
             NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
             [parameters setObject:appDel.user_Id forKey:@"user_id"];
@@ -886,7 +896,7 @@
             NSString *api = [NSString pathWithComponents:components];
             [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
              {
-                 
+                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                  NSLog(@"%@",responseObject);
                  NSString *msg = [responseObject objectForKey:@"msg"];
                  NSString *status = [responseObject objectForKey:@"status"];
@@ -898,17 +908,7 @@
 //                     UIImage *image = [UIImage imageNamed:@"favselectedED"];
 //                     [self->wishlistButton setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 //                     self->wishlistButton.tintColor = [UIColor blackColor];
-                     
-                     UIImage* image3 = [UIImage imageNamed:@"favselectedED.png"];
-                                       CGRect frameimg = CGRectMake(15,5, 25,25);
-                                       UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
-                                       [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
-                                       [someButton addTarget:self action:@selector(Add:)
-                                       forControlEvents:UIControlEventTouchUpInside];
-                     self->wishlistButton = [[UIBarButtonItem alloc] initWithCustomView:someButton];
-                     self.navigationItem.rightBarButtonItem = self->wishlistButton;
 
-                     
 //                     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 //
 //                     // Configure for text only and offset down
@@ -959,6 +959,16 @@
         }
         else
         {
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            UIImage* image3 = [UIImage imageNamed:@"favED.png"];
+            CGRect frameimg = CGRectMake(15,5, 25,25);
+            UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+            [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
+            [someButton addTarget:self action:@selector(Add:)
+            forControlEvents:UIControlEventTouchUpInside];
+            self->wishlistButton = [[UIBarButtonItem alloc] initWithCustomView:someButton];
+            self.navigationItem.rightBarButtonItem = self->wishlistButton;
+            
             appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
             NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
             [parameters setObject:appDel.user_Id forKey:@"user_id"];
@@ -974,7 +984,7 @@
             NSString *api = [NSString pathWithComponents:components];
             [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
              {
-                 
+                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                  NSLog(@"%@",responseObject);
                  NSString *msg = [responseObject objectForKey:@"msg"];
                  NSString *status = [responseObject objectForKey:@"status"];
@@ -985,15 +995,6 @@
 //                     UIImage *image = [UIImage imageNamed:@"favED"];
 //                     [self->wishlistButton setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 //                     self->wishlistButton.tintColor = [UIColor clearColor];
-                     
-                     UIImage* image3 = [UIImage imageNamed:@"favED.png"];
-                                        CGRect frameimg = CGRectMake(15,5, 25,25);
-                                        UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
-                                        [someButton setBackgroundImage:image3 forState:UIControlStateNormal];
-                                        [someButton addTarget:self action:@selector(Add:)
-                                        forControlEvents:UIControlEventTouchUpInside];
-                                        self->wishlistButton = [[UIBarButtonItem alloc] initWithCustomView:someButton];
-                                        self.navigationItem.rightBarButtonItem = self->wishlistButton;
                      
                      UIAlertController *alert= [UIAlertController
                                                 alertControllerWithTitle:@"Heyla"

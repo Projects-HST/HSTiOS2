@@ -659,6 +659,7 @@
                      [self presentViewController:oTPViewController animated:NO completion:nil];
                      UINavigationController *navigationController = [[UINavigationController alloc]initWithRootViewController:oTPViewController];
                      [[NSUserDefaults standardUserDefaults]setObject:@"YES" forKey:@"for_Alert"];
+                     [[NSUserDefaults standardUserDefaults]setObject:@"NO" forKey:@"fromActivatePage"];
                      [self.navigationController pushViewController:navigationController animated:YES];
                  }
                  else
@@ -953,7 +954,7 @@
             NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
             [parameters setObject:self.signInUserName.text forKey:@"username"];
             [parameters setObject:self.signInPassword.text forKey:@"password"];
-            [parameters setObject:@"dakjsdjadhk" forKey:@"gcm_key"];
+            [parameters setObject:deviceToken forKey:@"gcm_key"];
             [parameters setObject:@"2" forKey:@"mobile_type"];
             AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
             manager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -1036,6 +1037,33 @@
                          [[NSUserDefaults standardUserDefaults]setObject:@"NO" forKey:@"from_sideMenu"];
                          [self performSegueWithIdentifier:@"to_countryPage" sender:self];
                      }
+                     else if ([msg isEqualToString:@"Account Deactivated"] && [status isEqualToString:@"Error"])
+                     {
+                            UIAlertController *alert= [UIAlertController
+                                                       alertControllerWithTitle:@"Your Account is Deactive"
+                                                       message:@"Are you sure want to Activate your account?"
+                                                       preferredStyle:UIAlertControllerStyleAlert];
+                            
+                            UIAlertAction *ok = [UIAlertAction
+                                                 actionWithTitle:@"Activate"
+                                                 style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * action)
+                                                 {
+                                                    [self performSegueWithIdentifier:@"activateAccount" sender:self];
+                                                 }];
+                            
+                            UIAlertAction *cancel = [UIAlertAction
+                                                     actionWithTitle:@"NO"
+                                                     style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * action)
+                                                     {
+                                                         
+                                                     }];
+                            
+                            [alert addAction:ok];
+                            [alert addAction:cancel];
+                            [self presentViewController:alert animated:YES completion:nil];
+                     }
                      else
                      {
                          UIAlertController *alert= [UIAlertController
@@ -1074,7 +1102,7 @@
     NSString *deviceToken = [[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken_Key"];
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
     [parameters setObject:Identifier forKey:@"unique_id"];
-    [parameters setObject:@"dakjsdjadhk" forKey:@"gcm_key"];
+    [parameters setObject:deviceToken forKey:@"gcm_key"];
     [parameters setObject:@"2" forKey:@"mobile_type"];
     
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];

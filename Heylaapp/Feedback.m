@@ -81,7 +81,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"name cannot be empty"
+                                   message:@"Name cannot be empty"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -99,7 +99,7 @@
     {
            UIAlertController *alert= [UIAlertController
                                       alertControllerWithTitle:@"Heyla"
-                                      message:@"email cannot be empty"
+                                      message:@"Email cannot be empty"
                                       preferredStyle:UIAlertControllerStyleAlert];
            
            UIAlertAction *ok = [UIAlertAction
@@ -117,7 +117,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                   alertControllerWithTitle:@"Heyla"
-                                  message:@"enter valid email address"
+                                  message:@"Enter valid email address"
                                   preferredStyle:UIAlertControllerStyleAlert];
                                        
         UIAlertAction *ok = [UIAlertAction
@@ -135,7 +135,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"feedback cannot be empty"
+                                   message:@"Feedback cannot be empty"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction

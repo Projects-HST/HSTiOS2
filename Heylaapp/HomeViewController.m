@@ -235,7 +235,7 @@
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.searchBar.barTintColor = [UIColor colorWithRed:62/255.0f green:142/255.0f blue:203/255.0f alpha:1.0];
     self.searchController.searchBar.tintColor = [UIColor whiteColor];
- //   self.searchController.searchTextField.backgroundColor = [UIColor whiteColor];
+//  self.searchController.searchTextField.backgroundColor = [UIColor whiteColor];
     
     _eventArray = [[NSMutableArray alloc] init];
     _filterdItems = [[NSMutableArray alloc]init];
@@ -681,7 +681,7 @@
     [objLocationManager stopUpdatingLocation];
     [self loadMapView];
 }
-- (void) loadMapView
+- (void)loadMapView
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     for (int i =0; i < [event_longitude count] && i < [event_latitude count]; i++)
@@ -1813,7 +1813,7 @@
      appDel.hotspotStatus = hotspot_status[inthotspotStatus];
     
     appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
     [parameters setObject:appDel.event_id forKey:@"event_id"];
     [parameters setObject:appDel.user_Id forKey:@"user_id"];
@@ -2516,7 +2516,28 @@
         [NSCompoundPredicate andPredicateWithSubpredicates:andMatchPredicates];
         searchResults = [[searchResults filteredArrayUsingPredicate:finalCompoundPredicate] mutableCopy];
         _filterdItems = searchResults;
-        [self searchResultValue];
+        if([_filterdItems count] == 0)
+        {
+             UIAlertController *alert= [UIAlertController
+                                        alertControllerWithTitle:@"Heyla"
+                                        message:@"Aw! No events are happening!"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+
+             UIAlertAction *ok = [UIAlertAction
+                                  actionWithTitle:@"OK"
+                                  style:UIAlertActionStyleDefault
+                                  handler:^(UIAlertAction * action)
+                                  {
+                                    
+                                  }];
+
+             [alert addAction:ok];
+             [self presentViewController:alert animated:YES completion:nil];
+        }
+        else
+        {
+          [self searchResultValue];
+        }
     }
     else
     {
@@ -2524,6 +2545,10 @@
         searchFlag = @"NO";
         [self reloadData];
     }
+}
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
+{
+    return NO;
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {

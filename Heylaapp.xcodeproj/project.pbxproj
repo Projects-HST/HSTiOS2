@@ -394,6 +394,7 @@
 		6BD299F22010D46F0064FD8F /* CCResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD299ED2010D46F0064FD8F /* CCResultViewController.m */; };
 		6BD299F52010E9D10064FD8F /* BookingHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD299F42010E9D10064FD8F /* BookingHistoryViewController.m */; };
 		6BD299F82010E9F20064FD8F /* BookingHistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD299F72010E9F20064FD8F /* BookingHistoryTableViewCell.m */; };
+		6BDF615523D7398C0027A1B3 /* ActivateUserAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BDF615423D7398C0027A1B3 /* ActivateUserAccount.m */; };
 		6BE6ED5E2150D99100EC6293 /* place_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BE6ED5C2150D98700EC6293 /* place_black.png */; };
 		6BE6ED5F2150D99100EC6293 /* place_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BE6ED5D2150D98A00EC6293 /* place_white.png */; };
 		6BFE92B123016A4D00A1D17C /* login@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BFE92AE23016A4300A1D17C /* login@1x.png */; };
@@ -957,6 +958,8 @@
 		6BD299F42010E9D10064FD8F /* BookingHistoryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookingHistoryViewController.m; sourceTree = "<group>"; };
 		6BD299F62010E9F20064FD8F /* BookingHistoryTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookingHistoryTableViewCell.h; sourceTree = "<group>"; };
 		6BD299F72010E9F20064FD8F /* BookingHistoryTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookingHistoryTableViewCell.m; sourceTree = "<group>"; };
+		6BDF615323D7398C0027A1B3 /* ActivateUserAccount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActivateUserAccount.h; sourceTree = "<group>"; };
+		6BDF615423D7398C0027A1B3 /* ActivateUserAccount.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActivateUserAccount.m; sourceTree = "<group>"; };
 		6BE6ED5C2150D98700EC6293 /* place_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = place_black.png; sourceTree = "<group>"; };
 		6BE6ED5D2150D98A00EC6293 /* place_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = place_white.png; sourceTree = "<group>"; };
 		6BFE92AE23016A4300A1D17C /* login@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login@1x.png"; sourceTree = "<group>"; };
@@ -1148,6 +1151,8 @@
 				6814825C1FA06CF300A98C9A /* ViewThreeController.m */,
 				68E0DFF01F9FD00B00CDBF6E /* LoginViewController.h */,
 				68E0DFF11F9FD00B00CDBF6E /* LoginViewController.m */,
+				6BDF615323D7398C0027A1B3 /* ActivateUserAccount.h */,
+				6BDF615423D7398C0027A1B3 /* ActivateUserAccount.m */,
 				68F8C4451FBEECB300E17912 /* ForgotPasswordViewController.h */,
 				68F8C4461FBEECB300E17912 /* ForgotPasswordViewController.m */,
 				6B80ABF3203199E2008C4DE6 /* ForgotPasswordOTPViewController.h */,
@@ -2267,6 +2272,7 @@
 				6BA76EEF20CF91EB00017745 /* BlogViewController.m in Sources */,
 				6B91058420D0E31C00A2E568 /* PECropViewController.m in Sources */,
 				6BA23C45238E7EA400EF6B9E /* PrivacyPolicyTableViewCell.m in Sources */,
+				6BDF615523D7398C0027A1B3 /* ActivateUserAccount.m in Sources */,
 				6B51EA70201211B6003A2B72 /* EventReviewTableViewCell.m in Sources */,
 				6B91058320D0E31C00A2E568 /* PECropView.m in Sources */,
 				6818707D1FB04754009B1E5A /* ProfileViewController.m in Sources */,

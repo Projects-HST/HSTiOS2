@@ -95,7 +95,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-   return 9;
+   return 10;
 }
 
 - (void)updateNotificationStatus
@@ -194,6 +194,33 @@
     {
         [self performSegueWithIdentifier:@"profileSegue" sender:self];
     }
+    else if (indexPath.row == 3)
+    {
+        UIAlertController *alert= [UIAlertController
+                                   alertControllerWithTitle:@"Deactive Account"
+                                   message:@"Are you sure want to deactive your account?"
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction
+                             actionWithTitle:@"YES"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                [self deactiveAccount];
+                             }];
+        
+        UIAlertAction *cancel = [UIAlertAction
+                                 actionWithTitle:@"NO"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     
+                                 }];
+        
+        [alert addAction:ok];
+        [alert addAction:cancel];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
     else if (indexPath.row == 4)
     {
         [[NSUserDefaults standardUserDefaults]setObject:@"aboutus" forKey:@"policys"];
@@ -219,6 +246,88 @@
         [self performSegueWithIdentifier:@"privacyPolicy" sender:self];
     }
     
+}
+-(void)deactiveAccount
+{
+    appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
+    [parameters setObject:appDel.user_Id forKey:@"user_id"];
+
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    
+    NSString *getEventCountries = @"apimain/account_deactive";
+    NSArray *components = [NSArray arrayWithObjects:baseUrl,getEventCountries, nil];
+    NSString *api = [NSString pathWithComponents:components];
+    
+    [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+    {
+    
+        NSLog(@"%@",responseObject);
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        NSString *msg = [responseObject objectForKey:@"msg"];
+        NSString *status = [responseObject objectForKey:@"status"];
+    
+        if ([msg isEqualToString:@"Account Deactivated Successfully"] && [status isEqualToString:@"Success"])
+        {
+            [self clearAllSavedData];
+            LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            [self presentViewController:loginViewController animated:NO completion:nil];
+        }
+
+    }
+              failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+         {
+             NSLog(@"error: %@", error);
+         }];
+}
+
+-(void)clearAllSavedData
+{
+    self->appDel.user_name = @"";
+    self->appDel.picture_url =@"";
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"stat_user_type"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"stat_user_id"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"userName"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"password"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"signOut" forKey:@"status"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"picture_Url"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"statemail_id"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"statemobile_no"];
+    
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"fullName"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"dob"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"occupation"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"gender"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"addressLine"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"addressLineTwo"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"addressLineThree"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"country"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"state"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"city"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"pincode"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"country_id_key"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"state_id_key"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"city_id_key"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"new_Letter"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"statFull_Name"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"statUser_Name"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"selectView"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"deviceToken_Key"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"showSplash"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"status"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"from_sideMenu"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"selected_city_prof"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"TranscationStatus"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"userInfostat"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"remember_me"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"locatedCity"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"for_Alert"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"for_Alert"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"advnce_filter"];
 }
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

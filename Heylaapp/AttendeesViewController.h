@@ -14,4 +14,6 @@
 - (IBAction)backBtn:(id)sender;
 - (IBAction)payNowbtn:(id)sender;
 @property(strong,nonatomic) UIWindow *window;
+- (IBAction)skipAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *skipOutlet;
 @end

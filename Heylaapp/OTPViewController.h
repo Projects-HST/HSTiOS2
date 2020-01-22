@@ -19,4 +19,6 @@
 - (IBAction)confirmBtn:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *changeNumber;
 - (IBAction)changeNumberBtn:(id)sender;
+@property (nonatomic, strong) NSString *emailOrphoneNumber;
+
 @end

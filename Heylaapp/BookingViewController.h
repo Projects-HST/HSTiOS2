@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface BookingViewController : UIViewController<UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
+@property (weak, nonatomic) IBOutlet UILabel *eventHeldTime;
 @property (weak, nonatomic) IBOutlet UILabel *plusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *minusLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *planUmgView;

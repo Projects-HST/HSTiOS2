@@ -40,6 +40,13 @@
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+    action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+    
+    self.skipOutlet.layer.borderColor = UIColor.grayColor.CGColor;
+    self.skipOutlet.layer.borderWidth = 0.5;
+    
 }
 - (void)keyboardWasShown:(NSNotification*)notification
 {
@@ -95,6 +102,7 @@
         
         cell.mobNum.delegate = self;
         
+
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         
         cell.name.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"statFull_Name"];
@@ -150,7 +158,7 @@
 
     if (theTextField.tag == 1)
     {
-    [cell.email becomeFirstResponder];
+        [cell.email becomeFirstResponder];
     }
     else if (theTextField.tag == 2)
     {
@@ -171,16 +179,19 @@
     
     if (textField.tag == 1)
     {
-        [nameArr addObject:textField.text];
+       // [nameArr addObject:textField.text];
+        [nameArr replaceObjectAtIndex:index withObject:textField.text];
     }
     else if (textField.tag == 2)
     {
         
-        [emailArr addObject:textField.text];
+        //[emailArr addObject:textField.text];
+        [emailArr replaceObjectAtIndex:index withObject:textField.text];
     }
     else if (textField.tag == 3)
     {
-       [mobArr addObject:textField.text];
+       //[mobArr addObject:textField.text];
+       [mobArr replaceObjectAtIndex:index withObject:textField.text];
        
     }
     if ([textField.superview.superview isKindOfClass:[UITableViewCell class]])
@@ -220,7 +231,10 @@
     NSString *stremail;
     NSString *strMob_no;
     
-    for (int i = 0; i < [seats count]; i++)
+    
+    [nameArr removeObject:@""];
+    
+    for (int i = 0; i < [nameArr count]; i++)
     {
         
         @try
@@ -231,9 +245,9 @@
         }
         @catch (NSException *exception)
         {
-            strName =@"";
-            stremail =@"";
-            strMob_no =@"";
+            strName = @"";
+            stremail = @"";
+            strMob_no = @"";
         }
         
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -303,5 +317,92 @@
 -(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
     return NO;
+}
+- (IBAction)skipAction:(id)sender
+{
+    __block NSString *check = nil;
+       NSString *strName;
+       NSString *stremail;
+       NSString *strMob_no;
+       
+       
+       [nameArr removeObject:@""];
+       
+       for (int i = 0; i < [nameArr count]; i++)
+       {
+           
+           @try
+           {
+               strName = [nameArr objectAtIndex:i];
+               stremail = [emailArr objectAtIndex:i];
+               strMob_no = [mobArr objectAtIndex:i];
+           }
+           @catch (NSException *exception)
+           {
+               strName = @"";
+               stremail = @"";
+               strMob_no = @"";
+           }
+           
+           appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+           NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
+           [parameters setObject:appDel.order_id forKey:@"order_id"];
+           [parameters setObject:strName forKey:@"name"];
+           [parameters setObject:stremail forKey:@"email_id"];
+           [parameters setObject:strMob_no forKey:@"mobile_no"];
+           
+           AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+           manager.requestSerializer = [AFJSONRequestSerializer serializer];
+           [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+           manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+           
+           NSString *bookingAttendees = @"apimain/bookingAttendees";
+           NSArray *components = [NSArray arrayWithObjects:baseUrl,bookingAttendees, nil];
+           NSString *api = [NSString pathWithComponents:components];
+           
+           [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+            {
+                NSLog(@"%@",responseObject);
+                NSString *msg = [responseObject objectForKey:@"msg"];
+                check = [responseObject objectForKey:@"msg"];
+                NSString *status = [responseObject objectForKey:@"status"];
+                if ([msg isEqualToString:@"Attendees Added"] && [status isEqualToString:@"success"])
+                {
+                    NSLog(@"%@",check);
+                    //if ([check isEqualToString:@"Attendees Added"])
+                    //{
+                    //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                    //ReviewTicketBookingController *reviewTicketBookingController = (ReviewTicketBookingController *)[storyboard instantiateViewControllerWithIdentifier:@"ReviewTicketBookingController"];
+                    //[self.navigationController pushViewController:reviewTicketBookingController animated:YES];
+                    //}
+                }
+            }
+               failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+            {
+                NSLog(@"error: %@", error);
+            }];
+       }
+       UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+       UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"NavigationController"];
+       [navigationController setViewControllers:@[[storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"]]];
+       
+       SideMenuMainViewController *sideMenuMainViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SideMenuMainViewController"]; //or
+       sideMenuMainViewController.rootViewController = navigationController;
+       [sideMenuMainViewController setupWithType:0];
+       self.window.rootViewController = navigationController;
+       [self.window makeKeyAndVisible];
+       
+       UIWindow *window = UIApplication.sharedApplication.delegate.window;
+       window.rootViewController = sideMenuMainViewController;
+       
+       [UIView transitionWithView:window
+                         duration:0.3
+                          options:UIViewAnimationOptionTransitionCrossDissolve
+                       animations:nil
+                       completion:nil];
+}
+-(void)dismissKeyboard
+{
+  [self.view endEditing:YES];
 }
 @end

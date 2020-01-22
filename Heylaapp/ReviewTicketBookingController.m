@@ -392,7 +392,7 @@
 //Called when a required parameter is missing.
 -(void)errorMisssingParameter:(PGTransactionViewController *)controller error:(NSError *) error {
     DEBUGLOG(@"Parameter is missing %@",error.localizedDescription);
-    [controller.navigationController popViewControllerAnimated:YES];
+    //[controller.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)backButton:(id)sender
 {

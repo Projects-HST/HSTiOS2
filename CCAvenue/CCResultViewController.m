@@ -74,7 +74,7 @@
         self.newtxt.textColor = [UIColor colorWithRed:244/255.0f green:163/255.0f blue:55/255.0f alpha:1.0];
         self.statusLabel.textColor = [UIColor colorWithRed:244/255.0f green:163/255.0f blue:55/255.0f alpha:1.0];
         self.FinalStatus.text = @"Canceled";
-        [_continueOtlet setTitle:@"Try Again" forState:UIControlStateNormal];
+        [_continueOtlet setTitle:@"Back to events" forState:UIControlStateNormal];
         _continueOtlet.layer.backgroundColor = [UIColor colorWithRed:244/255.0f green:163/255.0f blue:55/255.0f alpha:1.0].CGColor;
     }
     else

@@ -78,4 +78,5 @@
 #import "UserInfo.h"
 #import "PrivacyPolicy.h"
 #import "PrivacyPolicyTableViewCell.h"
+#import "ActivateUserAccount.h"
 #endif /* heyla_pch */

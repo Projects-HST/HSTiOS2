@@ -68,6 +68,7 @@
      }];
     self.eventTitle.text = appDel.event_Name;
     self.eventLocation.text = appDel.event_Address;
+    self.eventHeldTime.text =  [NSString stringWithFormat:@"%@ to %@",appDel.event_StartTime,appDel.event_EndTime];
     
     monthName = [[NSMutableArray alloc]init];
     monthDate = [[NSMutableArray alloc]init];
@@ -118,7 +119,7 @@
                  NSDate *date = [df dateFromString:str];
                  
                  NSDateFormatter *dfTwo = [[NSDateFormatter alloc]init];
-                 [dfTwo setDateFormat:@"MMMM dd YYYY"];
+                 [dfTwo setDateFormat:@"MMMM dd yyyy"];
                  NSString *strDate = [dfTwo stringFromDate:date];
                  
                  [self->monthName addObject:strDate];
@@ -155,7 +156,7 @@
     
     self.eventTime.enabled = NO;
     self.eventPlan.enabled = NO;
-    self.timeImageView.hidden = YES;
+    self.timeImageView.hidden = NO;
     self.planUmgView.hidden = YES;
     self.minusLabel.hidden = YES;
     self.plusLabel.hidden = YES;
@@ -261,7 +262,7 @@
         self.eventTime.text = selectedTime;
         appDel.selected_Event_time = self.eventTime.text;
         [self getPlans];
-//        self.eventPlan.text = @"Plan";
+//      self.eventPlan.text = @"Plan";
         self.eventPlan.textColor = [UIColor blackColor];
         self.minusOulet.enabled = YES;
         self.plusOutlet.enabled = YES;
@@ -403,15 +404,17 @@
              
               if ([msg isEqualToString:@"View Booking Timings"] && [status isEqualToString:@"success"])
              {
-                 NSArray *Eventtiming = [responseObject objectForKey:@"Eventtiming"];
-                 for (int i = 0; i < [Eventtiming count]; i++)
-                 {
-                     NSDictionary *dict = [Eventtiming objectAtIndex:i];
-                     NSString *str = [dict objectForKey:@"show_time"];
-                     NSString *id_time = [dict objectForKey:@"id"];
-                     [self->Eventtime addObject:str];
-                     [self->Event_time_id addObject:id_time];
+                NSArray *Eventtiming = [responseObject objectForKey:@"Eventtiming"];
+                for (int i = 0; i < [Eventtiming count]; i++)
+                {
+                    NSDictionary *dict = [Eventtiming objectAtIndex:i];
+                    NSString *str = [dict objectForKey:@"show_time"];
+                    NSString *id_time = [dict objectForKey:@"id"];
+                    [self->Eventtime addObject:str];
+                    [self->Event_time_id addObject:id_time];
                  }
+                 self.eventTime.enabled = YES;
+                 self.eventTime.textColor = [UIColor blackColor];
                  self.eventTime.text = @"HH : MM";
                  self.eventPlan.text = @"Plan";
                  [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"S$.",@"0"] forState:UIControlStateNormal];
@@ -421,6 +424,9 @@
              }
              else
              {
+                  self.eventTime.enabled = NO;
+                  self.eventTime.textColor = [UIColor lightGrayColor];
+
                  UIAlertController *alert= [UIAlertController
                                             alertControllerWithTitle:@"Heyla"
                                             message:msg
@@ -471,6 +477,7 @@
         self.eventPlan.textColor = [UIColor lightGrayColor];
         self.eventPlan.enabled = NO;
         self.planUmgView.hidden = YES;
+        
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
                                    message:@"Please select a time!"
@@ -545,6 +552,10 @@
                      [self->event_id addObject:strEvent_id];
                  }
                  self.eventPlan.enabled = YES;
+                 self.eventPlan.textColor = [UIColor blackColor];
+                 self.minusLabel.hidden = NO;
+                 self.plusLabel.hidden = NO;
+                 self.countText.hidden = NO;
                  self.planUmgView.hidden = NO;
                  [self.amountOutlet setTitle:[NSString stringWithFormat:@"%@ %@%@",@"Pay - ",@"S$.",@"0"] forState:UIControlStateNormal];
                  [self->planName_seatrate insertObject:@"Select Plan" atIndex:0];
@@ -553,6 +564,13 @@
              }
              else
              {
+                 self.eventPlan.textColor = [UIColor lightGrayColor];
+                 self.eventPlan.enabled = NO;
+                 
+                 self.minusLabel.hidden = YES;
+                 self.plusLabel.hidden = YES;
+                 self.countText.hidden = YES;
+
                  UIAlertController *alert= [UIAlertController
                                             alertControllerWithTitle:@"Heyla"
                                             message:msg
@@ -591,29 +609,29 @@
 }
 - (IBAction)amountBtn:(id)sender
 {
-    if (selected_Seat.count == 0)
+    if ([self.eventDate.text isEqualToString:@"DD-MM-YYYY"])
     {
         UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@""
-                                   preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 
-                             }];
-        
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
+                                          alertControllerWithTitle:@"Heyla"
+                                          message:@"Select ticket date"
+                                          preferredStyle:UIAlertControllerStyleAlert];
+               
+       UIAlertAction *ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                
+                            }];
+       
+       [alert addAction:ok];
+       [self presentViewController:alert animated:YES completion:nil];
     }
     else if ([self.eventTime.text isEqualToString:@"HH : MM"])
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Please select a time!"
+                                   message:@"Select ticket time"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -627,29 +645,11 @@
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     }
-//    else if ([self.eventPlan.text isEqualToString:@"Select Plan"])
-//    {
-//        UIAlertController *alert= [UIAlertController
-//                                   alertControllerWithTitle:@"Heyla"
-//                                   message:@"Please pick a plan!"
-//                                   preferredStyle:UIAlertControllerStyleAlert];
-//
-//        UIAlertAction *ok = [UIAlertAction
-//                             actionWithTitle:@"OK"
-//                             style:UIAlertActionStyleDefault
-//                             handler:^(UIAlertAction * action)
-//                             {
-//
-//                             }];
-//
-//        [alert addAction:ok];
-//        [self presentViewController:alert animated:YES completion:nil];
-//    }
-    else if ([self.eventPlan.text isEqualToString:@"Select Plan"])
+    else if ([self.eventPlan.text isEqualToString:@"Plan"])
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Please pick a plan!"
+                                   message:@"Select ticket plan"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -662,6 +662,24 @@
         
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
+    }
+    else if (selected_Seat.count == 0)
+    {
+        UIAlertController *alert= [UIAlertController
+                                          alertControllerWithTitle:@"Heyla"
+                                          message:@"Select ticket count"
+                                          preferredStyle:UIAlertControllerStyleAlert];
+               
+       UIAlertAction *ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                
+                            }];
+       
+       [alert addAction:ok];
+       [self presentViewController:alert animated:YES completion:nil];
     }
     else
     {
@@ -677,8 +695,8 @@
         [Eventtime removeObjectAtIndex:0];
         NSArray *splitArray = [self.eventPlan.text componentsSeparatedByString:@"S$."];
         NSString *planName = [splitArray objectAtIndex:0];
-//        NSArray *arr = [planName componentsSeparatedByString:@" "];
-//        NSString *stt = [arr objectAtIndex:0];
+//      NSArray *arr = [planName componentsSeparatedByString:@" "];
+//      NSString *stt = [arr objectAtIndex:0];
         NSUInteger Eventplan_name= [plan_name indexOfObject:planName];
         appDel.plan_time_id = plan_time_id[Eventplan_name];
         appDel.plan_id = plan_id[Eventplan_name];
@@ -822,16 +840,16 @@
     {
         NSArray *splitArrayPN = [self.eventPlan.text componentsSeparatedByString:@"S$."];
         NSString *planName = [splitArrayPN objectAtIndex:0];
-//        NSArray *arr = [planName componentsSeparatedByString:@" "];
-//        NSString *stt = [arr objectAtIndex:0];
+//      NSArray *arr = [planName componentsSeparatedByString:@" "];
+//      NSString *stt = [arr objectAtIndex:0];
         
         NSUInteger Eventplan_name = [plan_name indexOfObject:planName];
         appDel.ticlet_seat_available = seat_available[Eventplan_name];
         
         NSArray *splitArray = [self.eventPlan.text componentsSeparatedByString:@"S$."];
         NSString *str = [splitArray objectAtIndex:1];
-//        NSArray *splitArray2 = [str componentsSeparatedByString:@"."];
-//        NSString *seat = [splitArray2 objectAtIndex:1];
+//      NSArray *splitArray2 = [str componentsSeparatedByString:@"."];
+//      NSString *seat = [splitArray2 objectAtIndex:1];
 //
         appDel.bookingdate = self.eventDate.text;
         NSString *quantity = self.countText.text;
@@ -839,8 +857,7 @@
         NSNumber *number = [NSNumber numberWithInteger:value];
         int ans = [number intValue];
         number = [NSNumber numberWithInt:ans + 1];
-        
-     //   NSString *selected_seat = [NSString stringWithFormat:@"%@",number];
+//      NSString *selected_seat = [NSString stringWithFormat:@"%@",number];
         
         NSString *Count =[NSString stringWithFormat:@"%@",number];
         int val = [appDel.ticlet_seat_available intValue];
@@ -849,11 +866,12 @@
        
         NSLog(@"%@",appDel.ticlet_seat_available);
        
+        NSString *alertMsg = [NSString stringWithFormat:@"%s %@ %@","Only",appDel.ticlet_seat_available,@"seats are available"];
         if ([number intValue] > seat_available)
         {
             UIAlertController *alert= [UIAlertController
                                        alertControllerWithTitle:@"Heyla"
-                                       message:@""
+                                       message:alertMsg
                                        preferredStyle:UIAlertControllerStyleAlert];
     
             UIAlertAction *ok = [UIAlertAction
@@ -917,7 +935,7 @@
 }
 - (IBAction)minusBtn:(id)sender
 {
-    if ([self.eventPlan.text isEqualToString:@""])
+    if ([self.eventDate.text isEqualToString:@"DD-MM-YYYY"])
     {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
@@ -973,31 +991,12 @@
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     }
-    
-    else if ([self.eventPlan.text isEqualToString:@"Select Plan"])
-    {
-        UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"Reached Maximum count."
-                                   preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 
-                             }];
-        
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
     else
     {
-        NSArray *splitArray = [self.eventPlan.text componentsSeparatedByString:@"-"];
+        NSArray *splitArray = [self.eventPlan.text componentsSeparatedByString:@"S$."];
         NSString *str = [splitArray objectAtIndex:1];
         NSArray *splitArray2 = [str componentsSeparatedByString:@"."];
-        NSString *seat = [splitArray2 objectAtIndex:1];
+        NSString *seat = [splitArray2 objectAtIndex:0];
         NSString *quantity = self.countText.text;
         int value = [quantity intValue];
         NSNumber *number = [NSNumber numberWithInteger:value];
