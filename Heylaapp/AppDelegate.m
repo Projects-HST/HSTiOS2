@@ -56,8 +56,7 @@
     NSLog( @"### running FB sdk version: %@", [FBSDKSettings sdkVersion] );
     NSLog(@"%@",@"Check 2");
     NSString *splash = [[NSUserDefaults standardUserDefaults]objectForKey:@"showSplash"];
-    NSString *status = [[NSUserDefaults standardUserDefaults]objectForKey:@"status"];
-    if ([splash isEqualToString:@"hide"])
+    NSString *status = [[NSUserDefaults standardUserDefaults]objectForKey:@"status"];    if ([splash isEqualToString:@"hide"])
     {
         
         if ([status isEqualToString:@"signIn"])
@@ -75,10 +74,10 @@
             [self.window makeKeyAndVisible];
 
 
-//            UIWindow *window = UIApplication.sharedApplication.delegate.window;
-//            window.rootViewController = sideMenuMainViewController;
+//          UIWindow *window = UIApplication.sharedApplication.delegate.window;
+//          window.rootViewController = sideMenuMainViewController;
 //
-//            [UIView transitionWithView:window
+//          [UIView transitionWithView:window
 //                              duration:0
 //                               options:UIViewAnimationOptionTransitionCrossDissolve
 //                            animations:nil

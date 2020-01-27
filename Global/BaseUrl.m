@@ -11,11 +11,9 @@
 @implementation BaseUrl
 
 //Testing Url
-//NSString *const baseUrl = @"https:/happysanz.in/heyla";
+NSString *const baseUrl = @"https:/happysanz.in/heyla";
 //Development Url
-NSString *const baseUrl = @"https://heyla.happysanz.net/";
+//NSString *const baseUrl = @"https://heyla.happysanz.net/";
 //Live Url
 //NSString *const baseUrl = @"https://heylaapp.com/";
-
-
 @end

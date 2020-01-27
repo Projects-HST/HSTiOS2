@@ -197,7 +197,7 @@
     else if (indexPath.row == 3)
     {
         UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Deactive Account"
+                                   alertControllerWithTitle:@"Heyla"
                                    message:@"Are you sure want to deactive your account?"
                                    preferredStyle:UIAlertControllerStyleAlert];
         

@@ -773,7 +773,7 @@
         [parameters setObject:self.SignUpUserName.text forKey:@"email_id"];
         [parameters setObject:appDel.mobileNumber forKey:@"mobile_no"];
         [parameters setObject:password forKey:@"password"];
-        [parameters setObject:@"dakjsdjadhk" forKey:@"gcm_key"];
+        [parameters setObject:deviceToken forKey:@"gcm_key"];
         [parameters setObject:@"2" forKey:@"mobile_type"];
 
         AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
@@ -1040,12 +1040,12 @@
                      else if ([msg isEqualToString:@"Account Deactivated"] && [status isEqualToString:@"Error"])
                      {
                             UIAlertController *alert= [UIAlertController
-                                                       alertControllerWithTitle:@"Your Account is Deactive"
-                                                       message:@"Are you sure want to Activate your account?"
+                                                       alertControllerWithTitle:@"Heyla"
+                                                       message:@"This account has been deactivated. Do you wish to reactivate it?"
                                                        preferredStyle:UIAlertControllerStyleAlert];
                             
                             UIAlertAction *ok = [UIAlertAction
-                                                 actionWithTitle:@"Activate"
+                                                 actionWithTitle:@"YES"
                                                  style:UIAlertActionStyleDefault
                                                  handler:^(UIAlertAction * action)
                                                  {
