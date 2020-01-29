@@ -336,6 +336,9 @@
 		6B9C6F2321477E6F008615AA /* booking_history_ticket.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B9C6F2221477E6F008615AA /* booking_history_ticket.png */; };
 		6B9C6F252147BD03008615AA /* drop_down_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B9C6F242147BD02008615AA /* drop_down_arrow.png */; };
 		6B9C6F352147CF8A008615AA /* leaderboard_arc.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B9C6F342147CF87008615AA /* leaderboard_arc.png */; };
+		6B9FDFF023DF068500E25590 /* FBSDKPlacesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B9FDFEA23DF068300E25590 /* FBSDKPlacesManager.m */; };
+		6B9FDFF123DF068500E25590 /* FBSDKPlacesKitConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B9FDFEB23DF068300E25590 /* FBSDKPlacesKitConstants.m */; };
+		6B9FDFF623DF0FE300E25590 /* FBSDKPlacesBluetoothScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B9FDFF423DF0FE000E25590 /* FBSDKPlacesBluetoothScanner.m */; };
 		6BA04F7B20BFC89400C50229 /* guestlogin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA04F7820BFC88D00C50229 /* guestlogin@2x.png */; };
 		6BA04F7C20BFC89400C50229 /* guestlogin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA04F7920BFC89000C50229 /* guestlogin@3x.png */; };
 		6BA04F7D20BFC89400C50229 /* guestlogin@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA04F7A20BFC89200C50229 /* guestlogin@1x.png */; };
@@ -355,6 +358,7 @@
 		6BA61BD4238E6EC400A0AA5C /* PrivacyPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA61BD3238E6EC400A0AA5C /* PrivacyPolicy.m */; };
 		6BA7214820247580000617D4 /* NearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA7214720247580000617D4 /* NearbyViewController.m */; };
 		6BA76EEF20CF91EB00017745 /* BlogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA76EEE20CF91EB00017745 /* BlogViewController.m */; };
+		6BADCA9B23E00C47009505C6 /* ChangePassowrdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BADCA9A23E00C47009505C6 /* ChangePassowrdViewController.m */; };
 		6BAFEB4A2146691C004D5C0F /* nearby_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BAFEB4921466919004D5C0F /* nearby_bg.png */; };
 		6BAFEB802146842E004D5C0F /* paymentfailed.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BAFEB7D2146842C004D5C0F /* paymentfailed.png */; };
 		6BAFEB812146842E004D5C0F /* paymentsucess.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BAFEB7E2146842D004D5C0F /* paymentsucess.png */; };
@@ -881,6 +885,14 @@
 		6B9C6F2221477E6F008615AA /* booking_history_ticket.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = booking_history_ticket.png; sourceTree = "<group>"; };
 		6B9C6F242147BD02008615AA /* drop_down_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drop_down_arrow.png; sourceTree = "<group>"; };
 		6B9C6F342147CF87008615AA /* leaderboard_arc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leaderboard_arc.png; sourceTree = "<group>"; };
+		6B9FDFEA23DF068300E25590 /* FBSDKPlacesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBSDKPlacesManager.m; sourceTree = "<group>"; };
+		6B9FDFEB23DF068300E25590 /* FBSDKPlacesKitConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBSDKPlacesKitConstants.m; sourceTree = "<group>"; };
+		6B9FDFEC23DF068400E25590 /* FBSDKPlacesKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBSDKPlacesKit.h; sourceTree = "<group>"; };
+		6B9FDFED23DF068400E25590 /* FBSDKPlacesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBSDKPlacesManager.h; sourceTree = "<group>"; };
+		6B9FDFEE23DF068500E25590 /* FBSDKPlacesKitConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBSDKPlacesKitConstants.h; sourceTree = "<group>"; };
+		6B9FDFEF23DF068500E25590 /* FBSDKPlacesKit.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = FBSDKPlacesKit.modulemap; sourceTree = "<group>"; };
+		6B9FDFF423DF0FE000E25590 /* FBSDKPlacesBluetoothScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBSDKPlacesBluetoothScanner.m; sourceTree = "<group>"; };
+		6B9FDFF523DF0FE300E25590 /* FBSDKPlacesBluetoothScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBSDKPlacesBluetoothScanner.h; sourceTree = "<group>"; };
 		6BA04F7820BFC88D00C50229 /* guestlogin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guestlogin@2x.png"; sourceTree = "<group>"; };
 		6BA04F7920BFC89000C50229 /* guestlogin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guestlogin@3x.png"; sourceTree = "<group>"; };
 		6BA04F7A20BFC89200C50229 /* guestlogin@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guestlogin@1x.png"; sourceTree = "<group>"; };
@@ -904,6 +916,8 @@
 		6BA7214720247580000617D4 /* NearbyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NearbyViewController.m; sourceTree = "<group>"; };
 		6BA76EED20CF91EB00017745 /* BlogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlogViewController.h; sourceTree = "<group>"; };
 		6BA76EEE20CF91EB00017745 /* BlogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlogViewController.m; sourceTree = "<group>"; };
+		6BADCA9923E00C47009505C6 /* ChangePassowrdViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChangePassowrdViewController.h; sourceTree = "<group>"; };
+		6BADCA9A23E00C47009505C6 /* ChangePassowrdViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChangePassowrdViewController.m; sourceTree = "<group>"; };
 		6BAFEB4921466919004D5C0F /* nearby_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nearby_bg.png; sourceTree = "<group>"; };
 		6BAFEB7D2146842C004D5C0F /* paymentfailed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paymentfailed.png; sourceTree = "<group>"; };
 		6BAFEB7E2146842D004D5C0F /* paymentsucess.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paymentsucess.png; sourceTree = "<group>"; };
@@ -1107,6 +1121,8 @@
 		6801D5F31F9E155D000946A2 = {
 			isa = PBXGroup;
 			children = (
+				6B9FDFF223DF069000E25590 /* FBSDKMessangerKit */,
+				6B9FDFE923DF065B00E25590 /* FBSDKPlacesKit */,
 				6B7C0E1420C9779B002B897C /* FBSDKShareKit.framework */,
 				6B7C0E1220C97792002B897C /* FBSDKLoginKit.framework */,
 				6B7C0E1020C97789002B897C /* FBSDKCoreKit.framework */,
@@ -1165,6 +1181,8 @@
 				6B4C43E9233F889100EE0ACC /* SignUpWelcomeViewController.m */,
 				6884D7BC1FA89DE8000BB968 /* ChangeNumberViewController.h */,
 				6884D7BD1FA89DE9000BB968 /* ChangeNumberViewController.m */,
+				6BADCA9923E00C47009505C6 /* ChangePassowrdViewController.h */,
+				6BADCA9A23E00C47009505C6 /* ChangePassowrdViewController.m */,
 				6818707B1FB04754009B1E5A /* ProfileViewController.h */,
 				6818707C1FB04754009B1E5A /* ProfileViewController.m */,
 				68BD568F1FB9D7B9004FA846 /* SelectCityPageViewController.h */,
@@ -1665,6 +1683,36 @@
 				6B91057F20D0E31B00A2E568 /* UIImage+PECrop.m */,
 			);
 			path = PECropView;
+			sourceTree = "<group>";
+		};
+		6B9FDFE923DF065B00E25590 /* FBSDKPlacesKit */ = {
+			isa = PBXGroup;
+			children = (
+				6B9FDFF323DF0FB200E25590 /* FBSDKPlacesBluetoothScanner */,
+				6B9FDFEC23DF068400E25590 /* FBSDKPlacesKit.h */,
+				6B9FDFEF23DF068500E25590 /* FBSDKPlacesKit.modulemap */,
+				6B9FDFEE23DF068500E25590 /* FBSDKPlacesKitConstants.h */,
+				6B9FDFEB23DF068300E25590 /* FBSDKPlacesKitConstants.m */,
+				6B9FDFED23DF068400E25590 /* FBSDKPlacesManager.h */,
+				6B9FDFEA23DF068300E25590 /* FBSDKPlacesManager.m */,
+			);
+			path = FBSDKPlacesKit;
+			sourceTree = "<group>";
+		};
+		6B9FDFF223DF069000E25590 /* FBSDKMessangerKit */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FBSDKMessangerKit;
+			sourceTree = "<group>";
+		};
+		6B9FDFF323DF0FB200E25590 /* FBSDKPlacesBluetoothScanner */ = {
+			isa = PBXGroup;
+			children = (
+				6B9FDFF523DF0FE300E25590 /* FBSDKPlacesBluetoothScanner.h */,
+				6B9FDFF423DF0FE000E25590 /* FBSDKPlacesBluetoothScanner.m */,
+			);
+			path = FBSDKPlacesBluetoothScanner;
 			sourceTree = "<group>";
 		};
 		6BB06751215DE7DE00531AA5 /* Paytm */ = {
@@ -2213,6 +2261,7 @@
 			files = (
 				6884D7BE1FA89DFA000BB968 /* ChangeNumberViewController.m in Sources */,
 				6BCBF412213D0C9F00FE360A /* PointsViewController.m in Sources */,
+				6B9FDFF023DF068500E25590 /* FBSDKPlacesManager.m in Sources */,
 				6B8CB2EF201B0BFF00821B89 /* EventImageTableViewCell.m in Sources */,
 				6B4C43EA233F889100EE0ACC /* SignUpWelcomeViewController.m in Sources */,
 				6BB586E620BD8EAA00D459AF /* LGSideMenuView.m in Sources */,
@@ -2237,12 +2286,14 @@
 				6B5910A72013721900CCDF37 /* LeaderBoardTableViewCell.m in Sources */,
 				6BB586E420BD8EAA00D459AF /* UIViewController+LGSideMenuController.m in Sources */,
 				6BB586ED20BD915400D459AF /* SideMenuMainViewController.m in Sources */,
+				6BADCA9B23E00C47009505C6 /* ChangePassowrdViewController.m in Sources */,
 				6BD299D920106DE50064FD8F /* ReviewTicketBookingController.m in Sources */,
 				6B98797220BE72FE000E7205 /* SideMenuTableViewController.m in Sources */,
 				6BFFA77F200F5F9A001B5FBC /* BookingViewController.m in Sources */,
 				6BCBF415213D0CDC00FE360A /* PointsTableViewCell.m in Sources */,
 				6811F94F1FCB54EA008D7EAD /* EventDetailViewController.m in Sources */,
 				6B7A12EB2317F89F0033655D /* UserInfo.m in Sources */,
+				6B9FDFF123DF068500E25590 /* FBSDKPlacesKitConstants.m in Sources */,
 				6BD299EE2010D46F0064FD8F /* Base64.m in Sources */,
 				68EADC631FBAD189008750B2 /* SelectCategoeryCollectionViewCell.m in Sources */,
 				6B88945E2022034A00ADA598 /* AttendeesTableViewCell.m in Sources */,
@@ -2283,6 +2334,7 @@
 				6BD299EF2010D46F0064FD8F /* CCInitViewController.m in Sources */,
 				6B8CB2EC201B0BE900821B89 /* EventImageViewController.m in Sources */,
 				6B98797520BE7319000E7205 /* SideMenuTableViewCell.m in Sources */,
+				6B9FDFF623DF0FE300E25590 /* FBSDKPlacesBluetoothScanner.m in Sources */,
 				6BD299F82010E9F20064FD8F /* BookingHistoryTableViewCell.m in Sources */,
 				6BB586F020BD934900D459AF /* NavigationController.m in Sources */,
 				6B91058220D0E31C00A2E568 /* PECropRectView.m in Sources */,

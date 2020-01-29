@@ -22,12 +22,9 @@
     // Do any additional setup after loading the view.
     
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
-    
     _send.layer.cornerRadius = 8;
     _send.clipsToBounds = YES;
-    
     _emailTextfiled.delegate = self;
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
                                                  name:UIKeyboardDidShowNotification object:nil];
@@ -82,9 +79,45 @@
        // [_emailTextfiled showErrorWithText:@"Enter email ID"];
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"Enter email ID"
+                                   message:@"Mobile number cannot empty"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
+        UIAlertAction *ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 
+                             }];
+        
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    else if (self.emailTextfiled.text.length < 8 )
+    {
+        UIAlertController *alert= [UIAlertController
+                                   alertControllerWithTitle:@"Heyla"
+                                   message:@"Enter valid mobile Number"
+                                   preferredStyle:UIAlertControllerStyleAlert];
+               
+       UIAlertAction *ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                
+                            }];
+       
+       [alert addAction:ok];
+       [self presentViewController:alert animated:YES completion:nil];
+    }
+    else if (self.emailTextfiled.text.length > 12)
+    {
+         UIAlertController *alert= [UIAlertController 
+                                    alertControllerWithTitle:@"Heyla"
+                                    message:@"Enter valid mobile Number"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+                
         UIAlertAction *ok = [UIAlertAction
                              actionWithTitle:@"OK"
                              style:UIAlertActionStyleDefault
@@ -100,9 +133,7 @@
     {
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         appDel.mobileNumber = self.emailTextfiled.text;
-        
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        
         NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
         [parameters setObject:self.emailTextfiled.text forKey:@"username"];
         

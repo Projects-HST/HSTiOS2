@@ -200,11 +200,85 @@
     }
     else
     {
+        NSString *fromActivatePage = [[NSUserDefaults standardUserDefaults]objectForKey:@"fromActivatePage"];
+        if ([fromActivatePage isEqualToString:@"YES"])
+        {
+            [self reactivceAccount:_emailOrphoneNumber];
+        }
+        else
+        {
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            NSString *otp = [NSString stringWithFormat:@"%@%@%@%@",self.textfieldOne.text,self.textfieldTwo.text,self.textfiledThree.text,self.textfiledFour.text];
+            
+            NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
+            [parameters setObject:appDel.mobileNumber forKey:@"mobile_no"];
+            [parameters setObject:otp forKey:@"OTP"];
+            
+            AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+            manager.requestSerializer = [AFJSONRequestSerializer serializer];
+            [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+            
+            NSString *mobileverify = @"apimain/mobileVerify";
+            NSArray *components = [NSArray arrayWithObjects:baseUrl,mobileverify, nil];
+            NSString *api = [NSString pathWithComponents:components];
+            [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+             {
+                 
+                 NSLog(@"%@",responseObject);
+                 [MBProgressHUD hideHUDForView:self.view animated:YES];
+                 NSString *msg = [responseObject objectForKey:@"msg"];
+                 NSString *status = [responseObject objectForKey:@"status"];
+                 
+                 if ([msg isEqualToString:@"Verification Successfully"] && [status isEqualToString:@"Success"])
+                 {
+                     self->appDel.user_Id = [responseObject objectForKey:@"user_id"];
+                     NSLog(@"%@",self->appDel.user_Id);
+                     
+                     
+                         [self performSegueWithIdentifier:@"to_passwordPage" sender:self];
+                         
+                 }
+                 else
+                 {
+                     UIAlertController *alert= [UIAlertController
+                                                alertControllerWithTitle:@"Heyla"
+                                                message:msg
+                                                preferredStyle:UIAlertControllerStyleAlert];
+                     
+                     UIAlertAction *ok = [UIAlertAction
+                                          actionWithTitle:@"OK"
+                                          style:UIAlertActionStyleDefault
+                                          handler:^(UIAlertAction * action)
+                                          {
+                                              
+                                          }];
+                     
+                     [alert addAction:ok];
+                     [self presentViewController:alert animated:YES completion:nil];
+                 }
+             }
+                  failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+             {
+                 NSLog(@"error: %@", error);
+             }];
+        }
+    }
+}
+
+- (IBAction)resendBtn:(id)sender
+{
+    NSString *fromActivatePage = [[NSUserDefaults standardUserDefaults]objectForKey:@"fromActivatePage"];
+    if ([fromActivatePage isEqualToString:@"YES"])
+    {
+        [self resendOtpForReactiveAccount:_emailOrphoneNumber];
+    }
+    else
+    {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         NSString *otp = [NSString stringWithFormat:@"%@%@%@%@",self.textfieldOne.text,self.textfieldTwo.text,self.textfiledThree.text,self.textfiledFour.text];
-        
         NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
         [parameters setObject:appDel.mobileNumber forKey:@"mobile_no"];
         [parameters setObject:otp forKey:@"OTP"];
@@ -214,9 +288,10 @@
         [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
         
-        NSString *mobileverify = @"apimain/mobileVerify";
-        NSArray *components = [NSArray arrayWithObjects:baseUrl,mobileverify, nil];
+        NSString *resendOTP = @"apimain/resendOTP";
+        NSArray *components = [NSArray arrayWithObjects:baseUrl,resendOTP, nil];
         NSString *api = [NSString pathWithComponents:components];
+        
         [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
          {
              
@@ -225,14 +300,13 @@
              NSString *msg = [responseObject objectForKey:@"msg"];
              NSString *status = [responseObject objectForKey:@"status"];
              
-             if ([msg isEqualToString:@"Verification Successfully"] && [status isEqualToString:@"Success"])
+             if ([msg isEqualToString:@"OTP resent"] && [status isEqualToString:@"Success"])
              {
-                 self->appDel.user_Id = [responseObject objectForKey:@"user_id"];
-                 NSLog(@"%@",self->appDel.user_Id);
-                 
-                 
-                     [self performSegueWithIdentifier:@"to_passwordPage" sender:self];
-                     
+                 self.textfieldOne.text = @"";
+                 self.textfieldTwo.text = @"";
+                 self.textfiledThree.text = @"";
+                 self.textfiledFour.text = @"";
+                 [self.textfieldOne becomeFirstResponder];
              }
              else
              {
@@ -259,28 +333,97 @@
          }];
     }
 }
-
-- (IBAction)resendBtn:(id)sender
+-(void)reactivceAccount:(NSString *)emailOrPhoneNumber
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
     appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    
     NSString *otp = [NSString stringWithFormat:@"%@%@%@%@",self.textfieldOne.text,self.textfieldTwo.text,self.textfiledThree.text,self.textfiledFour.text];
-    
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
-    [parameters setObject:appDel.mobileNumber forKey:@"mobile_no"];
-    [parameters setObject:otp forKey:@"OTP"];
+    [parameters setObject:emailOrPhoneNumber forKey:@"email_or_mobile"];
+    [parameters setObject:otp forKey:@"code"];
+
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+
+    NSString *mobileverify = @"apimain/reactivate_account";
+    NSArray *components = [NSArray arrayWithObjects:baseUrl,mobileverify, nil];
+    NSString *api = [NSString pathWithComponents:components];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+     {
+
+         NSLog(@"%@",responseObject);
+         [MBProgressHUD hideHUDForView:self.view animated:YES];
+         NSString *msg = [responseObject objectForKey:@"msg"];
+         NSString *status = [responseObject objectForKey:@"status"];
+
+         if ([msg isEqualToString:@"Account activated successfully"] && [status isEqualToString:@"success"])
+         {
+//             self->appDel.user_Id = [responseObject objectForKey:@"user_id"];
+//             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.user_Id forKey:@"stat_user_id"];
+//             NSLog(@"%@",self->appDel.user_Id);
+//
+//             NSString *View = [[NSUserDefaults standardUserDefaults]objectForKey:@"view_key"];
+             
+             UIAlertController *alert= [UIAlertController
+                                        alertControllerWithTitle:@"Heyla"
+                                        message:msg
+                                        preferredStyle:UIAlertControllerStyleAlert];
+
+             UIAlertAction *ok = [UIAlertAction
+                                  actionWithTitle:@"OK"
+                                  style:UIAlertActionStyleDefault
+                                  handler:^(UIAlertAction * action)
+                                  {
+            LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            [self presentViewController:loginViewController animated:NO completion:nil];
+                                  }];
+
+             [alert addAction:ok];
+             [self presentViewController:alert animated:YES completion:nil];
+        }
+         else
+         {
+             UIAlertController *alert= [UIAlertController
+                                        alertControllerWithTitle:@"Heyla"
+                                        message:@"Invalid OTP"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+
+             UIAlertAction *ok = [UIAlertAction
+                                  actionWithTitle:@"OK"
+                                  style:UIAlertActionStyleDefault
+                                  handler:^(UIAlertAction * action)
+                                  {
+
+                                  }];
+
+             [alert addAction:ok];
+             [self presentViewController:alert animated:YES completion:nil];
+         }
+     }
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+     {
+         NSLog(@"error: %@", error);
+     }];
+}
+-(void)resendOtpForReactiveAccount:(NSString *)emailOrPhoneNumber
+{
+    appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    NSString *otp = [NSString stringWithFormat:@"%@%@%@%@",self.textfieldOne.text,self.textfieldTwo.text,self.textfiledThree.text,self.textfiledFour.text];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
+    [parameters setObject:_emailOrphoneNumber forKey:@"email_or_mobile"];
+    //[parameters setObject:otp forKey:@"OTP"];
     
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     
-    NSString *resendOTP = @"apimain/resendOTP";
+    NSString *resendOTP = @"apimain/check_account_activate";
     NSArray *components = [NSArray arrayWithObjects:baseUrl,resendOTP, nil];
     NSString *api = [NSString pathWithComponents:components];
-    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
      {
          
@@ -289,10 +432,13 @@
          NSString *msg = [responseObject objectForKey:@"msg"];
          NSString *status = [responseObject objectForKey:@"status"];
          
-         if ([msg isEqualToString:@"Verification Successfully"] && [status isEqualToString:@"Success"])
+         if ([msg isEqualToString:@"OTP resent"] && [status isEqualToString:@"Success"])
          {
-             
-             
+             self.textfieldOne.text = @"";
+             self.textfieldTwo.text = @"";
+             self.textfiledThree.text = @"";
+             self.textfiledFour.text = @"";
+            [self.textfieldOne becomeFirstResponder];
          }
          else
          {

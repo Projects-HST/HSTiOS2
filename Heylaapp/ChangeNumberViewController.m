@@ -23,15 +23,15 @@
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     
     _textfieldOne.delegate = self;
-    _textfieldTwo.delegate = self;
-    _textfieldthree.delegate = self;
-    _textfieldFour.delegate = self;
-    _textfieldFive.delegate = self;
-    _textfieldSix.delegate = self;
-    _textfieldSeven.delegate = self;
-    _textfieldEight.delegate = self;
-    _textfieldNine.delegate = self;
-    _textfieldTen.delegate = self;
+//    _textfieldTwo.delegate = self;
+//    _textfieldthree.delegate = self;
+//    _textfieldFour.delegate = self;
+//    _textfieldFive.delegate = self;
+//    _textfieldSix.delegate = self;
+//    _textfieldSeven.delegate = self;
+//    _textfieldEight.delegate = self;
+//    _textfieldNine.delegate = self;
+//    _textfieldTen.delegate = self;
 
     _confirm.layer.cornerRadius = 8;
     _confirm.clipsToBounds = YES;
@@ -56,168 +56,169 @@
     // Pass the selected object to the new view controller.
 }
 */
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    
-    NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    NSUInteger newLength = newString.length;
-    
-    if (textField == self.textfieldOne)
-    {
-        if (newLength == 1) {
-            [_textfieldOne setText:newString];
-            [_textfieldTwo becomeFirstResponder];
-            return NO; // NO because we already updated the text.
-        }
-    }
-    
-    if (textField == self.textfieldTwo)
-    {
-        if (newLength == 1) {
-            [_textfieldTwo setText:newString];
-            [_textfieldthree becomeFirstResponder];
-            return NO;
-        }
-    }
-    
-    if (textField == self.textfieldthree)
-    {
-        if (newLength == 1)
-        {
-            [_textfieldthree setText:newString];
-            [_textfieldFour becomeFirstResponder];
-            return NO;
-        }
-    }
-    
-    if (textField == self.textfieldFour)
-    {
-        if (newLength == 1)
-        {
-            [_textfieldFour setText:newString];
-            [_textfieldFive becomeFirstResponder];
-            return NO;
-        }
-    }
-    
-    if (textField == self.textfieldFive)
-    {
-        if (newLength == 1)
-        {
-            [_textfieldFive setText:newString];
-            [_textfieldSix becomeFirstResponder];
-            return NO;
-        }
-    }
-    
-    if (textField == self.textfieldSix)
-    {
-        if (newLength == 1)
-        {
-            [_textfieldSix setText:newString];
-            [_textfieldSeven becomeFirstResponder];
-            return NO;
-        }
-    }
-    if (textField == self.textfieldSeven)
-    {
-        if (newLength == 1)
-        {
-            [_textfieldSeven setText:newString];
-            [_textfieldEight becomeFirstResponder];
-            return NO;
-        }
-    }
-    if (textField == self.textfieldEight)
-    {
-        if (newLength == 1)
-        {
-            [_textfieldEight setText:newString];
-            [_textfieldNine becomeFirstResponder];
-            return NO;
-        }
-    }
-    if (textField == self.textfieldNine)
-    {
-        if (newLength == 1)
-        {
-            [_textfieldNine setText:newString];
-            [_textfieldTen becomeFirstResponder];
-            return NO;
-        }
-    }
-    if (textField == self.textfieldTen)
-    {
-        if (newLength == 1)
-        {
-            [_textfieldTen setText:newString];
-            [_textfieldTen resignFirstResponder];
-            return NO;
-        }
-    }
-    return YES;
-}-(BOOL)keyboardInputShouldDelete:(UITextField *)textField
+//-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+//{
+//
+//    NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+//    NSUInteger newLength = newString.length;
+//
+//    if (textField == self.textfieldOne)
+//    {
+//        if (newLength == 1) {
+//            [_textfieldOne setText:newString];
+//            [_textfieldTwo becomeFirstResponder];
+//            return NO; // NO because we already updated the text.
+//        }
+//    }
+//
+//    if (textField == self.textfieldTwo)
+//    {
+//        if (newLength == 1) {
+//            [_textfieldTwo setText:newString];
+//            [_textfieldthree becomeFirstResponder];
+//            return NO;
+//        }
+//    }
+//
+//    if (textField == self.textfieldthree)
+//    {
+//        if (newLength == 1)
+//        {
+//            [_textfieldthree setText:newString];
+//            [_textfieldFour becomeFirstResponder];
+//            return NO;
+//        }
+//    }
+//
+//    if (textField == self.textfieldFour)
+//    {
+//        if (newLength == 1)
+//        {
+//            [_textfieldFour setText:newString];
+//            [_textfieldFive becomeFirstResponder];
+//            return NO;
+//        }
+//    }
+//
+//    if (textField == self.textfieldFive)
+//    {
+//        if (newLength == 1)
+//        {
+//            [_textfieldFive setText:newString];
+//            [_textfieldSix becomeFirstResponder];
+//            return NO;
+//        }
+//    }
+//
+//    if (textField == self.textfieldSix)
+//    {
+//        if (newLength == 1)
+//        {
+//            [_textfieldSix setText:newString];
+//            [_textfieldSeven becomeFirstResponder];
+//            return NO;
+//        }
+//    }
+//    if (textField == self.textfieldSeven)
+//    {
+//        if (newLength == 1)
+//        {
+//            [_textfieldSeven setText:newString];
+//            [_textfieldEight becomeFirstResponder];
+//            return NO;
+//        }
+//    }
+//    if (textField == self.textfieldEight)
+//    {
+//        if (newLength == 1)
+//        {
+//            [_textfieldEight setText:newString];
+//            [_textfieldNine becomeFirstResponder];
+//            return NO;
+//        }
+//    }
+//    if (textField == self.textfieldNine)
+//    {
+//        if (newLength == 1)
+//        {
+//            [_textfieldNine setText:newString];
+//            [_textfieldTen becomeFirstResponder];
+//            return NO;
+//        }
+//    }
+//    if (textField == self.textfieldTen)
+//    {
+//        if (newLength == 1)
+//        {
+//            [_textfieldTen setText:newString];
+//            [_textfieldTen resignFirstResponder];
+//            return NO;
+//        }
+//    }
+//    return YES;
+//}
+-(BOOL)keyboardInputShouldDelete:(UITextField *)textField
 {
     if (textField == self.textfieldOne)
     {
         self.textfieldOne.text = @"";
-        [_textfieldOne becomeFirstResponder];
+        [_textfieldOne resignFirstResponder];
         return NO;
     }
-    if (textField == self.textfieldTwo)
-    {
-        self.textfieldOne.text = @"";
-        [_textfieldOne becomeFirstResponder];
-        return NO;
-    }
-    if (textField == self.textfieldthree)
-    {
-        self.textfieldTwo.text = @"";
-        [_textfieldTwo becomeFirstResponder];
-        return NO;
-    }
-    if (textField == self.textfieldFour)
-    {
-        self.textfieldthree.text = @"";
-        [_textfieldthree becomeFirstResponder];
-        return NO;
-    }
-    if (textField == self.textfieldFive)
-    {
-        self.textfieldFour.text = @"";
-        [_textfieldFour becomeFirstResponder];
-        return NO;
-    }
-    if (textField == self.textfieldSix)
-    {
-        self.textfieldFive.text = @"";
-        [_textfieldFive becomeFirstResponder];
-        return NO;
-    }
-    if (textField == self.textfieldSeven)
-    {
-        self.textfieldSix.text = @"";
-        [_textfieldSix becomeFirstResponder];
-        return NO;
-    }
-    if (textField == self.textfieldEight)
-    {
-        self.textfieldSeven.text = @"";
-        [_textfieldSeven becomeFirstResponder];
-        return NO;
-    }
-    if (textField == self.textfieldNine)
-    {
-        self.textfieldEight.text = @"";
-        [_textfieldEight becomeFirstResponder];
-        return NO;
-    }
-    if (textField == self.textfieldTen)
-    {
-        self.textfieldNine.text = @"";
-        [_textfieldNine becomeFirstResponder];
-        return NO;
-    }
+//    if (textField == self.textfieldTwo)
+//    {
+//        self.textfieldOne.text = @"";
+//        [_textfieldOne becomeFirstResponder];
+//        return NO;
+//    }
+//    if (textField == self.textfieldthree)
+//    {
+//        self.textfieldTwo.text = @"";
+//        [_textfieldTwo becomeFirstResponder];
+//        return NO;
+//    }
+//    if (textField == self.textfieldFour)
+//    {
+//        self.textfieldthree.text = @"";
+//        [_textfieldthree becomeFirstResponder];
+//        return NO;
+//    }
+//    if (textField == self.textfieldFive)
+//    {
+//        self.textfieldFour.text = @"";
+//        [_textfieldFour becomeFirstResponder];
+//        return NO;
+//    }
+//    if (textField == self.textfieldSix)
+//    {
+//        self.textfieldFive.text = @"";
+//        [_textfieldFive becomeFirstResponder];
+//        return NO;
+//    }
+//    if (textField == self.textfieldSeven)
+//    {
+//        self.textfieldSix.text = @"";
+//        [_textfieldSix becomeFirstResponder];
+//        return NO;
+//    }
+//    if (textField == self.textfieldEight)
+//    {
+//        self.textfieldSeven.text = @"";
+//        [_textfieldSeven becomeFirstResponder];
+//        return NO;
+//    }
+//    if (textField == self.textfieldNine)
+//    {
+//        self.textfieldEight.text = @"";
+//        [_textfieldEight becomeFirstResponder];
+//        return NO;
+//    }
+//    if (textField == self.textfieldTen)
+//    {
+//        self.textfieldNine.text = @"";
+//        [_textfieldNine becomeFirstResponder];
+//        return NO;
+//    }
     return YES;
 }
 - (IBAction)back:(id)sender
@@ -244,11 +245,11 @@
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     }
-    else if ([self.textfieldTwo.text isEqualToString:@""])
+    else if (self.textfieldOne.text.length < 8)
     {
-        UIAlertController *alert= [UIAlertController
+       UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
-                                   message:@"mobile number should be 10 digits"
+                                   message:@"Enter valid mobile number"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -262,158 +263,30 @@
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     }
-    else if ([self.textfieldthree.text isEqualToString:@""])
+    else if (self.textfieldOne.text.length > 12)
     {
         UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"mobile number should be 10 digits"
-                                   preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 
-                             }];
-        
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    else if ([self.textfieldFour.text isEqualToString:@""])
-    {
-        UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"mobile number should be 10 digits"
-                                   preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 
-                             }];
-        
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    else if ([self.textfieldFive.text isEqualToString:@""])
-    {
-        UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"mobile number should be 10 digits"
-                                   preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 
-                             }];
-        
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    else if ([self.textfieldSix.text isEqualToString:@""])
-    {
-        UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"mobile number should be 10 digits"
-                                   preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 
-                             }];
-        
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    else if ([self.textfieldSeven.text isEqualToString:@""])
-    {
-        UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"mobile number should be 10 digits"
-                                   preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 
-                             }];
-        
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    else if ([self.textfieldEight.text isEqualToString:@""])
-    {
-        UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"mobile number should be 10 digits"
-                                   preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 
-                             }];
-        
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    else if ([self.textfieldNine.text isEqualToString:@""])
-    {
-        UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"mobile number should be 10 digits"
-                                   preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 
-                             }];
-        
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    else if ([self.textfieldTen.text isEqualToString:@""])
-    {
-        UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"mobile number should be 10 digits"
-                                   preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 
-                             }];
-        
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
+                                          alertControllerWithTitle:@"Heyla"
+                                          message:@"Enter valid mobile number"
+                                          preferredStyle:UIAlertControllerStyleAlert];
+               
+               UIAlertAction *ok = [UIAlertAction
+                                    actionWithTitle:@"OK"
+                                    style:UIAlertActionStyleDefault
+                                    handler:^(UIAlertAction * action)
+                                    {
+                                        
+                                    }];
+               
+               [alert addAction:ok];
+               [self presentViewController:alert animated:YES completion:nil];
     }
     else
     {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        NSString *newMobileNumber = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@",self.textfieldOne.text,self.textfieldTwo.text,self.textfieldthree.text,self.textfieldFour.text,self.textfieldFive.text,self.textfieldSix.text,self.textfieldSeven.text,self.textfieldEight.text,self.textfieldNine.text,self.textfieldTen.text];
-        
+        NSString *newMobileNumber = [NSString stringWithFormat:@"%@",self.textfieldOne.text];
         [[NSUserDefaults standardUserDefaults]setObject:newMobileNumber forKey:@"statemobile_no"];
-
         
         NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
         [parameters setObject:appDel.mobileNumber forKey:@"old_mobile_no"];
@@ -471,15 +344,15 @@
 -(void)dismissKeyboard
 {
     [_textfieldOne resignFirstResponder];
-    [_textfieldTwo resignFirstResponder];
-    [_textfieldthree resignFirstResponder];
-    [_textfieldFour resignFirstResponder];
-    [_textfieldFive resignFirstResponder];
-    [_textfieldSix resignFirstResponder];
-    [_textfieldSeven resignFirstResponder];
-    [_textfieldEight resignFirstResponder];
-    [_textfieldNine resignFirstResponder];
-    [_textfieldTen resignFirstResponder];
+//    [_textfieldTwo resignFirstResponder];
+//    [_textfieldthree resignFirstResponder];
+//    [_textfieldFour resignFirstResponder];
+//    [_textfieldFive resignFirstResponder];
+//    [_textfieldSix resignFirstResponder];
+//    [_textfieldSeven resignFirstResponder];
+//    [_textfieldEight resignFirstResponder];
+//    [_textfieldNine resignFirstResponder];
+//    [_textfieldTen resignFirstResponder];
 
 }
 @end

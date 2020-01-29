@@ -66,7 +66,7 @@
 
     if ([self.newpassword.text isEqualToString:@""])
     {
-//        [_newpassword showErrorWithText:@"Give a new password to reset!"];
+//      [_newpassword showErrorWithText:@"Give a new password to reset!"];
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
                                    message:@"Password should contain atleast 6 characters"
@@ -85,7 +85,7 @@
     }
     else if (password.length < 6)
     {
-//        [_newpassword showErrorWithText:@"Password should contain atleast 6 characters"];
+//      [_newpassword showErrorWithText:@"Password should contain atleast 6 characters"];
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
                                    message:@"Password should contain atleast 6 characters"
@@ -129,6 +129,47 @@
              
              if ([msg isEqualToString:@"Password Updated"] && [status isEqualToString:@"success"])
              {
+                 self->appDel.user_name = @"";
+                 self->appDel.picture_url =@"";
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"stat_user_type"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"stat_user_id"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"userName"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"password"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"signOut" forKey:@"status"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"picture_Url"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"statemail_id"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"statemobile_no"];
+                 
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"fullName"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"dob"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"occupation"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"gender"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"addressLine"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"addressLineTwo"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"addressLineThree"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"country"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"state"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"city"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"pincode"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"country_id_key"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"state_id_key"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"city_id_key"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"new_Letter"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"statFull_Name"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"statUser_Name"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"selectView"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"deviceToken_Key"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"showSplash"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"status"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"from_sideMenu"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"selected_city_prof"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"TranscationStatus"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"userInfostat"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"remember_me"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"locatedCity"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"for_Alert"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"for_Alert"];
+                 [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"advnce_filter"];
                  LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
                  [self presentViewController:loginViewController animated:NO completion:nil];
              }
@@ -183,5 +224,8 @@
 -(void)dismissKeyboard
 {
     [_newpassword resignFirstResponder];
+    
+}
+- (IBAction)forgotPasswordAction:(id)sender {
 }
 @end

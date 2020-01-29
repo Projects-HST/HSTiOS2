@@ -260,6 +260,7 @@
 }
 - (IBAction)forgotPasswordBtn:(id)sender
 {
+    [[NSUserDefaults standardUserDefaults]setObject:@"NO" forKey:@"fromActivatePage"];
     [self performSegueWithIdentifier:@"to_forgot_Password" sender:self];
 }
 - (IBAction)facebookBtn:(id)sender
@@ -267,7 +268,7 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     UIViewController *vc=self.view.window.rootViewController;
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    login.loginBehavior=FBSDKLoginBehaviorWeb;
+    login.loginBehavior = FBSDKLoginBehaviorWeb;
     [login logOut];
     [login logInWithReadPermissions:@[@"public_profile",@"email"]  fromViewController:vc handler:^(FBSDKLoginManagerLoginResult *result, NSError *error)
      {
@@ -659,7 +660,6 @@
                      [self presentViewController:oTPViewController animated:NO completion:nil];
                      UINavigationController *navigationController = [[UINavigationController alloc]initWithRootViewController:oTPViewController];
                      [[NSUserDefaults standardUserDefaults]setObject:@"YES" forKey:@"for_Alert"];
-                     [[NSUserDefaults standardUserDefaults]setObject:@"NO" forKey:@"fromActivatePage"];
                      [self.navigationController pushViewController:navigationController animated:YES];
                  }
                  else
@@ -706,9 +706,27 @@
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     }
-    else if (appDel.mobileNumber.length != 10)
+    else if (appDel.mobileNumber.length < 8)
     {
        // [_SignUpMobileNo showErrorWithText:@"Enter valid mobile number."];
+        UIAlertController *alert= [UIAlertController
+                                   alertControllerWithTitle:@"Heyla"
+                                   message:@"Enter valid mobile number."
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 
+                             }];
+        
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    else if (appDel.mobileNumber.length > 12)
+    {
         UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Heyla"
                                    message:@"Enter valid mobile number."
@@ -1040,7 +1058,7 @@
                      else if ([msg isEqualToString:@"Account Deactivated"] && [status isEqualToString:@"Error"])
                      {
                             UIAlertController *alert= [UIAlertController
-                                                       alertControllerWithTitle:@"Heyla"
+                                                       alertControllerWithTitle:@"Deactivated Account"
                                                        message:@"This account has been deactivated. Do you wish to reactivate it?"
                                                        preferredStyle:UIAlertControllerStyleAlert];
                             

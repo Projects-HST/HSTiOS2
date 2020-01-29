@@ -197,8 +197,35 @@
     else if (indexPath.row == 3)
     {
         UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Heyla"
-                                   message:@"Are you sure want to deactive your account?"
+                                   alertControllerWithTitle:@"Reset Password"
+                                   message:@"Are you want to reset your account password? Doing this log you out of all current sessions."
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction
+                             actionWithTitle:@"YES"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                               [self performSegueWithIdentifier:@"changePasswordViewController" sender:self];
+                             }];
+        
+        UIAlertAction *cancel = [UIAlertAction
+                                 actionWithTitle:@"NO"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     
+                                 }];
+        
+        [alert addAction:ok];
+        [alert addAction:cancel];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    else if (indexPath.row == 4)
+    {
+        UIAlertController *alert= [UIAlertController
+                                   alertControllerWithTitle:@"Deactivate Account"
+                                   message:@"Are you want to deactivate your account?"
                                    preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *ok = [UIAlertAction
@@ -221,26 +248,26 @@
         [alert addAction:cancel];
         [self presentViewController:alert animated:YES completion:nil];
     }
-    else if (indexPath.row == 4)
+    else if (indexPath.row == 5)
     {
         [[NSUserDefaults standardUserDefaults]setObject:@"aboutus" forKey:@"policys"];
         [self performSegueWithIdentifier:@"privacyPolicy" sender:self];
     }
-    else if (indexPath.row == 5)
+    else if (indexPath.row == 6)
     {
         [self performSegueWithIdentifier:@"feedback" sender:self];
     }
-    else if (indexPath.row == 6)
+    else if (indexPath.row == 7)
     {
         [[NSUserDefaults standardUserDefaults]setObject:@"privacypolicy" forKey:@"policys"];
         [self performSegueWithIdentifier:@"privacyPolicy" sender:self];
     }
-    else if (indexPath.row == 7)
+    else if (indexPath.row == 8)
     {
         [[NSUserDefaults standardUserDefaults]setObject:@"paymentpolicy" forKey:@"policys"];
         [self performSegueWithIdentifier:@"privacyPolicy" sender:self];
     }
-    else if (indexPath.row == 8)
+    else if (indexPath.row == 9)
     {
         [[NSUserDefaults standardUserDefaults]setObject:@"termsConditn" forKey:@"policys"];
         [self performSegueWithIdentifier:@"privacyPolicy" sender:self];

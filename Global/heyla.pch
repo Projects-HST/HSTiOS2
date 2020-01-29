@@ -79,4 +79,5 @@
 #import "PrivacyPolicy.h"
 #import "PrivacyPolicyTableViewCell.h"
 #import "ActivateUserAccount.h"
+#import "ChangePassowrdViewController.h"
 #endif /* heyla_pch */

@@ -66,7 +66,7 @@
     {
         UIAlertController *alert= [UIAlertController
                                   alertControllerWithTitle:@"Heyla"
-                                  message:@"You should enter atleast one of the details before you submit"
+                                  message:@"Email ID/Mobile number is mandatory"
                                   preferredStyle:UIAlertControllerStyleAlert];
                                               
        UIAlertAction *ok = [UIAlertAction
@@ -254,7 +254,7 @@
     if ([[segue identifier] isEqualToString:@"activateToOtp"]) {
 
         // Get destination view
-        OTPViewController *vc = [segue destinationViewController];
+        ForgotPasswordOTPViewController *vc = [segue destinationViewController];
         // Pass the information to your destination view
         vc.emailOrphoneNumber = self.email.text;
     }

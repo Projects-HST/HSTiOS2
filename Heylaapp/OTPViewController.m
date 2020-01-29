@@ -25,26 +25,15 @@
     _textfiledTwo.delegate = self;
     _textfiledThree.delegate = self;;
     _textfieldFour.delegate = self;
-    NSString *fromActivatePage = [[NSUserDefaults standardUserDefaults]objectForKey:@"fromActivatePage"];
-    if ([fromActivatePage isEqualToString:@"YES"])
-    {
-        _confirm.layer.cornerRadius = 8;
-        _confirm.clipsToBounds = YES;
-        
-        _changeNumber.hidden = YES;
-    }
-    else
-    {
-        _changeNumber.hidden = NO;
-        _confirm.layer.cornerRadius = 8;
-        _confirm.clipsToBounds = YES;
-        
-        _changeNumber.layer.cornerRadius = 8;
-        _changeNumber.clipsToBounds = YES;
-                
-        [[NSUserDefaults standardUserDefaults]setObject:@"YES" forKey:@"from_otp"];
-        [[NSUserDefaults standardUserDefaults]setObject:@"signOut" forKey:@"status"];
-    }
+    _changeNumber.hidden = NO;
+    _confirm.layer.cornerRadius = 8;
+    _confirm.clipsToBounds = YES;
+    
+    _changeNumber.layer.cornerRadius = 8;
+    _changeNumber.clipsToBounds = YES;
+            
+    [[NSUserDefaults standardUserDefaults]setObject:@"YES" forKey:@"from_otp"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"signOut" forKey:@"status"];
         
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                   action:@selector(dismissKeyboard)];
@@ -143,63 +132,6 @@
 }
 - (IBAction)resendBtn:(id)sender
 {
-    NSString *fromActivatePage = [[NSUserDefaults standardUserDefaults]objectForKey:@"fromActivatePage"];
-    if ([fromActivatePage isEqualToString:@"YES"])
-    {
-        appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        NSString *otp = [NSString stringWithFormat:@"%@%@%@%@",self.textfiledOne.text,self.textfiledTwo.text,self.textfiledThree.text,self.textfieldFour.text];
-        NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
-        [parameters setObject:_emailOrphoneNumber forKey:@"mobile_no"];
-        [parameters setObject:otp forKey:@"OTP"];
-        
-        AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-        manager.requestSerializer = [AFJSONRequestSerializer serializer];
-        [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-        
-        NSString *resendOTP = @"apimain/resendOTP";
-        NSArray *components = [NSArray arrayWithObjects:baseUrl,resendOTP, nil];
-        NSString *api = [NSString pathWithComponents:components];
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-         {
-             
-             NSLog(@"%@",responseObject);
-             [MBProgressHUD hideHUDForView:self.view animated:YES];
-             NSString *msg = [responseObject objectForKey:@"msg"];
-             NSString *status = [responseObject objectForKey:@"status"];
-             
-             if ([msg isEqualToString:@"Verification Successfully"] && [status isEqualToString:@"Success"])
-             {
-                 
-                 
-             }
-             else
-             {
-                 UIAlertController *alert= [UIAlertController
-                                            alertControllerWithTitle:@"Heyla"
-                                            message:msg
-                                            preferredStyle:UIAlertControllerStyleAlert];
-                 
-                 UIAlertAction *ok = [UIAlertAction
-                                      actionWithTitle:@"OK"
-                                      style:UIAlertActionStyleDefault
-                                      handler:^(UIAlertAction * action)
-                                      {
-                                          
-                                      }];
-                 
-                 [alert addAction:ok];
-                 [self presentViewController:alert animated:YES completion:nil];
-             }
-         }
-              failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-         {
-             NSLog(@"error: %@", error);
-         }];
-    }
-    else
-    {
         appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
         NSString *otp = [NSString stringWithFormat:@"%@%@%@%@",self.textfiledOne.text,self.textfiledTwo.text,self.textfiledThree.text,self.textfieldFour.text];
         NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
@@ -251,7 +183,6 @@
          {
              NSLog(@"error: %@", error);
          }];
-    }
 }
 
 - (IBAction)confirmBtn:(id)sender
@@ -330,13 +261,6 @@
     }
     else
     {
-        NSString *fromActivatePage = [[NSUserDefaults standardUserDefaults]objectForKey:@"fromActivatePage"];
-        if ([fromActivatePage isEqualToString:@"YES"])
-        {
-            [self reactivceAccount:_emailOrphoneNumber];
-        }
-        else
-        {
            appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
            NSString *otp = [NSString stringWithFormat:@"%@%@%@%@",self.textfiledOne.text,self.textfiledTwo.text,self.textfiledThree.text,self.textfieldFour.text];
            NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
@@ -385,7 +309,7 @@
                 {
                     UIAlertController *alert= [UIAlertController
                                                alertControllerWithTitle:@"Heyla"
-                                               message:msg
+                                               message:@"Invalid OTP"
                                                preferredStyle:UIAlertControllerStyleAlert];
 
                     UIAlertAction *ok = [UIAlertAction
@@ -405,83 +329,8 @@
                 NSLog(@"error: %@", error);
             }];
         }
-    }
-
 }
--(void)reactivceAccount:(NSString *)emailOrPhoneNumber
-{
-    appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    NSString *otp = [NSString stringWithFormat:@"%@%@%@%@",self.textfiledOne.text,self.textfiledTwo.text,self.textfiledThree.text,self.textfieldFour.text];
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
-    [parameters setObject:emailOrPhoneNumber forKey:@"email_or_mobile"];
-    [parameters setObject:otp forKey:@"code"];
 
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-
-    NSString *mobileverify = @"apimain/reactivate_account";
-    NSArray *components = [NSArray arrayWithObjects:baseUrl,mobileverify, nil];
-    NSString *api = [NSString pathWithComponents:components];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [manager POST:api parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-     {
-
-         NSLog(@"%@",responseObject);
-         [MBProgressHUD hideHUDForView:self.view animated:YES];
-         NSString *msg = [responseObject objectForKey:@"msg"];
-         NSString *status = [responseObject objectForKey:@"status"];
-
-         if ([msg isEqualToString:@"Account activated successfully"] && [status isEqualToString:@"success"])
-         {
-//             self->appDel.user_Id = [responseObject objectForKey:@"user_id"];
-//             [[NSUserDefaults standardUserDefaults]setObject:self->appDel.user_Id forKey:@"stat_user_id"];
-//             NSLog(@"%@",self->appDel.user_Id);
-//
-//             NSString *View = [[NSUserDefaults standardUserDefaults]objectForKey:@"view_key"];
-             
-             UIAlertController *alert= [UIAlertController
-                                        alertControllerWithTitle:@"Heyla"
-                                        message:msg
-                                        preferredStyle:UIAlertControllerStyleAlert];
-
-             UIAlertAction *ok = [UIAlertAction
-                                  actionWithTitle:@"OK"
-                                  style:UIAlertActionStyleDefault
-                                  handler:^(UIAlertAction * action)
-                                  {
-            LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-            [self presentViewController:loginViewController animated:NO completion:nil];
-                                  }];
-
-             [alert addAction:ok];
-             [self presentViewController:alert animated:YES completion:nil];
-        }
-         else
-         {
-             UIAlertController *alert= [UIAlertController
-                                        alertControllerWithTitle:@"Heyla"
-                                        message:msg
-                                        preferredStyle:UIAlertControllerStyleAlert];
-
-             UIAlertAction *ok = [UIAlertAction
-                                  actionWithTitle:@"OK"
-                                  style:UIAlertActionStyleDefault
-                                  handler:^(UIAlertAction * action)
-                                  {
-
-                                  }];
-
-             [alert addAction:ok];
-             [self presentViewController:alert animated:YES completion:nil];
-         }
-     }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-     {
-         NSLog(@"error: %@", error);
-     }];
-}
 - (IBAction)changeNumberBtn:(id)sender
 {
     [self performSegueWithIdentifier:@"to_changeNumber" sender:self];

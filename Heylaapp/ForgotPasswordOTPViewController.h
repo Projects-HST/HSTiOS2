@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *confirmOtlet;
 - (IBAction)confirmBtn:(id)sender;
 - (IBAction)resendBtn:(id)sender;
+@property (nonatomic, strong) NSString *emailOrphoneNumber;
 
 @end

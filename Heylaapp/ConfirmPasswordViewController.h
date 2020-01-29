@@ -10,6 +10,7 @@
 #import "ACFloatingTextField.h"
 
 @interface ConfirmPasswordViewController : UIViewController<UITextFieldDelegate>
+- (IBAction)forgotPasswordAction:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *eye;
 - (IBAction)eyeBtn:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *submit;
